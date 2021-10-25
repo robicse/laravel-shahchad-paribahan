@@ -46,19 +46,19 @@
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control" name="name" id="name" value="{{$category->name}}" required>
                             </div>
-                            <img src="{{asset('uploads/categories/'.$category->icon)}}" width="80" height="50" alt="">
-                            <div class="form-group">
-                                <label for="email">Brand Logo <small>(size: 120 * 80 pixel)</small></label>
-                                <input type="file" class="form-control" name="icon" id="logo" >
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Meta Title</label>
-                                <input type="text" class="form-control" name="meta_title" id="meta_title" value="{{$category->meta_title}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="meta_desc">Meta Description</label>
-                                <textarea name="meta_description" id="meta_desc" class="form-control"  rows="3">{{$category->meta_description}}</textarea>
-                            </div>
+{{--                            <img src="{{asset('uploads/categories/'.$category->icon)}}" width="80" height="50" alt="">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="email">Brand Logo <small>(size: 120 * 80 pixel)</small></label>--}}
+{{--                                <input type="file" class="form-control" name="icon" id="logo" >--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="phone">Meta Title</label>--}}
+{{--                                <input type="text" class="form-control" name="meta_title" id="meta_title" value="{{$category->meta_title}}">--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="meta_desc">Meta Description</label>--}}
+{{--                                <textarea name="meta_description" id="meta_desc" class="form-control"  rows="3">{{$category->meta_description}}</textarea>--}}
+{{--                            </div>--}}
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">

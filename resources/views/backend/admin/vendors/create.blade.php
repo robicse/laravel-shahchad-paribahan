@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Add Category")
+@section("title","Add Vendor")
 @push('css')
 
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add Category</h1>
+                    <h1>Add Vendor</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Add Category</li>
+                        <li class="breadcrumb-item active">Add Vendor</li>
                     </ol>
                 </div>
             </div>
@@ -26,9 +26,9 @@
             <!-- general form elements -->
                 <div class="card card-info card-outline">
                 <div class="card-header">
-                    <h3 class="card-title float-left">Add Category</h3>
+                    <h3 class="card-title float-left">Add Vendor</h3>
                     <div class="float-right">
-                        <a href="{{route('admin.categories.index')}}">
+                        <a href="{{route('admin.vendors.index')}}">
                             <button class="btn btn-success">
                                 <i class="fa fa-backward"> </i>
                                 Back
@@ -38,21 +38,37 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" action="{{route('admin.categories.store')}}" method="post" enctype="multipart/form-data">
+                <form role="form" action="{{route('admin.vendors.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" required>
                         </div>
-{{--                        <div class="form-group">--}}
-{{--                            <label for="email">Icon <small>(size: 32 * 32 pixel)</small></label>--}}
-{{--                            <input type="file" class="form-control" name="icon" id="logo" >--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label for="phone">Meta Title</label>--}}
-{{--                            <input type="text" class="form-control" name="meta_title" id="phone" placeholder="Enter meta title">--}}
-{{--                        </div>--}}
+                        <div class="form-group">
+                            <label for="email">Vendor Image <small>(size: 120 * 80 pixel)</small></label>
+                            <input type="file" class="form-control" name="logo" id="logo" >
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="text" class="form-control" name="phone" id="phone" placeholder="" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" name="email" id="email" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="vendor_address">Vendor Address</label>
+                            <input type="text" class="form-control" name="vendor_address" id="vendor_address" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="company_name">Company Name</label>
+                            <input type="text" class="form-control" name="company_name" id="company_name" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="company_address">Company Address</label>
+                            <input type="text" class="form-control" name="company_address" id="company_address" placeholder="">
+                        </div>
 {{--                        <div class="form-group">--}}
 {{--                            <label for="meta_desc">Meta Description</label>--}}
 {{--                            <textarea name="meta_description" id="meta_desc" class="form-control"  rows="3"></textarea>--}}

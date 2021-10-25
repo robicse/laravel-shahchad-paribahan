@@ -30,6 +30,24 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item has-treeview {{(Request::is('admin/vendors*') ) ? 'menu-open' : ''}}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Vendors
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('admin.vendors.index')}}"
+                                   class="nav-link {{Request::is('admin/vendors') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/vendors') ? 'folder-open':'folder'}} nav-icon"></i>
+                                    <p>Vendors List</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="nav-item has-treeview {{(Request::is('admin/customers*') ) ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
@@ -48,46 +66,35 @@
                             </li>
                         </ul>
                     </li>
-{{--                    <li class="nav-item has-treeview {{(Request::is('admin/brands*')--}}
-{{--                        || Request::is('admin/categories*')--}}
-{{--                        || Request::is('admin/subcategories*')--}}
-{{--                        || Request::is('admin/sub-subcategories*')--}}
-{{--                        || Request::is('admin/products*')--}}
-{{--                        || Request::is('admin/flash_deals*')--}}
-{{--                        || Request::is('admin/coupon*')--}}
-{{--                        || Request::is('admin/offers*')--}}
-{{--                        || Request::is('admin/request/products*')--}}
-{{--                        || Request::is('admin/attributes*'))--}}
-{{--                    ? 'menu-open' : ''}}">--}}
-{{--                        <a href="#" class="nav-link">--}}
-{{--                            <i class="nav-icon fas fa-shopping-cart"></i>--}}
-{{--                            <p>--}}
-{{--                                Product Management--}}
-{{--                                <i class="right fa fa-angle-left"></i>--}}
-{{--                            </p>--}}
-{{--                        </a>--}}
-{{--                        <ul class="nav nav-treeview">--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route('admin.attributes.index')}}"--}}
-{{--                                   class="nav-link {{Request::is('admin/attributes*') ? 'active' :''}}">--}}
-{{--                                    <i class="fa fa-{{Request::is('admin/attributes*') ? 'folder-open':'folder'}} nav-icon"></i>--}}
-{{--                                    <p>Attributes</p>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route('admin.brands.index')}}"--}}
-{{--                                   class="nav-link {{Request::is('admin/brands*') ? 'active' :''}}">--}}
-{{--                                    <i class="fa fa-{{Request::is('admin/brands*') ? 'folder-open':'folder'}} nav-icon"></i>--}}
-{{--                                    <p>Brands</p>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route('admin.categories.index')}}"--}}
-{{--                                   class="nav-link {{Request::is('admin/categories*') ? 'active' :''}}">--}}
-{{--                                    <i class="fa fa-{{Request::is('admin/categories*') ? 'folder-open':'folder'}} nav-icon"></i>--}}
-{{--                                    <p>Categories</p>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                    <li class="nav-item has-treeview {{(Request::is('admin/brands*')
+                        || Request::is('admin/categories*')
+                        || Request::is('admin/subcategories*')
+                        //|| Request::is('admin/sub-subcategories*')
+                        //|| Request::is('admin/products*')
+                        )
+                    ? 'menu-open' : ''}}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-shopping-cart"></i>
+                            <p>
+                                Vehicle Management
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('admin.brands.index')}}"
+                                   class="nav-link {{Request::is('admin/brands*') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/brands*') ? 'folder-open':'folder'}} nav-icon"></i>
+                                    <p>Brands</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.categories.index')}}"
+                                   class="nav-link {{Request::is('admin/categories*') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/categories*') ? 'folder-open':'folder'}} nav-icon"></i>
+                                    <p>Categories</p>
+                                </a>
+                            </li>
 {{--                            <li class="nav-item">--}}
 {{--                                <a href="{{route('admin.subcategories.index')}}"--}}
 {{--                                   class="nav-link {{Request::is('admin/subcategories*') ? 'active' :''}}">--}}
@@ -109,29 +116,8 @@
 {{--                                    <p>Products</p>--}}
 {{--                                </a>--}}
 {{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route('admin.flash_deals.index')}}"--}}
-{{--                                   class="nav-link {{Request::is('admin/flash_deals*') ? 'active' :''}}">--}}
-{{--                                    <i class="fa fa-{{Request::is('admin/flash_deals*') ? 'folder-open':'folder'}} nav-icon"></i>--}}
-{{--                                    <p>Flash Deal</p>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route('admin.coupon.index')}}"--}}
-{{--                                   class="nav-link {{Request::is('admin/coupon*') ? 'active' :''}}">--}}
-{{--                                    <i class="fa fa-{{Request::is('admin/coupon*') ? 'folder-open':'folder'}} nav-icon"></i>--}}
-{{--                                    <p>Coupon</p>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route('admin.offers.index')}}"--}}
-{{--                                   class="nav-link {{Request::is('admin/offers*') ? 'active' :''}}">--}}
-{{--                                    <i class="fa fa-{{Request::is('admin/offers*') ? 'folder-open':'folder'}} nav-icon"></i>--}}
-{{--                                    <p>Offer</p>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                        </ul>--}}
-{{--                    </li>--}}
+                        </ul>
+                    </li>
                     <li class="nav-item has-treeview {{(Request::is('admin/roles*') || Request::is('admin/staffs*')) ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>

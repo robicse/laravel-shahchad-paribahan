@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Categories List")
+@section("title","Vendor List")
 @push('css')
     <link rel="stylesheet" href="{{asset('backend/plugins/datatables/dataTables.bootstrap4.css')}}">
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Categories List</h1>
+                    <h1>Vendor List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Categories List</li>
+                        <li class="breadcrumb-item active">Vendor List</li>
                     </ol>
                 </div>
             </div>
@@ -25,9 +25,9 @@
             <div class="col-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title float-left">Categories Lists</h3>
+                        <h3 class="card-title float-left">Vendor Lists</h3>
                         <div class="float-right">
-                            <a href="{{route('admin.categories.create')}}">
+                            <a href="{{route('admin.vendors.create')}}">
                                 <button class="btn btn-success">
                                     <i class="fa fa-plus-circle"></i>
                                     Add
@@ -41,40 +41,35 @@
                             <thead>
                             <tr>
                                 <th>#Id</th>
+                                <th>Image</th>
                                 <th>Name</th>
-{{--                                <th>Icon</th>--}}
-{{--                                <th>Is_home</th>--}}
+                                <th>Phone</th>
+                                <th>Email</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($categories as $key => $category)
+                            @foreach($vendors as $key => $vendor)
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>{{$category->name}}</td>
-{{--                                <td>--}}
-{{--                                    <img src="{{asset('uploads/categories/'.$category->icon)}}" width="32" height="32" alt="">--}}
-{{--                                </td>--}}
-{{--                                <td>--}}
-{{--                                    <div class="form-group col-md-2">--}}
-{{--                                        <label class="switch" style="margin-top:40px;">--}}
-{{--                                            <input onchange="update_is_home(this)" value="{{ $category->id }}" {{$category->is_home == 1? 'checked':''}} type="checkbox" >--}}
-{{--                                            <span class="slider round"></span>--}}
-{{--                                        </label>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
                                 <td>
-                                    <a class="btn btn-info waves-effect" href="{{route('admin.categories.edit',$category->id)}}">
+                                    <img src="{{asset('uploads/vendors/'.$vendor->logo)}}" width="80" height="50" alt="">
+                                </td>
+                                <td>{{$vendor->name}}</td>
+                                <td>{{$vendor->phone}}</td>
+                                <td>{{$vendor->email}}</td>
+                                <td>
+                                    <a class="btn btn-info waves-effect" href="{{route('admin.vendors.edit',$vendor->id)}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <button class="btn btn-danger waves-effect" type="button"
-                                            onclick="deleteCategory({{$category->id}})">
+                                            onclick="deleteVendor({{$vendor->id}})">
                                         <i class="fa fa-trash"></i>
                                     </button>
-                                    <form id="delete-form-{{$category->id}}" action="{{route('admin.categories.destroy',$category->id)}}" method="POST" style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
+{{--                                    <form id="delete-form-{{$vendor->id}}" action="{{route('admin.vendors.destroy',$vendor->id)}}" method="POST" style="display: none;">--}}
+{{--                                        @csrf--}}
+{{--                                        @method('DELETE')--}}
+{{--                                    </form>--}}
                                 </td>
                             </tr>
                             @endforeach
@@ -82,9 +77,10 @@
                             <tfoot>
                             <tr>
                                 <th>#Id</th>
+                                <th>Image</th>
                                 <th>Name</th>
-{{--                                <th>Icon</th>--}}
-{{--                                <th>Is_home</th>--}}
+                                <th>Phone</th>
+                                <th>Email</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>
@@ -115,7 +111,7 @@
         });
 
         //sweet alert
-        function deleteCategory(id) {
+        function deleteVendor(id) {
             swal({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -143,23 +139,6 @@
                     )
                 }
             })
-        }
-        //today's deals
-        function update_is_home(el){
-            if(el.checked){
-                var status = 1;
-            }
-            else{
-                var status = 0;
-            }
-            $.post('{{ route('admin.categories.is_home') }}', {_token:'{{ csrf_token() }}', id:el.value, status:status}, function(data){
-                if(data == 1){
-                    toastr.success('success', 'Is Home updated successfully');
-                }
-                else{
-                    toastr.danger('danger', 'Something went wrong');
-                }
-            });
         }
     </script>
 @endpush

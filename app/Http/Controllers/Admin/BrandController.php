@@ -49,8 +49,8 @@ class BrandController extends Controller
         $brand = new Brand;
         $brand->name = $request->name;
         $brand->slug = Str::slug($request->name);
-        $brand->meta_title = $request->meta_title;
-        $brand->meta_description = $request->meta_description;
+        //$brand->meta_title = $request->meta_title;
+        //$brand->meta_description = $request->meta_description;
         $image = $request->file('logo');
         if (isset($image)) {
             //make unique name for image
@@ -110,8 +110,8 @@ class BrandController extends Controller
         $brand = Brand::find($id);
         $brand->name = $request->name;
         $brand->slug = Str::slug($request->name);
-        $brand->meta_title = $request->meta_title;
-        $brand->meta_description = $request->meta_description;
+        //$brand->meta_title = $request->meta_title;
+        //$brand->meta_description = $request->meta_description;
         $image = $request->file('logo');
         if (isset($image)) {
             //make unique name for image
