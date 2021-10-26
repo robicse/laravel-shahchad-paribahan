@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Model\Vendor;
+use App\Model\Vehicle;
+use App\Model\Brand;
+use App\Model\Category;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -11,26 +13,28 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
-class VendorController extends Controller
+class VehicleController extends Controller
 {
     public function index()
     {
-        $vendors = Vendor::all();
-        return view('backend.admin.vendors.index', compact('vendors'));
+        $vehicles = Vehicle::all();
+        return view('backend.admin.vehicles.index', compact('vehicles'));
     }
 
     public function create()
     {
-        return view('backend.admin.vendors.create');
+        $brands = Brand::all();
+        $categories = Category::all();
+        return view('backend.admin.vehicles.create', compact('brands','categories'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
-            //'name'=> 'required|unique:vendors,name',
+            //'name'=> 'required|unique:vehicles,name',
         ]);
 
-        $vendor = new Vendor();
+        $vendor = new Vehicle();
         $vendor->name = $request->name;
         $vendor->phone = $request->phone;
         $vendor->email = $request->email;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Model\Vendor;
+use App\Model\Driver;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -11,32 +11,34 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
-class VendorController extends Controller
+class DriverController extends Controller
 {
     public function index()
     {
-        $vendors = Vendor::all();
-        return view('backend.admin.vendors.index', compact('vendors'));
+        $drivers = Driver::all();
+        return view('backend.admin.drivers.index', compact('drivers'));
     }
 
     public function create()
     {
-        return view('backend.admin.vendors.create');
+        return view('backend.admin.drivers.create');
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
-            //'name'=> 'required|unique:vendors,name',
+            'name'=> 'required|unique:drivers,name',
         ]);
 
-        $vendor = new Vendor();
-        $vendor->name = $request->name;
-        $vendor->phone = $request->phone;
-        $vendor->email = $request->email;
-        $vendor->vendor_address = $request->vendor_address;
-        $vendor->company_name = $request->company_name;
-        $vendor->company_address = $request->company_address;
+        $driver = new Driver();
+        $driver->name = $request->name;
+        $driver->phone = $request->phone;
+        $driver->email = $request->email;
+        $driver->present_address = $request->present_address;
+        $driver->permanent_address = $request->permanent_address;
+        $driver->driving_licence_no = $request->driving_licence_no;
+        $driver->driving_experience_duration = $request->driving_experience_duration;
+        $driver->salary = $request->salary;
         $image = $request->file('logo');
         if (isset($image)) {
             //make unique name for image
@@ -44,14 +46,14 @@ class VendorController extends Controller
             $imagename = $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
 //            resize image for hospital and upload
             $proImage = Image::make($image)->resize(120, 80)->save($image->getClientOriginalExtension());
-            Storage::disk('public')->put('uploads/vendors/' . $imagename, $proImage);
+            Storage::disk('public')->put('uploads/drivers/' . $imagename, $proImage);
 
         }else {
             $imagename = "default.png";
         }
-        $vendor->logo = $imagename;
-        $vendor->save();
-        Toastr::success('Vendor Created Successfully');
+        $driver->logo = $imagename;
+        $driver->save();
+        Toastr::success('Driver Created Successfully');
         return back();
 
 
@@ -64,44 +66,46 @@ class VendorController extends Controller
 
     public function edit($id)
     {
-        $vendor = Vendor::find($id);
-        return view('backend.admin.vendors.edit',compact('vendor'));
+        $driver = Driver::find($id);
+        return view('backend.admin.drivers.edit',compact('driver'));
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name'=> 'required|unique:vendors,name,'.$id,
+            'name'=> 'required|unique:drivers,name,'.$id,
         ]);
 
-        $vendor = Vendor::find($id);
-        $vendor->name = $request->name;
-        $vendor->phone = $request->phone;
-        $vendor->email = $request->email;
-        $vendor->vendor_address = $request->vendor_address;
-        $vendor->company_name = $request->company_name;
-        $vendor->company_address = $request->company_address;
+        $driver = Driver::find($id);
+        $driver->name = $request->name;
+        $driver->phone = $request->phone;
+        $driver->email = $request->email;
+        $driver->present_address = $request->present_address;
+        $driver->permanent_address = $request->permanent_address;
+        $driver->driving_licence_no = $request->driving_licence_no;
+        $driver->driving_experience_duration = $request->driving_experience_duration;
+        $driver->salary = $request->salary;
         $image = $request->file('logo');
         if (isset($image)) {
             //make unique name for image
             $currentDate = Carbon::now()->toDateString();
             $imagename = $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
 
-            if(Storage::disk('public')->exists('uploads/vendors/'.$vendor->logo))
+            if(Storage::disk('public')->exists('uploads/drivers/'.$driver->logo))
             {
-                Storage::disk('public')->delete('uploads/vendors/'.$vendor->logo);
+                Storage::disk('public')->delete('uploads/drivers/'.$driver->logo);
             }
 //            resize image for hospital and upload
             $proImage = Image::make($image)->resize(120, 80)->save($image->getClientOriginalExtension());
-            Storage::disk('public')->put('uploads/vendors/' . $imagename, $proImage);
+            Storage::disk('public')->put('uploads/drivers/' . $imagename, $proImage);
 
         }else {
-            $imagename = $vendor->logo;
+            $imagename = $driver->logo;
         }
-        $vendor->logo = $imagename;
-        $vendor->save();
+        $driver->logo = $imagename;
+        $driver->save();
 
-        Toastr::success('Vendor updated successfully','Success');
+        Toastr::success('Driver updated successfully','Success');
         return back();
     }
 

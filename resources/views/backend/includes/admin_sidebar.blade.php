@@ -48,6 +48,24 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item has-treeview {{(Request::is('admin/drivers*') ) ? 'menu-open' : ''}}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Drivers
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('admin.drivers.index')}}"
+                                   class="nav-link {{Request::is('admin/drivers') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/drivers') ? 'folder-open':'folder'}} nav-icon"></i>
+                                    <p>Drivers List</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="nav-item has-treeview {{(Request::is('admin/customers*') ) ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>

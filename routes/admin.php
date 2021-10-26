@@ -20,6 +20,7 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::resource('staffs','StaffController');
     Route::resource('brands','BrandController');
     Route::resource('vendors','VendorController');
+    Route::resource('drivers','DriverController');
     Route::resource('categories','CategoryController');
     Route::post('categories/is_home', 'CategoryController@updateIsHome')->name('categories.is_home');
 //    Route::resource('attributes','AttributeController');
