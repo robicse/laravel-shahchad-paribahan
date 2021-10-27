@@ -66,14 +66,14 @@
                                     <a class="btn btn-info waves-effect" href="{{route('admin.staffs.edit',$user->id)}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <button class="btn btn-danger waves-effect" type="button"
-                                            onclick="deleteUser({{$user->id}})">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                    <form id="delete-form-{{$user->id}}" action="{{route('admin.staffs.destroy',$user->id)}}" method="POST" style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
+{{--                                    <button class="btn btn-danger waves-effect" type="button"--}}
+{{--                                            onclick="deleteUser({{$user->id}})">--}}
+{{--                                        <i class="fa fa-trash"></i>--}}
+{{--                                    </button>--}}
+{{--                                    <form id="delete-form-{{$user->id}}" action="{{route('admin.staffs.destroy',$user->id)}}" method="POST" style="display: none;">--}}
+{{--                                        @csrf--}}
+{{--                                        @method('DELETE')--}}
+{{--                                    </form>--}}
                                 </td>
                             </tr>
                             @endforeach

@@ -43,7 +43,7 @@
                         @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="name">Name</label>
+                                <label for="name">Name <span>*</span></label>
                                 <input type="text" class="form-control" name="name" id="name" value="{{$category->name}}" required>
                             </div>
 {{--                            <img src="{{asset('uploads/categories/'.$category->icon)}}" width="80" height="50" alt="">--}}

@@ -66,7 +66,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item has-treeview {{(Request::is('admin/customers*') ) ? 'menu-open' : ''}}">
+                    <li class="nav-item has-treeview {{(Request::is('admin.customer*') ) ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
@@ -127,13 +127,13 @@
 {{--                                    <p>Sub Subcategories</p>--}}
 {{--                                </a>--}}
 {{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route('admin.products.index')}}"--}}
-{{--                                   class="nav-link {{Request::is('admin/products*') ? 'active' :''}}">--}}
-{{--                                    <i class="fa fa-{{Request::is('admin/products*') ? 'folder-open':'folder'}} nav-icon"></i>--}}
-{{--                                    <p>Products</p>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            <li class="nav-item">
+                                <a href="{{route('admin.vehicles.index')}}"
+                                   class="nav-link {{Request::is('admin/vehicles*') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/vehicles*') ? 'folder-open':'folder'}} nav-icon"></i>
+                                    <p>Vehicles</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item has-treeview {{(Request::is('admin/roles*') || Request::is('admin/staffs*')) ? 'menu-open' : ''}}">

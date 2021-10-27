@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Add Driver")
+@section("title","Add Customer")
 @push('css')
 
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add Driver</h1>
+                    <h1>Add Customer</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Add Driver</li>
+                        <li class="breadcrumb-item active">Add Customer</li>
                     </ol>
                 </div>
             </div>
@@ -26,9 +26,9 @@
             <!-- general form elements -->
                 <div class="card card-info card-outline">
                 <div class="card-header">
-                    <h3 class="card-title float-left">Add Driver</h3>
+                    <h3 class="card-title float-left">Add Customer</h3>
                     <div class="float-right">
-                        <a href="{{route('admin.drivers.index')}}">
+                        <a href="{{route('admin.vendors.index')}}">
                             <button class="btn btn-success">
                                 <i class="fa fa-backward"> </i>
                                 Back
@@ -38,7 +38,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" action="{{route('admin.drivers.store')}}" method="post" enctype="multipart/form-data">
+                <form role="form" action="{{route('admin.customers.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -54,28 +54,20 @@
                             <input type="text" class="form-control" name="email" id="email" placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="present_address">Present Address</label>
-                            <input type="text" class="form-control" name="present_address" id="present_address" placeholder="">
+                            <label for="vendor_address">Customer Address</label>
+                            <input type="text" class="form-control" name="vendor_address" id="vendor_address" placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="permanent_address">Permanent Address</label>
-                            <input type="text" class="form-control" name="permanent_address" id="permanent_address" placeholder="">
+                            <label for="company_name">Company Name</label>
+                            <input type="text" class="form-control" name="company_name" id="company_name" placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="driving_licence_no">Driving Licence NO <span>*</span></label>
-                            <input type="text" class="form-control" name="driving_licence_no" id="driving_licence_no" placeholder="" required>
+                            <label for="company_address">Company Address</label>
+                            <input type="text" class="form-control" name="company_address" id="company_address" placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="driving_experience_duration">Driving Experience Duration <span>*</span></label>
-                            <input type="text" class="form-control" name="driving_experience_duration" id="driving_experience_duration" placeholder="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="salary">Salary <span>*</span></label>
-                            <input type="number" class="form-control" name="salary" id="salary" placeholder="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Driver Image <small>(size: 120 * 80 pixel)</small></label>
-                            <input type="file" class="form-control" name="logo" id="logo" >
+                            <label for="image">Customer Image <small>(size: 120 * 80 pixel)</small></label>
+                            <input type="file" class="form-control" name="image" id="image" >
                         </div>
 {{--                        <div class="form-group">--}}
 {{--                            <label for="meta_desc">Meta Description</label>--}}

@@ -15,6 +15,14 @@ use Intervention\Image\Facades\Image;
 
 class VehicleController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:vehicle-list|vehicle-create|vehicle-edit|vehicle-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:vehicle-create', ['only' => ['create','store']]);
+        $this->middleware('permission:vehicle-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:vehicle-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $vehicles = Vehicle::all();
@@ -34,28 +42,37 @@ class VehicleController extends Controller
             //'name'=> 'required|unique:vehicles,name',
         ]);
 
-        $vendor = new Vehicle();
-        $vendor->name = $request->name;
-        $vendor->phone = $request->phone;
-        $vendor->email = $request->email;
-        $vendor->vendor_address = $request->vendor_address;
-        $vendor->company_name = $request->company_name;
-        $vendor->company_address = $request->company_address;
-        $image = $request->file('logo');
+        $vehicle = new Vehicle();
+        $vehicle->owner_name = $request->owner_name;
+        $vehicle->vehicle_name = $request->vehicle_name;
+        $vehicle->brand_id = $request->brand_id;
+        $vehicle->category_id = $request->category_id;
+        $vehicle->model = $request->model;
+        $vehicle->licence_no = $request->licence_no;
+        $vehicle->registration_date = $request->registration_date;
+        $vehicle->chassis_no = $request->chassis_no;
+        $vehicle->engine_no = $request->engine_no;
+        $vehicle->vehicle_class = $request->vehicle_class;
+        $vehicle->fuel_type = $request->fuel_type;
+        $vehicle->fitness = $request->fitness;
+        $vehicle->rc_status = $request->rc_status;
+        $vehicle->own_vehicle_status = $request->own_vehicle_status;
+        $vehicle->rent_type = $request->rent_type;
+        $image = $request->file('image');
         if (isset($image)) {
             //make unique name for image
             $currentDate = Carbon::now()->toDateString();
             $imagename = $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
 //            resize image for hospital and upload
             $proImage = Image::make($image)->resize(120, 80)->save($image->getClientOriginalExtension());
-            Storage::disk('public')->put('uploads/vendors/' . $imagename, $proImage);
+            Storage::disk('public')->put('uploads/vehicles/' . $imagename, $proImage);
 
         }else {
             $imagename = "default.png";
         }
-        $vendor->logo = $imagename;
-        $vendor->save();
-        Toastr::success('Vendor Created Successfully');
+        $vehicle->image = $imagename;
+        $vehicle->save();
+        Toastr::success('Vehicle Created Successfully');
         return back();
 
 
@@ -68,44 +85,55 @@ class VehicleController extends Controller
 
     public function edit($id)
     {
-        $vendor = Vendor::find($id);
-        return view('backend.admin.vendors.edit',compact('vendor'));
+        $brands = Brand::all();
+        $categories = Category::all();
+        $vehicle = Vehicle::find($id);
+        return view('backend.admin.vehicles.edit',compact('vehicle','brands','categories'));
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name'=> 'required|unique:vendors,name,'.$id,
+            //'name'=> 'required|unique:vehicles,name,'.$id,
         ]);
 
-        $vendor = Vendor::find($id);
-        $vendor->name = $request->name;
-        $vendor->phone = $request->phone;
-        $vendor->email = $request->email;
-        $vendor->vendor_address = $request->vendor_address;
-        $vendor->company_name = $request->company_name;
-        $vendor->company_address = $request->company_address;
-        $image = $request->file('logo');
+        $vehicle = Vehicle::find($id);
+        $vehicle->owner_name = $request->owner_name;
+        $vehicle->vehicle_name = $request->vehicle_name;
+        $vehicle->brand_id = $request->brand_id;
+        $vehicle->category_id = $request->category_id;
+        $vehicle->model = $request->model;
+        $vehicle->licence_no = $request->licence_no;
+        $vehicle->registration_date = $request->registration_date;
+        $vehicle->chassis_no = $request->chassis_no;
+        $vehicle->engine_no = $request->engine_no;
+        $vehicle->vehicle_class = $request->vehicle_class;
+        $vehicle->fuel_type = $request->fuel_type;
+        $vehicle->fitness = $request->fitness;
+        $vehicle->rc_status = $request->rc_status;
+        $vehicle->own_vehicle_status = $request->own_vehicle_status;
+        $vehicle->rent_type = $request->rent_type;
+        $image = $request->file('image');
         if (isset($image)) {
             //make unique name for image
             $currentDate = Carbon::now()->toDateString();
             $imagename = $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
 
-            if(Storage::disk('public')->exists('uploads/vendors/'.$vendor->logo))
+            if(Storage::disk('public')->exists('uploads/vehicles/'.$vehicle->image))
             {
-                Storage::disk('public')->delete('uploads/vendors/'.$vendor->logo);
+                Storage::disk('public')->delete('uploads/vehicles/'.$vehicle->image);
             }
 //            resize image for hospital and upload
             $proImage = Image::make($image)->resize(120, 80)->save($image->getClientOriginalExtension());
-            Storage::disk('public')->put('uploads/vendors/' . $imagename, $proImage);
+            Storage::disk('public')->put('uploads/vehicles/' . $imagename, $proImage);
 
         }else {
-            $imagename = $vendor->logo;
+            $imagename = $vehicle->image;
         }
-        $vendor->logo = $imagename;
-        $vendor->save();
+        $vehicle->image = $imagename;
+        $vehicle->save();
 
-        Toastr::success('Vendor updated successfully','Success');
+        Toastr::success('Vehicle updated successfully','Success');
         return back();
     }
 

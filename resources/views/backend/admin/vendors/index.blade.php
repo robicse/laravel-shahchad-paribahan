@@ -62,10 +62,10 @@
                                     <a class="btn btn-info waves-effect" href="{{route('admin.vendors.edit',$vendor->id)}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <button class="btn btn-danger waves-effect" type="button"
-                                            onclick="deleteVendor({{$vendor->id}})">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+{{--                                    <button class="btn btn-danger waves-effect" type="button"--}}
+{{--                                            onclick="deleteVendor({{$vendor->id}})">--}}
+{{--                                        <i class="fa fa-trash"></i>--}}
+{{--                                    </button>--}}
 {{--                                    <form id="delete-form-{{$vendor->id}}" action="{{route('admin.vendors.destroy',$vendor->id)}}" method="POST" style="display: none;">--}}
 {{--                                        @csrf--}}
 {{--                                        @method('DELETE')--}}

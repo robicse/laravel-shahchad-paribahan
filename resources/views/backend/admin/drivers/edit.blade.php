@@ -43,16 +43,11 @@
                         @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="name">Name</label>
+                                <label for="name">Name <span>*</span></label>
                                 <input type="text" class="form-control" name="name" id="name" value="{{$driver->name}}" required>
                             </div>
-                            <img src="{{asset('uploads/drivers/'.$driver->logo)}}" width="80" height="50" alt="">
                             <div class="form-group">
-                                <label for="logo">Driver Logo <small>(size: 120 * 80 pixel)</small></label>
-                                <input type="file" class="form-control" name="logo" id="logo" >
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Phone</label>
+                                <label for="phone">Phone <span>*</span></label>
                                 <input type="text" class="form-control" name="phone" id="phone"  value="{{$driver->phone}}" required>
                             </div>
                             <div class="form-group">
@@ -68,16 +63,21 @@
                                 <input type="text" class="form-control" name="permanent_address" id="permanent_address" value="{{$driver->permanent_address}}">
                             </div>
                             <div class="form-group">
-                                <label for="driving_licence_no">Driving Licence NO</label>
-                                <input type="text" class="form-control" name="driving_licence_no" id="driving_licence_no" value="{{$driver->driving_licence_no}}">
+                                <label for="driving_licence_no">Driving Licence NO <span>*</span></label>
+                                <input type="text" class="form-control" name="driving_licence_no" id="driving_licence_no" value="{{$driver->driving_licence_no}}" required>
                             </div>
                             <div class="form-group">
-                                <label for="driving_experience_duration">Driving Experience Duration</label>
-                                <input type="text" class="form-control" name="driving_experience_duration" id="driving_experience_duration" value="{{$driver->driving_experience_duration}}">
+                                <label for="driving_experience_duration">Driving Experience Duration <span>*</span></label>
+                                <input type="text" class="form-control" name="driving_experience_duration" id="driving_experience_duration" value="{{$driver->driving_experience_duration}}" required>
                             </div>
                             <div class="form-group">
-                                <label for="salary">Salary</label>
-                                <input type="number" class="form-control" name="salary" id="salary" value="{{$driver->salary}}">
+                                <label for="salary">Salary <span>*</span></label>
+                                <input type="number" class="form-control" name="salary" id="salary" value="{{$driver->salary}}" required>
+                            </div>
+                            <img src="{{asset('uploads/drivers/'.$driver->logo)}}" width="80" height="50" alt="">
+                            <div class="form-group">
+                                <label for="logo">Driver Logo <small>(size: 120 * 80 pixel)</small></label>
+                                <input type="file" class="form-control" name="logo" id="logo" >
                             </div>
                         </div>
                         <!-- /.card-body -->

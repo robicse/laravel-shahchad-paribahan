@@ -13,6 +13,14 @@ use Intervention\Image\Facades\Image;
 
 class VendorController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:vendor-list|vendor-create|vendor-edit|vendor-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:vendor-create', ['only' => ['create','store']]);
+        $this->middleware('permission:vendor-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:vendor-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $vendors = Vendor::all();

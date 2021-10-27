@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Edit Vendor")
+@section("title","Edit Customer")
 @push('css')
 
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Vendor</h1>
+                    <h1>Edit Customer</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Edit Vendor</li>
+                        <li class="breadcrumb-item active">Edit Customer</li>
                     </ol>
                 </div>
             </div>
@@ -26,9 +26,9 @@
                 <!-- general form elements -->
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title float-left">Edit Vendor</h3>
+                        <h3 class="card-title float-left">Edit Customer</h3>
                         <div class="float-right">
-                            <a href="{{route('admin.vendors.index')}}">
+                            <a href="{{route('admin.customers.index')}}">
                                 <button class="btn btn-success">
                                     <i class="fa fa-backward"> </i>
                                     Back
@@ -38,38 +38,38 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" action="{{route('admin.vendors.update',$vendor->id)}}" method="post" enctype="multipart/form-data">
+                    <form role="form" action="{{route('admin.customers.update',$customer->id)}}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="name">Name <span>*</span></label>
-                                <input type="text" class="form-control" name="name" id="name" value="{{$vendor->name}}" required>
+                                <input type="text" class="form-control" name="name" id="name" value="{{$customer->name}}" required>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone <span>*</span></label>
-                                <input type="text" class="form-control" name="phone" id="phone"  value="{{$vendor->phone}}" required>
+                                <input type="text" class="form-control" name="phone" id="phone"  value="{{$customer->phone}}" required>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="text" class="form-control" name="email" id="email"  value="{{$vendor->email}}">
+                                <input type="text" class="form-control" name="email" id="email"  value="{{$customer->email}}">
                             </div>
                             <div class="form-group">
-                                <label for="vendor_address">Vendor Address</label>
-                                <input type="text" class="form-control" name="vendor_address" id="vendor_address"  value="{{$vendor->vendor_address}}">
+                                <label for="customer_address">Customer Address</label>
+                                <input type="text" class="form-control" name="customer_address" id="customer_address"  value="{{$customer->customer_address}}">
                             </div>
                             <div class="form-group">
                                 <label for="company_name">Company Name</label>
-                                <input type="text" class="form-control" name="company_name" id="company_name"  value="{{$vendor->company_name}}">
+                                <input type="text" class="form-control" name="company_name" id="company_name"  value="{{$customer->company_name}}">
                             </div>
                             <div class="form-group">
                                 <label for="company_address">Company Address</label>
-                                <input type="text" class="form-control" name="company_address" id="company_address"  value="{{$vendor->company_address}}">
+                                <input type="text" class="form-control" name="company_address" id="company_address"  value="{{$customer->company_address}}">
                             </div>
-                            <img src="{{asset('uploads/vendors/'.$vendor->logo)}}" width="80" height="50" alt="">
+                            <img src="{{asset('uploads/customers/'.$customer->image)}}" width="80" height="50" alt="">
                             <div class="form-group">
-                                <label for="logo">Vendor Logo <small>(size: 120 * 80 pixel)</small></label>
-                                <input type="file" class="form-control" name="logo" id="logo" >
+                                <label for="image">Customer Logo <small>(size: 120 * 80 pixel)</small></label>
+                                <input type="file" class="form-control" name="image" id="image" >
                             </div>
                         </div>
                         <!-- /.card-body -->

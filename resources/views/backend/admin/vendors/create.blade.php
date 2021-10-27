@@ -42,15 +42,11 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" required>
+                            <label for="name">Name <span>*</span></label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Vendor Image <small>(size: 120 * 80 pixel)</small></label>
-                            <input type="file" class="form-control" name="logo" id="logo" >
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
+                            <label for="phone">Phone <span>*</span></label>
                             <input type="text" class="form-control" name="phone" id="phone" placeholder="" required>
                         </div>
                         <div class="form-group">
@@ -68,6 +64,10 @@
                         <div class="form-group">
                             <label for="company_address">Company Address</label>
                             <input type="text" class="form-control" name="company_address" id="company_address" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Vendor Image <small>(size: 120 * 80 pixel)</small></label>
+                            <input type="file" class="form-control" name="logo" id="logo" >
                         </div>
 {{--                        <div class="form-group">--}}
 {{--                            <label for="meta_desc">Meta Description</label>--}}

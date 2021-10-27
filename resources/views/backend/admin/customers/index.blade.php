@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Driver List")
+@section("title","Customer List")
 @push('css')
     <link rel="stylesheet" href="{{asset('backend/plugins/datatables/dataTables.bootstrap4.css')}}">
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Driver List</h1>
+                    <h1>Customer List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Driver List</li>
+                        <li class="breadcrumb-item active">Customer List</li>
                     </ol>
                 </div>
             </div>
@@ -25,9 +25,9 @@
             <div class="col-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title float-left">Driver Lists</h3>
+                        <h3 class="card-title float-left">Customer Lists</h3>
                         <div class="float-right">
-                            <a href="{{route('admin.drivers.create')}}">
+                            <a href="{{route('admin.customers.create')}}">
                                 <button class="btn btn-success">
                                     <i class="fa fa-plus-circle"></i>
                                     Add
@@ -49,24 +49,24 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($drivers as $key => $driver)
+                            @foreach($customers as $key => $customer)
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>
-                                    <img src="{{asset('uploads/drivers/'.$driver->logo)}}" width="80" height="50" alt="">
+                                    <img src="{{asset('uploads/customers/'.$customer->logo)}}" width="80" height="50" alt="">
                                 </td>
-                                <td>{{$driver->name}}</td>
-                                <td>{{$driver->phone}}</td>
-                                <td>{{$driver->email}}</td>
+                                <td>{{$customer->name}}</td>
+                                <td>{{$customer->phone}}</td>
+                                <td>{{$customer->email}}</td>
                                 <td>
-                                    <a class="btn btn-info waves-effect" href="{{route('admin.drivers.edit',$driver->id)}}">
+                                    <a class="btn btn-info waves-effect" href="{{route('admin.customers.edit',$customer->id)}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
 {{--                                    <button class="btn btn-danger waves-effect" type="button"--}}
-{{--                                            onclick="deleteDriver({{$driver->id}})">--}}
+{{--                                            onclick="deleteVendor({{$vendor->id}})">--}}
 {{--                                        <i class="fa fa-trash"></i>--}}
 {{--                                    </button>--}}
-{{--                                    <form id="delete-form-{{$driver->id}}" action="{{route('admin.drivers.destroy',$driver->id)}}" method="POST" style="display: none;">--}}
+{{--                                    <form id="delete-form-{{$vendor->id}}" action="{{route('admin.vendors.destroy',$vendor->id)}}" method="POST" style="display: none;">--}}
 {{--                                        @csrf--}}
 {{--                                        @method('DELETE')--}}
 {{--                                    </form>--}}
@@ -111,7 +111,7 @@
         });
 
         //sweet alert
-        function deleteDriver(id) {
+        function deleteVendor(id) {
             swal({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",

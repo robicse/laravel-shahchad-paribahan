@@ -15,6 +15,7 @@ class CreateVehiclesTable extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
+            $table->string('own_vehicle_status');
             $table->string('owner_name');
             $table->string('name');
             $table->integer('brand_id');
@@ -28,7 +29,6 @@ class CreateVehiclesTable extends Migration
             $table->string('fuel_type')->nullable();
             $table->string('fitness')->nullable();
             $table->string('rc_status')->nullable();
-            $table->string('own_vehicle_status')->nullable();
             $table->string('rent_type')->nullable();
             $table->string('image')->nullable();
             $table->integer('status')->default(1);

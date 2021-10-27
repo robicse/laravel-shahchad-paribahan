@@ -13,6 +13,14 @@ use Intervention\Image\Facades\Image;
 
 class DriverController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:driver-list|driver-create|driver-edit|driver-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:driver-create', ['only' => ['create','store']]);
+        $this->middleware('permission:driver-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:driver-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $drivers = Driver::all();

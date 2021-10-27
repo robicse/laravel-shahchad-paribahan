@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Driver List")
+@section("title","Vehicle List")
 @push('css')
     <link rel="stylesheet" href="{{asset('backend/plugins/datatables/dataTables.bootstrap4.css')}}">
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Driver List</h1>
+                    <h1>Vehicle List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Driver List</li>
+                        <li class="breadcrumb-item active">Vehicle List</li>
                     </ol>
                 </div>
             </div>
@@ -25,9 +25,9 @@
             <div class="col-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title float-left">Driver Lists</h3>
+                        <h3 class="card-title float-left">Vehicle Lists</h3>
                         <div class="float-right">
-                            <a href="{{route('admin.drivers.create')}}">
+                            <a href="{{route('admin.vehicles.create')}}">
                                 <button class="btn btn-success">
                                     <i class="fa fa-plus-circle"></i>
                                     Add
@@ -42,34 +42,30 @@
                             <tr>
                                 <th>#Id</th>
                                 <th>Image</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Email</th>
+                                <th>Owner Name</th>
+                                <th>Vehicle Name</th>
+                                <th>Brand</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($drivers as $key => $driver)
+                            @foreach($vehicles as $key => $vehicle)
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>
-                                    <img src="{{asset('uploads/drivers/'.$driver->logo)}}" width="80" height="50" alt="">
+                                    <img src="{{asset('uploads/vehicles/'.$vehicle->image)}}" width="80" height="50" alt="">
                                 </td>
-                                <td>{{$driver->name}}</td>
-                                <td>{{$driver->phone}}</td>
-                                <td>{{$driver->email}}</td>
+                                <td>{{$vehicle->owner_name}}</td>
+                                <td>{{$vehicle->vehicle_name}}</td>
+                                <td>{{$vehicle->brand->name}}</td>
                                 <td>
-                                    <a class="btn btn-info waves-effect" href="{{route('admin.drivers.edit',$driver->id)}}">
+                                    <a class="btn btn-info waves-effect" href="{{route('admin.vehicles.edit',$vehicle->id)}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
 {{--                                    <button class="btn btn-danger waves-effect" type="button"--}}
-{{--                                            onclick="deleteDriver({{$driver->id}})">--}}
+{{--                                            onclick="deleteVehicle({{$vehicle->id}})">--}}
 {{--                                        <i class="fa fa-trash"></i>--}}
 {{--                                    </button>--}}
-{{--                                    <form id="delete-form-{{$driver->id}}" action="{{route('admin.drivers.destroy',$driver->id)}}" method="POST" style="display: none;">--}}
-{{--                                        @csrf--}}
-{{--                                        @method('DELETE')--}}
-{{--                                    </form>--}}
                                 </td>
                             </tr>
                             @endforeach
@@ -78,9 +74,9 @@
                             <tr>
                                 <th>#Id</th>
                                 <th>Image</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Email</th>
+                                <th>Owner Name</th>
+                                <th>Vehicle Name</th>
+                                <th>Brand</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>
@@ -111,7 +107,7 @@
         });
 
         //sweet alert
-        function deleteDriver(id) {
+        function deleteVehicle(id) {
             swal({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
