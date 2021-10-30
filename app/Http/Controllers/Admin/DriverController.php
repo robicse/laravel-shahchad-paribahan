@@ -93,6 +93,7 @@ class DriverController extends Controller
         $driver->driving_licence_no = $request->driving_licence_no;
         $driver->driving_experience_duration = $request->driving_experience_duration;
         $driver->salary = $request->salary;
+        $driver->status = $request->status;
         $image = $request->file('logo');
         if (isset($image)) {
             //make unique name for image

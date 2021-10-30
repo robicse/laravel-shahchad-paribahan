@@ -91,6 +91,7 @@ class CustomerController extends Controller
         $customer->customer_address = $request->customer_address;
         $customer->company_name = $request->company_name;
         $customer->company_address = $request->company_address;
+        $customer->status = $request->status;
         $image = $request->file('image');
         if (isset($image)) {
             //make unique name for image

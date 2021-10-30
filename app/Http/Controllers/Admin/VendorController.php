@@ -89,6 +89,7 @@ class VendorController extends Controller
         $vendor->vendor_address = $request->vendor_address;
         $vendor->company_name = $request->company_name;
         $vendor->company_address = $request->company_address;
+        $vendor->status = $request->status;
         $image = $request->file('logo');
         if (isset($image)) {
             //make unique name for image

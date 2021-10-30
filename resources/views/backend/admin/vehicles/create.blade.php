@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section("title","Add Vehicle")
 @push('css')
-
+    <link rel="stylesheet" href="{{asset('backend/plugins/bootstrap-datepicker/bootstrap-datepicker.css')}}">
 @endpush
 @section('content')
     <section class="content-header">
@@ -85,7 +85,7 @@
                         </div>
                         <div class="form-group">
                             <label for="registration_date">Registration Date</label>
-                            <input type="text" class="form-control" name="registration_date" id="registration_date" placeholder="" required>
+                            <input type="text" class="datepicker form-control" name="registration_date" id="registration_date" placeholder="" required>
                         </div>
                         <div class="form-group">
                             <label for="chassis_no">Chassis NO</label>
@@ -133,5 +133,22 @@
 
 @stop
 @push('js')
-
+    <script src="{{asset('backend/plugins/bootstrap-datepicker/bootstrap-datepicker.js')}}"></script>
+    <script>
+        $('.demo-select2').select2();
+        // $("#demo-dp-range .input-daterange").datepicker({
+        //     startDate: "-0d",
+        //     todayBtn: "linked",
+        //     autoclose: true,
+        //     todayHighlight: true,
+        // });
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            startDate: '-3d',
+            //startDate: '-0d',
+            todayBtn: "linked",
+            autoclose: true,
+            todayHighlight: true
+        });
+    </script>
 @endpush

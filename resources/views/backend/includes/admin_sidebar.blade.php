@@ -136,6 +136,24 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item has-treeview {{(Request::is('admin.vehicle-driver-assigns*') ) ? 'menu-open' : ''}}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Vehicle Driver Assign
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('admin.vehicle-driver-assigns.index')}}"
+                                   class="nav-link {{Request::is('admin/vehicle-driver-assigns') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/vehicle-driver-assigns') ? 'folder-open':'folder'}} nav-icon"></i>
+                                    <p>Vehicle Driver Assign List</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="nav-item has-treeview {{(Request::is('admin/roles*') || Request::is('admin/staffs*')) ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>

@@ -79,6 +79,13 @@
                                 <label for="logo">Driver Logo <small>(size: 120 * 80 pixel)</small></label>
                                 <input type="file" class="form-control" name="logo" id="logo" >
                             </div>
+                            <div class="form-group">
+                                <label for="status">Status <span>*</span></label>
+                                <select name="status" id="status" class="form-control select2" required>
+                                    <option value="1" {{$driver->status == 1 ? 'selected' : ''}}>Active</option>
+                                    <option value="0" {{$driver->status == 0 ? 'selected' : ''}}>Inactive</option>
+                                </select>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">

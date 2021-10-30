@@ -113,6 +113,7 @@ class VehicleController extends Controller
         $vehicle->rc_status = $request->rc_status;
         $vehicle->own_vehicle_status = $request->own_vehicle_status;
         $vehicle->rent_type = $request->rent_type;
+        $vehicle->status = $request->status;
         $image = $request->file('image');
         if (isset($image)) {
             //make unique name for image

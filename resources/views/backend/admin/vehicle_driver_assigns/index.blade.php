@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Customer List")
+@section("title","Vehicle Driver Assign List")
 @push('css')
     <link rel="stylesheet" href="{{asset('backend/plugins/datatables/dataTables.bootstrap4.css')}}">
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Customer List</h1>
+                    <h1>Vehicle Driver Assign List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Customer List</li>
+                        <li class="breadcrumb-item active">Vehicle Driver Assign List</li>
                     </ol>
                 </div>
             </div>
@@ -25,9 +25,9 @@
             <div class="col-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title float-left">Customer Lists</h3>
+                        <h3 class="card-title float-left">Vehicle Driver Assign Lists</h3>
                         <div class="float-right">
-                            <a href="{{route('admin.customers.create')}}">
+                            <a href="{{route('admin.vehicle-driver-assigns.create')}}">
                                 <button class="btn btn-success">
                                     <i class="fa fa-plus-circle"></i>
                                     Add
@@ -41,35 +41,29 @@
                             <thead>
                             <tr>
                                 <th>#Id</th>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Email</th>
+                                <th>Vehicle</th>
+                                <th>Driver</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($customers as $key => $customer)
+                            @foreach($vehicleDriverAssigns as $key => $vehicleDriverAssign)
                             <tr>
                                 <td>{{$key + 1}}</td>
+                                <td>{{$vehicleDriverAssign->vehicle->vehicle_name}}</td>
+                                <td>{{$vehicleDriverAssign->driver->name}} ({{$vehicleDriverAssign->driver->phone}})</td>
+                                <td>{{$vehicleDriverAssign->start_date}}</td>
+                                <td>{{$vehicleDriverAssign->end_date}}</td>
                                 <td>
-                                    <img src="{{asset('uploads/customers/'.$customer->image)}}" width="80" height="50" alt="">
-                                </td>
-                                <td>{{$customer->name}}</td>
-                                <td>{{$customer->phone}}</td>
-                                <td>{{$customer->email}}</td>
-                                <td>
-                                    <a class="btn btn-info waves-effect" href="{{route('admin.customers.edit',$customer->id)}}">
+                                    <a class="btn btn-info waves-effect" href="{{route('admin.vehicle-driver-assigns.edit',$vehicleDriverAssign->id)}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
 {{--                                    <button class="btn btn-danger waves-effect" type="button"--}}
-{{--                                            onclick="deleteVendor({{$vendor->id}})">--}}
+{{--                                            onclick="deleteVehicle({{$vehicle->id}})">--}}
 {{--                                        <i class="fa fa-trash"></i>--}}
 {{--                                    </button>--}}
-{{--                                    <form id="delete-form-{{$vendor->id}}" action="{{route('admin.vendors.destroy',$vendor->id)}}" method="POST" style="display: none;">--}}
-{{--                                        @csrf--}}
-{{--                                        @method('DELETE')--}}
-{{--                                    </form>--}}
                                 </td>
                             </tr>
                             @endforeach
@@ -77,10 +71,10 @@
                             <tfoot>
                             <tr>
                                 <th>#Id</th>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Email</th>
+                                <th>Vehicle</th>
+                                <th>Driver</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>
@@ -111,7 +105,7 @@
         });
 
         //sweet alert
-        function deleteVendor(id) {
+        function deleteVehicle(id) {
             swal({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",

@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section("title","Edit Vehicle")
 @push('css')
-
+    <link rel="stylesheet" href="{{asset('backend/plugins/bootstrap-datepicker/bootstrap-datepicker.css')}}">
 @endpush
 @section('content')
     <section class="content-header">
@@ -84,7 +84,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="registration_date">Registration Date</label>
-                                <input type="text" class="form-control" name="registration_date" id="registration_date" value="{{$vehicle->registration_date}}">
+                                <input type="text" class="datepicker form-control" name="registration_date" id="registration_date" value="{{$vehicle->registration_date}}">
                             </div>
                             <div class="form-group">
                                 <label for="chassis_no">Chassis NO</label>
@@ -120,6 +120,13 @@
                                 <label for="email">Vehicle Image <small>(size: 120 * 80 pixel)</small></label>
                                 <input type="file" class="form-control" name="image" id="logo" >
                             </div>
+                            <div class="form-group">
+                                <label for="status">Status <span>*</span></label>
+                                <select name="status" id="status" class="form-control select2" required>
+                                    <option value="1" {{$vehicle->status == 1 ? 'selected' : ''}}>Active</option>
+                                    <option value="0" {{$vehicle->status == 0 ? 'selected' : ''}}>Inactive</option>
+                                </select>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -133,5 +140,22 @@
 
 @stop
 @push('js')
-
+    <script src="{{asset('backend/plugins/bootstrap-datepicker/bootstrap-datepicker.js')}}"></script>
+    <script>
+        $('.demo-select2').select2();
+        // $("#demo-dp-range .input-daterange").datepicker({
+        //     startDate: "-0d",
+        //     todayBtn: "linked",
+        //     autoclose: true,
+        //     todayHighlight: true,
+        // });
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            startDate: '-3d',
+            //startDate: '-0d',
+            todayBtn: "linked",
+            autoclose: true,
+            todayHighlight: true
+        });
+    </script>
 @endpush
