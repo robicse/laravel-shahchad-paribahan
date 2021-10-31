@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Model\AccessLog;
 use App\Model\Customer;
 use App\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -60,6 +62,16 @@ class CustomerController extends Controller
         }
         $customer->image = $imagename;
         $customer->save();
+        $insert_id = $customer->id;
+        if($insert_id){
+            $accessLog = new AccessLog();
+            $accessLog->user_id=Auth::user()->id;
+            $accessLog->action_module='Customer';
+            $accessLog->action_done='Create';
+            $accessLog->action_remarks='Customer ID: '.$insert_id;
+            $accessLog->action_date=date('Y-m-d');
+            $accessLog->save();
+        }
 
         Toastr::success('Customer Created Successfully');
         return back();
@@ -110,7 +122,16 @@ class CustomerController extends Controller
             $imagename = $customer->image;
         }
         $customer->image = $imagename;
-        $customer->save();
+        $updated_row = $customer->save();
+        if($updated_row){
+            $accessLog = new AccessLog();
+            $accessLog->user_id=Auth::user()->id;
+            $accessLog->action_module='Customer';
+            $accessLog->action_done='Update';
+            $accessLog->action_remarks='Customer ID: '.$id;
+            $accessLog->action_date=date('Y-m-d');
+            $accessLog->save();
+        }
 
         Toastr::success('Customer updated successfully','Success');
         return back();
@@ -123,7 +144,16 @@ class CustomerController extends Controller
 //        {
 //            Storage::disk('public')->delete('uploads/vendors/'.$vendor->image);
 //        }
-//        $vendor->delete();
+//        $deleted_row = $vendor->delete();
+//        if($deleted_row){
+//            $accessLog = new AccessLog();
+//            $accessLog->user_id=Auth::user()->id;
+//            $accessLog->action_module='Customer';
+//            $accessLog->action_done='Delete';
+//            $accessLog->action_remarks='Customer ID: '.$id;
+//            $accessLog->action_date=date('Y-m-d');
+//            $accessLog->save();
+//        }
 //
 //        Toastr::success('Vendor deleted successfully','Success');
 //        return back();

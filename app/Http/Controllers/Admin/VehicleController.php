@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Model\AccessLog;
 use App\Model\Vehicle;
 use App\Model\Brand;
 use App\Model\Category;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -72,6 +74,16 @@ class VehicleController extends Controller
         }
         $vehicle->image = $imagename;
         $vehicle->save();
+        $insert_id = $vehicle->id;
+        if($insert_id){
+            $accessLog = new AccessLog();
+            $accessLog->user_id=Auth::user()->id;
+            $accessLog->action_module='Vehicle';
+            $accessLog->action_done='Create';
+            $accessLog->action_remarks='Vehicle ID: '.$insert_id;
+            $accessLog->action_date=date('Y-m-d');
+            $accessLog->save();
+        }
         Toastr::success('Vehicle Created Successfully');
         return back();
 
@@ -132,7 +144,16 @@ class VehicleController extends Controller
             $imagename = $vehicle->image;
         }
         $vehicle->image = $imagename;
-        $vehicle->save();
+        $updated_row = $vehicle->save();
+        if($updated_row){
+            $accessLog = new AccessLog();
+            $accessLog->user_id=Auth::user()->id;
+            $accessLog->action_module='Vehicle';
+            $accessLog->action_done='Update';
+            $accessLog->action_remarks='Vehicle ID: '.$id;
+            $accessLog->action_date=date('Y-m-d');
+            $accessLog->save();
+        }
 
         Toastr::success('Vehicle updated successfully','Success');
         return back();
@@ -145,7 +166,16 @@ class VehicleController extends Controller
 //        {
 //            Storage::disk('public')->delete('uploads/vendors/'.$vendor->image);
 //        }
-//        $vendor->delete();
+//        $deleted_row = $vendor->delete();
+//        if($deleted_row){
+//            $accessLog = new AccessLog();
+//            $accessLog->user_id=Auth::user()->id;
+//            $accessLog->action_module='Vehicle';
+//            $accessLog->action_done='Delete';
+//            $accessLog->action_remarks='Vehicle ID: '.$id;
+//            $accessLog->action_date=date('Y-m-d');
+//            $accessLog->save();
+//        }
 //
 //        Toastr::success('Vendor deleted successfully','Success');
 //        return back();

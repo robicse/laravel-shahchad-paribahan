@@ -25,6 +25,7 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::resource('vehicles','VehicleController');
     Route::resource('vehicle-driver-assigns','VehicleDriverAssignController');
     Route::resource('categories','CategoryController');
+    Route::resource('access-logs','AccessLogController');
     Route::post('categories/is_home', 'CategoryController@updateIsHome')->name('categories.is_home');
 //    Route::resource('attributes','AttributeController');
 //    Route::resource('subcategories','SubcategoryController');

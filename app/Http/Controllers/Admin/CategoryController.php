@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Model\AccessLog;
 use App\Model\Brand;
 use App\Model\Category;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -61,6 +63,16 @@ class CategoryController extends Controller
         }
         $category->icon = $imagename;
         $category->save();
+        $insert_id = $category->id;
+        if($insert_id){
+            $accessLog = new AccessLog();
+            $accessLog->user_id=Auth::user()->id;
+            $accessLog->action_module='Category';
+            $accessLog->action_done='Create';
+            $accessLog->action_remarks='Category ID: '.$insert_id;
+            $accessLog->action_date=date('Y-m-d');
+            $accessLog->save();
+        }
         Toastr::success('Categories Created Successfully');
         return back();
     }
@@ -107,23 +119,41 @@ class CategoryController extends Controller
             $imagename = $category->icon;
         }
         $category->icon = $imagename;
-        $category->save();
+        $updated_row = $category->save();
+        if($updated_row){
+            $accessLog = new AccessLog();
+            $accessLog->user_id=Auth::user()->id;
+            $accessLog->action_module='Category';
+            $accessLog->action_done='Update';
+            $accessLog->action_remarks='Category ID: '.$id;
+            $accessLog->action_date=date('Y-m-d');
+            $accessLog->save();
+        }
         Toastr::success('Categories Updated Successfully');
         return back();
     }
 
-    public function destroy($id)
-    {
-        $category = Category::find($id);
-        if(Storage::disk('public')->exists('uploads/categories/'.$category->icon))
-        {
-            Storage::disk('public')->delete('uploads/categories/'.$category->icon);
-        }
-        $category->delete();
-        Toastr::success('Categories Deleted Successfully');
-        return back();
-
-    }
+//    public function destroy($id)
+//    {
+//        $category = Category::find($id);
+//        if(Storage::disk('public')->exists('uploads/categories/'.$category->icon))
+//        {
+//            Storage::disk('public')->delete('uploads/categories/'.$category->icon);
+//        }
+//        $deleted_row = $category->delete();
+//        if($deleted_row){
+//            $accessLog = new AccessLog();
+//            $accessLog->user_id=Auth::user()->id;
+//            $accessLog->action_module='Category';
+//            $accessLog->action_done='Delete';
+//            $accessLog->action_remarks='Category ID: '.$id;
+//            $accessLog->action_date=date('Y-m-d');
+//            $accessLog->save();
+//        }
+//        Toastr::success('Categories Deleted Successfully');
+//        return back();
+//
+//    }
     public function updateIsHome(Request $request)
     {
         $category = Category::findOrFail($request->id);

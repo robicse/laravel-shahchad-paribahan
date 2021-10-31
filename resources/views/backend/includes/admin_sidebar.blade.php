@@ -30,59 +30,23 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item has-treeview {{(Request::is('admin/vendors*') ) ? 'menu-open' : ''}}">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item ">
+                        <a href="{{route('admin.vendors.index')}}" class="nav-link {{Request::is('admin.vendors*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>
-                                Vendors
-                                <i class="right fa fa-angle-left"></i>
-                            </p>
+                            <p>Vendors List</p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{route('admin.vendors.index')}}"
-                                   class="nav-link {{Request::is('admin/vendors') ? 'active' :''}}">
-                                    <i class="fa fa-{{Request::is('admin/vendors') ? 'folder-open':'folder'}} nav-icon"></i>
-                                    <p>Vendors List</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-                    <li class="nav-item has-treeview {{(Request::is('admin/drivers*') ) ? 'menu-open' : ''}}">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item ">
+                        <a href="{{route('admin.drivers.index')}}" class="nav-link {{Request::is('admin.drivers*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>
-                                Drivers
-                                <i class="right fa fa-angle-left"></i>
-                            </p>
+                            <p>Drivers List</p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{route('admin.drivers.index')}}"
-                                   class="nav-link {{Request::is('admin/drivers') ? 'active' :''}}">
-                                    <i class="fa fa-{{Request::is('admin/drivers') ? 'folder-open':'folder'}} nav-icon"></i>
-                                    <p>Drivers List</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-                    <li class="nav-item has-treeview {{(Request::is('admin.customer*') ) ? 'menu-open' : ''}}">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item ">
+                        <a href="{{route('admin.customers.index')}}" class="nav-link {{Request::is('admin.customers*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>
-                                Customers
-                                <i class="right fa fa-angle-left"></i>
-                            </p>
+                            <p>Customers List</p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{route('admin.customers.index')}}"
-                                   class="nav-link {{Request::is('admin/customers') ? 'active' :''}}">
-                                    <i class="fa fa-{{Request::is('admin/customers') ? 'folder-open':'folder'}} nav-icon"></i>
-                                    <p>Customer List</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="nav-item has-treeview {{(Request::is('admin/brands*')
                         || Request::is('admin/categories*')
@@ -136,24 +100,13 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item has-treeview {{(Request::is('admin.vehicle-driver-assigns*') ) ? 'menu-open' : ''}}">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item ">
+                        <a href="{{route('admin.vehicle-driver-assigns.index')}}" class="nav-link {{Request::is('admin.vehicle-driver-assigns*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>
-                                Vehicle Driver Assign
-                                <i class="right fa fa-angle-left"></i>
-                            </p>
+                            <p>Vehicle Driver Assign List</p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{route('admin.vehicle-driver-assigns.index')}}"
-                                   class="nav-link {{Request::is('admin/vehicle-driver-assigns') ? 'active' :''}}">
-                                    <i class="fa fa-{{Request::is('admin/vehicle-driver-assigns') ? 'folder-open':'folder'}} nav-icon"></i>
-                                    <p>Vehicle Driver Assign List</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
+                    <div class="user-panel">&nbsp;</div>
                     <li class="nav-item has-treeview {{(Request::is('admin/roles*') || Request::is('admin/staffs*')) ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
@@ -179,33 +132,12 @@
                             </li>
                         </ul>
                     </li>
-
-                    <li class="nav-item has-treeview {{(Request::is('admin/profile*') ) ? 'menu-open' : '' || (Request::is('admin/payment*') ) ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item ">
+                        <a href="{{route('admin.profile.index')}}" class="nav-link {{Request::is('admin.profile*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-user-circle"></i>
-                            <p>
-                                Admin
-                                <i class="right fa fa-angle-left"></i>
-                            </p>
+                            <p>Profile</p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{route('admin.profile.index')}}"
-                                   class="nav-link {{Request::is('admin/profile') ? 'active' :''}}">
-                                    <i class="fa fa-{{Request::is('admin/profile') ? 'folder-open':'folder'}} nav-icon"></i>
-                                    <p>Profile</p>
-                                </a>
-                            </li>
-{{--                            <li class="nav-item">--}}
-{{--                                <a href=""--}}
-{{--                                   class="nav-link {{Request::is('admin/payment/history*') ? 'active' :''}}">--}}
-{{--                                    <i class="fa fa-{{Request::is('admin/payment/history*') ? 'folder-open':'folder'}} nav-icon"></i>--}}
-{{--                                    <p>Admin Payments History</p>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-                        </ul>
                     </li>
-
 
 {{--                    <li class="nav-item has-treeview {{(Request::is('admin/frontend_settings*') ) || (Request::is('admin/logo*') ) ? 'menu-open' : ''}}">--}}
 {{--                        <a href="#" class="nav-link">--}}
@@ -233,12 +165,15 @@
 {{--                        </ul>--}}
 {{--                    </li>--}}
                     <li class="nav-item ">
-
+                        <a href="{{route('admin.access-logs.index')}}" class="nav-link {{Request::is('admin.access-logs*') ? 'active' : ''}}">
+                            <i class="nav-icon fa fa-cog"></i>
+                            <p>Access Log</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
                         <a href="{{route('admin.site.optimize')}}" class="nav-link {{Request::is('admin/site-optimize*') ? 'active' : ''}}">
                             <i class="nav-icon fa fa-cog"></i>
-                            <p>
-                                Site Optimize
-                            </p>
+                            <p>Site Optimize</p>
                         </a>
                     </li>
                 </ul>

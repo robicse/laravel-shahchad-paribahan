@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Model\AccessLog;
 use App\Model\Driver;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -61,6 +63,16 @@ class DriverController extends Controller
         }
         $driver->logo = $imagename;
         $driver->save();
+        $insert_id = $driver->id;
+        if($insert_id){
+            $accessLog = new AccessLog();
+            $accessLog->user_id=Auth::user()->id;
+            $accessLog->action_module='Driver';
+            $accessLog->action_done='Create';
+            $accessLog->action_remarks='Driver ID: '.$insert_id;
+            $accessLog->action_date=date('Y-m-d');
+            $accessLog->save();
+        }
         Toastr::success('Driver Created Successfully');
         return back();
 
@@ -112,7 +124,16 @@ class DriverController extends Controller
             $imagename = $driver->logo;
         }
         $driver->logo = $imagename;
-        $driver->save();
+        $updated_row = $driver->save();
+        if($updated_row){
+            $accessLog = new AccessLog();
+            $accessLog->user_id=Auth::user()->id;
+            $accessLog->action_module='Driver';
+            $accessLog->action_done='Update';
+            $accessLog->action_remarks='Driver ID: '.$id;
+            $accessLog->action_date=date('Y-m-d');
+            $accessLog->save();
+        }
 
         Toastr::success('Driver updated successfully','Success');
         return back();
@@ -125,7 +146,16 @@ class DriverController extends Controller
 //        {
 //            Storage::disk('public')->delete('uploads/vendors/'.$vendor->image);
 //        }
-//        $vendor->delete();
+//        $deleted_row = $vendor->delete();
+//        if($deleted_row){
+//            $accessLog = new AccessLog();
+//            $accessLog->user_id=Auth::user()->id;
+//            $accessLog->action_module='Driver';
+//            $accessLog->action_done='Delete';
+//            $accessLog->action_remarks='Driver ID: '.$id;
+//            $accessLog->action_date=date('Y-m-d');
+//            $accessLog->save();
+//        }
 //
 //        Toastr::success('Vendor deleted successfully','Success');
 //        return back();

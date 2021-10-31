@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Model\AccessLog;
 use App\Model\Brand;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -72,6 +74,16 @@ class BrandController extends Controller
         }
         $brand->logo = $imagename;
         $brand->save();
+        $insert_id = $brand->id;
+        if($insert_id){
+            $accessLog = new AccessLog();
+            $accessLog->user_id=Auth::user()->id;
+            $accessLog->action_module='Brand';
+            $accessLog->action_done='Create';
+            $accessLog->action_remarks='Brand ID: '.$insert_id;
+            $accessLog->action_date=date('Y-m-d');
+            $accessLog->save();
+        }
         Toastr::success('Brand Created Successfully');
         return back();
 
@@ -137,7 +149,16 @@ class BrandController extends Controller
             $imagename = $brand->logo;
         }
         $brand->logo = $imagename;
-        $brand->save();
+        $updated_row = $brand->save();
+        if($updated_row){
+            $accessLog = new AccessLog();
+            $accessLog->user_id=Auth::user()->id;
+            $accessLog->action_module='Brand';
+            $accessLog->action_done='Update';
+            $accessLog->action_remarks='Brand ID: '.$id;
+            $accessLog->action_date=date('Y-m-d');
+            $accessLog->save();
+        }
         Toastr::success('Brand updated successfully','Success');
         return back();
     }
@@ -148,15 +169,24 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $brand = Brand::find($id);
-        if(Storage::disk('public')->exists('uploads/brands/'.$brand->logo))
-        {
-            Storage::disk('public')->delete('uploads/brands/'.$brand->logo);
-        }
-        $brand->delete();
-        Toastr::success('Brand deleted successfully','Success');
-        return back();
-    }
+//    public function destroy($id)
+//    {
+//        $brand = Brand::find($id);
+//        if(Storage::disk('public')->exists('uploads/brands/'.$brand->logo))
+//        {
+//            Storage::disk('public')->delete('uploads/brands/'.$brand->logo);
+//        }
+//        $deleted_row = $brand->delete();
+//        if($deleted_row){
+//            $accessLog = new AccessLog();
+//            $accessLog->user_id=Auth::user()->id;
+//            $accessLog->action_module='Brand';
+//            $accessLog->action_done='Delete';
+//            $accessLog->action_remarks='Brand ID: '.$id;
+//            $accessLog->action_date=date('Y-m-d');
+//            $accessLog->save();
+//        }
+//        Toastr::success('Brand deleted successfully','Success');
+//        return back();
+//    }
 }
