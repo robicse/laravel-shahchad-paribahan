@@ -46,7 +46,7 @@
                             <select name="own_vehicle_status" id="own_vehicle_status" class="form-control select2" required>
                                 <option value="">Select</option>
                                 <option value="Own">Own</option>
-                                <option value="Other">Other</option>
+                                <option value="Rent">Rent</option>
                             </select>
                         </div>
                         <div class="form-group">

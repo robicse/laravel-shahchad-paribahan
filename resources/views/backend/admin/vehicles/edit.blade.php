@@ -47,7 +47,7 @@
                                 <select name="own_vehicle_status" id="own_vehicle_status" class="form-control select2" required>
                                     <option value="">Select</option>
                                     <option value="Own" {{$vehicle->own_vehicle_status == 'Own' ? 'selected' : ''}}>Own</option>
-                                    <option value="Other" {{$vehicle->own_vehicle_status == 'Other' ? 'selected' : ''}}>Other</option>
+                                    <option value="Rent" {{$vehicle->own_vehicle_status == 'Rent' ? 'selected' : ''}}>Rent</option>
                                 </select>
                             </div>
                             <div class="form-group">

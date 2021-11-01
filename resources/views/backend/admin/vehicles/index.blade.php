@@ -45,6 +45,7 @@
                                 <th>Owner Name</th>
                                 <th>Vehicle Name</th>
                                 <th>Brand</th>
+                                <th>Active/Inactive</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -58,6 +59,7 @@
                                 <td>{{$vehicle->owner_name}}</td>
                                 <td>{{$vehicle->vehicle_name}}</td>
                                 <td>{{$vehicle->brand->name}}</td>
+                                <td>{{$vehicle->status == 1 ? 'Active' : 'Inactive'}}</td>
                                 <td>
                                     <a class="btn btn-info waves-effect" href="{{route('admin.vehicles.edit',$vehicle->id)}}">
                                         <i class="fa fa-edit"></i>
@@ -77,6 +79,7 @@
                                 <th>Owner Name</th>
                                 <th>Vehicle Name</th>
                                 <th>Brand</th>
+                                <th>Active/Inactive</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>

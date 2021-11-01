@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Vehicle Driver Assign List")
+@section("title","Vehicle Vendor Rent List")
 @push('css')
     <link rel="stylesheet" href="{{asset('backend/plugins/datatables/dataTables.bootstrap4.css')}}">
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Vehicle Driver Assign List</h1>
+                    <h1>Vehicle Vendor Rent List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Vehicle Driver Assign List</li>
+                        <li class="breadcrumb-item active">Vehicle Vendor Rent List</li>
                     </ol>
                 </div>
             </div>
@@ -25,9 +25,9 @@
             <div class="col-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title float-left">Vehicle Driver Assign Lists</h3>
+                        <h3 class="card-title float-left">Vehicle Vendor Rent Lists</h3>
                         <div class="float-right">
-                            <a href="{{route('admin.vehicle-driver-assigns.create')}}">
+                            <a href="{{route('admin.vehicle-vendor-rents.create')}}">
                                 <button class="btn btn-success">
                                     <i class="fa fa-plus-circle"></i>
                                     Add
@@ -41,23 +41,23 @@
                             <thead>
                             <tr>
                                 <th>#Id</th>
+                                <th>Vendor</th>
                                 <th>Vehicle</th>
-                                <th>Driver</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($vehicleDriverAssigns as $key => $vehicleDriverAssign)
+                            @foreach($vehicleVendorRents as $key => $vehicleVendorRent)
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>{{$vehicleDriverAssign->vehicle->vehicle_name}} ({{$vehicleDriverAssign->vehicle->owner_name}})</td>
-                                <td>{{$vehicleDriverAssign->driver->name}} ({{$vehicleDriverAssign->driver->phone}})</td>
-                                <td>{{$vehicleDriverAssign->start_date}}</td>
-                                <td>{{$vehicleDriverAssign->end_date}}</td>
+                                <td>{{$vehicleVendorRent->vehicle->vehicle_name}}</td>
+                                <td>{{$vehicleVendorRent->vendor->name}} ({{$vehicleDriverAssign->vendor->phone}})</td>
+                                <td>{{$vehicleVendorRent->start_date}}</td>
+                                <td>{{$vehicleVendorRent->end_date}}</td>
                                 <td>
-                                    <a class="btn btn-info waves-effect" href="{{route('admin.vehicle-driver-assigns.edit',$vehicleDriverAssign->id)}}">
+                                    <a class="btn btn-info waves-effect" href="{{route('admin.vehicle-vendor-rents.edit',$vehicleVendorRent->id)}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
 {{--                                    <button class="btn btn-danger waves-effect" type="button"--}}
@@ -71,8 +71,8 @@
                             <tfoot>
                             <tr>
                                 <th>#Id</th>
+                                <th>Vendor</th>
                                 <th>Vehicle</th>
-                                <th>Driver</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Action</th>

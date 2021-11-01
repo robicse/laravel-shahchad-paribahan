@@ -45,6 +45,7 @@
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
+                                <th>Active/Inactive</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -58,6 +59,7 @@
                                 <td>{{$vendor->name}}</td>
                                 <td>{{$vendor->phone}}</td>
                                 <td>{{$vendor->email}}</td>
+                                <td>{{$vendor->status == 1 ? 'Active' : 'Inactive'}}</td>
                                 <td>
                                     <a class="btn btn-info waves-effect" href="{{route('admin.vendors.edit',$vendor->id)}}">
                                         <i class="fa fa-edit"></i>
@@ -81,6 +83,7 @@
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
+                                <th>Active/Inactive</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>

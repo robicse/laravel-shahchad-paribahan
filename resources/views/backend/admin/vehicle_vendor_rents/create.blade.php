@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Add Vehicle Driver Assign")
+@section("title","Add Vehicle Vendor Rent")
 @push('css')
     <link rel="stylesheet" href="{{asset('backend/plugins/bootstrap-datepicker/bootstrap-datepicker.css')}}">
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add Vehicle Driver Assign</h1>
+                    <h1>Add Vehicle Vendor Rent</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Add Vehicle Driver Assign</li>
+                        <li class="breadcrumb-item active">Add Vehicle Vendor Rent</li>
                     </ol>
                 </div>
             </div>
@@ -26,9 +26,9 @@
             <!-- general form elements -->
                 <div class="card card-info card-outline">
                 <div class="card-header">
-                    <h3 class="card-title float-left">Add Vehicle Driver Assign</h3>
+                    <h3 class="card-title float-left">Add Vehicle Vendor Rent</h3>
                     <div class="float-right">
-                        <a href="{{route('admin.vehicle-driver-assigns.index')}}">
+                        <a href="{{route('admin.vehicle-vendor-rents.index')}}">
                             <button class="btn btn-success">
                                 <i class="fa fa-backward"> </i>
                                 Back
@@ -38,9 +38,18 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" action="{{route('admin.vehicle-driver-assigns.store')}}" method="post" enctype="multipart/form-data">
+                <form role="form" action="{{route('admin.vehicle-vendor-rents.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
+                        <div class="form-group">
+                            <label for="vendor_id">Vendor <span>*</span></label>
+                            <select name="vendor_id" id="vendor_id" class="form-control select2" required>
+                                <option value="">Select</option>
+                                @foreach($vendors as $vendor)
+                                    <option value="{{$vendor->id}}">{{$vendor->name}} ({{$vendor->phone}})</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="vehicle_id">Vehicle <span>*</span></label>
                             <select name="vehicle_id" id="vehicle_id" class="form-control select2" required>
@@ -51,21 +60,20 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="driver_id">Driver <span>*</span></label>
-                            <select name="driver_id" id="driver_id" class="form-control select2" required>
-                                <option value="">Select</option>
-                                @foreach($drivers as $driver)
-                                    <option value="{{$driver->id}}">{{$driver->name}} ({{$driver->phone}})</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="text">Start Date</label>
+                            <label for="start_date">Start Date</label>
                             <input type="text" class="datepicker form-control" name="start_date" id="start_date" >
                         </div>
                         <div class="form-group">
-                            <label for="text">End Date</label>
+                            <label for="end_date">End Date</label>
                             <input type="text" class="datepicker form-control" name="end_date" id="end_date" >
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" class="form-control" name="quantity" id="quantity" >
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input type="number" class="form-control" name="amount" id="amount" >
                         </div>
                     </div>
                     <!-- /.card-body -->

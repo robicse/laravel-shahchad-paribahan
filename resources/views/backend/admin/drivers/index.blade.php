@@ -45,6 +45,7 @@
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
+                                <th>Active/Inactive</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -58,6 +59,7 @@
                                 <td>{{$driver->name}}</td>
                                 <td>{{$driver->phone}}</td>
                                 <td>{{$driver->email}}</td>
+                                <td>{{$driver->status == 1 ? 'Active' : 'Inactive'}}</td>
                                 <td>
                                     <a class="btn btn-info waves-effect" href="{{route('admin.drivers.edit',$driver->id)}}">
                                         <i class="fa fa-edit"></i>
@@ -81,6 +83,7 @@
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
+                                <th>Active/Inactive</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>
