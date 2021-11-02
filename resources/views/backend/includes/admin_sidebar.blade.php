@@ -107,7 +107,7 @@
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.vehicle-vendor-rents.index')}}" class="nav-link {{Request::is('admin.vehicle-driver-assigns*') ? 'active' : ''}}">
+                        <a href="{{route('admin.vehicle-vendor-rent-list')}}" class="nav-link {{Request::is('admin.vehicle-vendor-rent-list*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Vehicle Vendor Rent List</p>
                         </a>

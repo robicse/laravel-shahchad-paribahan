@@ -27,7 +27,7 @@
                     <div class="card-header">
                         <h3 class="card-title float-left">Vehicle Vendor Rent Lists</h3>
                         <div class="float-right">
-                            <a href="{{route('admin.vehicle-vendor-rents.create')}}">
+                            <a href="{{route('admin.vehicle-vendor-rent-create')}}">
                                 <button class="btn btn-success">
                                     <i class="fa fa-plus-circle"></i>
                                     Add
@@ -45,19 +45,26 @@
                                 <th>Vehicle</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
+                                <th>Grand Total</th>
+                                <th>Due</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($vehicleVendorRents as $key => $vehicleVendorRent)
+                                @php
+                                    $orderItem = orderItemByOrderId($vehicleVendorRent->id);
+                                @endphp
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>{{$vehicleVendorRent->vehicle->vehicle_name}}</td>
-                                <td>{{$vehicleVendorRent->vendor->name}} ({{$vehicleDriverAssign->vendor->phone}})</td>
-                                <td>{{$vehicleVendorRent->start_date}}</td>
-                                <td>{{$vehicleVendorRent->end_date}}</td>
+                                <td>{{$vehicleVendorRent->vendor->name}} ({{$vehicleVendorRent->vendor->phone}})</td>
+                                <td>{{$orderItem->vehicle_name}} ({{$orderItem->owner_name}})</td>
+                                <td>{{$orderItem->start_date}}</td>
+                                <td>{{$orderItem->end_date}}</td>
+                                <td>{{$vehicleVendorRent->grand_total}}</td>
+                                <td>{{$vehicleVendorRent->due_price}}</td>
                                 <td>
-                                    <a class="btn btn-info waves-effect" href="{{route('admin.vehicle-vendor-rents.edit',$vehicleVendorRent->id)}}">
+                                    <a class="btn btn-info waves-effect" href="{{route('admin.vehicle-vendor-rent-edit',$vehicleVendorRent->id)}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
 {{--                                    <button class="btn btn-danger waves-effect" type="button"--}}
@@ -75,6 +82,8 @@
                                 <th>Vehicle</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
+                                <th>Grand Total</th>
+                                <th>Due</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>

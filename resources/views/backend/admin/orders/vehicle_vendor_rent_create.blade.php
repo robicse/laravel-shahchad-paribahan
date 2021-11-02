@@ -28,7 +28,7 @@
                 <div class="card-header">
                     <h3 class="card-title float-left">Add Vehicle Vendor Rent</h3>
                     <div class="float-right">
-                        <a href="{{route('admin.vehicle-vendor-rents.index')}}">
+                        <a href="{{route('admin.vehicle-vendor-rent-list')}}">
                             <button class="btn btn-success">
                                 <i class="fa fa-backward"> </i>
                                 Back
@@ -38,7 +38,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" action="{{route('admin.vehicle-vendor-rents.store')}}" method="post" enctype="multipart/form-data">
+                <form role="form" action="{{route('admin.vehicle-vendor-rent-store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -72,8 +72,33 @@
                             <input type="number" class="form-control" name="quantity" id="quantity" >
                         </div>
                         <div class="form-group">
-                            <label for="amount">Amount</label>
-                            <input type="number" class="form-control" name="amount" id="amount" >
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control" name="price" id="price" >
+                        </div>
+                        <div class="form-group">
+                            <label for="sub_total">Sub Total</label>
+                            <input type="number" class="form-control" name="sub_total" id="sub_total" >
+                        </div>
+                        <div class="form-group">
+                            <label for="discount">Discount</label>
+                            <input type="number" class="form-control" name="discount" id="discount" >
+                        </div>
+                        <div class="form-group">
+                            <label for="grand_total">Grand Total</label>
+                            <input type="number" class="form-control" name="grand_total" id="grand_total" >
+                        </div>
+                        <div class="form-group">
+                            <label for="note">Note</label>
+                            <textarea type="text" class="form-control" name="note" id="note" ></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment_type_id">Payment Type <span>*</span></label>
+                            <select name="payment_type_id" id="payment_type_id" class="form-control select2" required>
+                                <option value="">Select</option>
+                                @foreach($payment_types as $payment_type)
+                                    <option value="{{$payment_type->id}}">{{$payment_type->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <!-- /.card-body -->

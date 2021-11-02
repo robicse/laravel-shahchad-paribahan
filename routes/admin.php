@@ -24,9 +24,14 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::resource('customers','CustomerController');
     Route::resource('vehicles','VehicleController');
     Route::resource('vehicle-driver-assigns','VehicleDriverAssignController');
-    Route::resource('vehicle-vendor-rents','VehicleVendorRentController');
     Route::resource('categories','CategoryController');
     Route::resource('access-logs','AccessLogController');
+
+    Route::get('vehicle/vendor/rent/list','OrderController@vehicle_vendor_rent_list')->name('vehicle-vendor-rent-list');
+    Route::get('vehicle/vendor/rent/create','OrderController@vehicle_vendor_rent_create')->name('vehicle-vendor-rent-create');
+    Route::post('vehicle/vendor/rent/store','OrderController@vehicle_vendor_rent_store')->name('vehicle-vendor-rent-store');
+    Route::get('vehicle/vendor/rent/edit/{id}','OrderController@vehicle_vendor_rent_edit')->name('vehicle-vendor-rent-edit');
+
     Route::post('categories/is_home', 'CategoryController@updateIsHome')->name('categories.is_home');
 //    Route::resource('attributes','AttributeController');
 //    Route::resource('subcategories','SubcategoryController');
