@@ -160,4 +160,13 @@ class DriverController extends Controller
 //        Toastr::success('Vendor deleted successfully','Success');
 //        return back();
 //    }
+
+    public function check_already_driver_assigned_or_free($driver_id){
+        return checkAlreadyDriverAssignedOrFree($driver_id);
+    }
+
+    public function check_already_driver_assigned_or_free_edit(Request $request){
+        return checkAlreadyDriverAssignedOrFreeEdit($request->driver_id, $request->vehicle_driver_assign_id);
+    }
+
 }

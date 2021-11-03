@@ -42,10 +42,10 @@
                         @csrf
                         @method('PUT')
                         <div class="card-body">
+                            <input type="hidden" class="form-control" name="vehicle_driver_assign_id" id="vehicle_driver_assign_id" value="{{$vehicleDriverAssign->id}}">
                             <div class="form-group">
                                 <label for="vehicle_id">Vehicle <span>*</span></label>
                                 <select name="vehicle_id" id="vehicle_id" class="form-control select2" required>
-                                    <option value="">Select</option>
                                     @foreach($vehicles as $vehicle)
                                         <option value="{{$vehicle->id}}" {{$vehicle->id == $vehicleDriverAssign->vehicle_id ? 'selected' : ''}}>{{$vehicle->vehicle_name}} ({{$vehicle->owner_name}})</option>
                                     @endforeach
@@ -54,7 +54,6 @@
                             <div class="form-group">
                                 <label for="driver_id">Driver <span>*</span></label>
                                 <select name="driver_id" id="driver_id" class="form-control select2" required>
-                                    <option value="">Select</option>
                                     @foreach($drivers as $driver)
                                         <option value="{{$driver->id}}" {{$driver->id == $vehicleDriverAssign->driver_id ? 'selected' : ''}}>{{$driver->name}} ({{$driver->phone}})</option>
                                     @endforeach
@@ -98,5 +97,57 @@
             autoclose: true,
             todayHighlight: true
         });
+
+        $('#vehicle_id').change(function (){
+            var vehicle_id = $('#vehicle_id').val();
+            var vehicle_driver_assign_id = $('#vehicle_driver_assign_id').val();
+            $.ajax({
+                url:"{{URL('/admin/check/already/vehicle/assigned/or/free/edit')}}",
+                method:"POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    vehicle_id : vehicle_id,
+                    vehicle_driver_assign_id : vehicle_driver_assign_id,
+                },
+                success:function (data){
+                     // console.log(data)
+                    if(data > 0){
+                        alert('Please select another vehicle, This vehicle already assigned.');
+                        $('#vehicle_id').val('');
+                    }
+                },
+                error:function (err){
+                    console.log(err)
+                }
+            })
+        })
+
+        $('#driver_id').change(function (){
+            var driver_id = $('#driver_id').val();
+            var vehicle_driver_assign_id = $('#vehicle_driver_assign_id').val();
+            $.ajax({
+                url:"{{URL('/admin/check/already/driver/assigned/or/free/edit')}}",
+                method:"POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    driver_id : driver_id,
+                    vehicle_driver_assign_id : vehicle_driver_assign_id,
+                },
+                success:function (data){
+                    //console.log(data)
+                    if(data > 0){
+                        alert('Please select another driver, This driver already assigned.');
+                        $('#driver_id').val('');
+                    }
+                },
+                error:function (err){
+                    console.log(err)
+                }
+            })
+        })
     </script>
 @endpush

@@ -72,6 +72,14 @@
                             <input type="number" class="form-control" name="quantity" id="quantity" >
                         </div>
                         <div class="form-group">
+                            <label for="rent_type">Rent Type <span>*</span></label>
+                            <select name="rent_type" id="rent_type" class="form-control select2" required>
+                                <option value="">Select</option>
+                                <option value="Daily">Daily</option>
+                                <option value="Monthly">Monthly</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="price">Price</label>
                             <input type="number" class="form-control" name="price" id="price" >
                         </div>

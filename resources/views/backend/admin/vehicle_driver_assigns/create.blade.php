@@ -97,5 +97,43 @@
             autoclose: true,
             todayHighlight: true
         });
+
+        $('#vehicle_id').change(function (){
+            //alert();
+            var vehicle_id = $('#vehicle_id').val();
+            $.ajax({
+                url:"{{URL('/admin/check/already/vehicle/assigned/or/free')}}/" + vehicle_id,
+                method:"GET",
+                success:function (data){
+                    //console.log(data)
+                    if(data > 0){
+                        alert('Please select another vehicle, This vehicle already assigned.');
+                        $('#vehicle_id').val('');
+                    }
+                },
+                error:function (err){
+                    console.log(err)
+                }
+            })
+        })
+
+        $('#driver_id').change(function (){
+            //alert();
+            var driver_id = $('#driver_id').val();
+            $.ajax({
+                url:"{{URL('/admin/check/already/driver/assigned/or/free')}}/" + driver_id,
+                method:"GET",
+                success:function (data){
+                    //console.log(data)
+                    if(data > 0){
+                        alert('Please select another driver, This driver already assigned.');
+                        $('#driver_id').val('');
+                    }
+                },
+                error:function (err){
+                    console.log(err)
+                }
+            })
+        })
     </script>
 @endpush

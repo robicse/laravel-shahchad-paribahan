@@ -7,6 +7,7 @@ use App\Model\AccessLog;
 use App\Model\Vehicle;
 use App\Model\Brand;
 use App\Model\Category;
+use App\Model\VehicleDriverAssign;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -50,6 +51,7 @@ class VehicleController extends Controller
         $vehicle->brand_id = $request->brand_id;
         $vehicle->category_id = $request->category_id;
         $vehicle->model = $request->model;
+        $vehicle->rent_type = $request->rent_type;
         $vehicle->licence_no = $request->licence_no;
         $vehicle->registration_date = $request->registration_date;
         $vehicle->chassis_no = $request->chassis_no;
@@ -114,6 +116,7 @@ class VehicleController extends Controller
         $vehicle->vehicle_name = $request->vehicle_name;
         $vehicle->brand_id = $request->brand_id;
         $vehicle->category_id = $request->category_id;
+        $vehicle->rent_type = $request->rent_type;
         $vehicle->model = $request->model;
         $vehicle->licence_no = $request->licence_no;
         $vehicle->registration_date = $request->registration_date;
@@ -180,4 +183,12 @@ class VehicleController extends Controller
 //        Toastr::success('Vendor deleted successfully','Success');
 //        return back();
 //    }
+
+    public function check_already_vehicle_assigned_or_free($vehicle_id){
+        return checkAlreadyVehicleAssignedOrFree($vehicle_id);
+    }
+
+    public function check_already_vehicle_assigned_or_free_edit(Request $request){
+        return checkAlreadyVehicleAssignedOrFreeEdit($request->vehicle_id, $request->vehicle_driver_assign_id);
+    }
 }

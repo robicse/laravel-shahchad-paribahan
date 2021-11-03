@@ -46,6 +46,7 @@
                                 <th>Phone</th>
                                 <th>Email</th>
                                 <th>Active/Inactive</th>
+                                <th>Vehicle Assign Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -60,6 +61,9 @@
                                 <td>{{$driver->phone}}</td>
                                 <td>{{$driver->email}}</td>
                                 <td>{{$driver->status == 1 ? 'Active' : 'Inactive'}}</td>
+                                <td>
+                                    {{checkAlreadyDriverAssignedOrFree($driver->id) > 0 ? 'Assigned' : 'Free'}}
+                                </td>
                                 <td>
                                     <a class="btn btn-info waves-effect" href="{{route('admin.drivers.edit',$driver->id)}}">
                                         <i class="fa fa-edit"></i>
@@ -84,6 +88,7 @@
                                 <th>Phone</th>
                                 <th>Email</th>
                                 <th>Active/Inactive</th>
+                                <th>Vehicle Assign Status</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>

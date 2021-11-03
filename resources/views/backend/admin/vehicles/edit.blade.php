@@ -75,6 +75,14 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="rent_type">Rent Type <span>*</span></label>
+                                <select name="rent_type" id="rent_type" class="form-control select2" required>
+                                    <option value="">Select</option>
+                                    <option value="Daily" {{$vehicle->rent_type == 'Daily' ? 'selected' : ''}}>Daily</option>
+                                    <option value="Monthly" {{$vehicle->rent_type == 'Monthly' ? 'selected' : ''}}>Monthly</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="model">Model</label>
                                 <input type="text" class="form-control" name="model" id="model" value="{{$vehicle->model}}">
                             </div>
