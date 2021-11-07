@@ -35,6 +35,7 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::get('check/already/driver/assigned/or/free/{id}','DriverController@check_already_driver_assigned_or_free');
     Route::post('check/already/vehicle/assigned/or/free/edit','VehicleController@check_already_vehicle_assigned_or_free_edit');
     Route::post('check/already/driver/assigned/or/free/edit','DriverController@check_already_driver_assigned_or_free_edit');
+    Route::post('get/vehicle/price','VehicleController@get_vehicle_price');
 
     Route::post('categories/is_home', 'CategoryController@updateIsHome')->name('categories.is_home');
 //    Route::resource('attributes','AttributeController');

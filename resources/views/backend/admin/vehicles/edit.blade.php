@@ -83,6 +83,10 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="price">Rent Price</label>
+                                <input type="number" class="form-control" name="price" id="price" value="{{$vehicle->price}}">
+                            </div>
+                            <div class="form-group">
                                 <label for="model">Model</label>
                                 <input type="text" class="form-control" name="model" id="model" value="{{$vehicle->model}}">
                             </div>

@@ -60,16 +60,20 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="start_date">Start Date</label>
+                            <label for="start_date">Start Date <span>*</span></label>
                             <input type="text" class="datepicker form-control" name="start_date" id="start_date" >
                         </div>
                         <div class="form-group">
-                            <label for="end_date">End Date</label>
+                            <label for="end_date">End Date <span>*</span></label>
                             <input type="text" class="datepicker form-control" name="end_date" id="end_date" >
                         </div>
                         <div class="form-group">
-                            <label for="quantity">Quantity</label>
-                            <input type="number" class="form-control" name="quantity" id="quantity" >
+                            <label for="rent_duration">Rent Duration <span>*</span></label>
+                            <input type="text" class="form-control" name="rent_duration" id="rent_duration" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity <span>*</span></label>
+                            <input type="number" class="form-control" name="quantity" id="quantity" value="1">
                         </div>
                         <div class="form-group">
                             <label for="rent_type">Rent Type <span>*</span></label>
@@ -85,7 +89,7 @@
                         </div>
                         <div class="form-group">
                             <label for="sub_total">Sub Total</label>
-                            <input type="number" class="form-control" name="sub_total" id="sub_total" >
+                            <input type="number" class="form-control" name="sub_total" id="sub_total" readonly>
                         </div>
                         <div class="form-group">
                             <label for="discount">Discount</label>
@@ -93,7 +97,7 @@
                         </div>
                         <div class="form-group">
                             <label for="grand_total">Grand Total</label>
-                            <input type="number" class="form-control" name="grand_total" id="grand_total" >
+                            <input type="number" class="form-control" name="grand_total" id="grand_total" readonly>
                         </div>
                         <div class="form-group">
                             <label for="note">Note</label>
@@ -138,5 +142,57 @@
             autoclose: true,
             todayHighlight: true
         });
+
+        $('#rent_type').change(function (){
+            //alert();
+            var vehicle_id = $('#vehicle_id').val();
+            if(vehicle_id == ''){
+                alert('Vehicle Select First!');
+                $('#rent_type').val('');
+            }
+            var rent_duration = $('#rent_duration').val();
+            if(rent_duration == ''){
+                alert('Start Date And End Date Select First!');
+                $('#rent_type').val('');
+            }
+            var quantity = $('#quantity').val();
+            var rent_type = $('#rent_type').val();
+            $.ajax({
+                url:"{{URL('/admin/get/vehicle/price')}}",
+                method:"POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    vehicle_id : vehicle_id
+                },
+                success:function (result){
+                    console.log(result)
+                    $('#price').val(result)
+                    $('#sub_total').val(result*quantity)
+                    $('#discount').val(0)
+                    $('#grand_total').val(result*quantity)
+                },
+                error:function (err){
+                    console.log(err)
+                }
+            })
+        })
+
+        $('#end_date').change(function (){
+            var start_date = $('#start_date').val();
+            var end_date = $('#end_date').val();
+            if(start_date == ''){
+                alert('Start Date Select First!');
+                $('#end_date').val('');
+            }
+            //alert(start_date);
+            const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            const firstDate = new Date(start_date);
+            const secondDate = new Date(end_date);
+
+            const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+            $('#rent_duration').val(diffDays);
+        })
     </script>
 @endpush

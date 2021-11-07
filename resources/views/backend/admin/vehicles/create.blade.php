@@ -84,6 +84,10 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="price">Rent Price</label>
+                            <input type="number" class="form-control" name="price" id="price" placeholder="">
+                        </div>
+                        <div class="form-group">
                             <label for="model">Model</label>
                             <input type="text" class="form-control" name="model" id="model" placeholder="" required>
                         </div>

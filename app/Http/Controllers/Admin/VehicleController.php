@@ -52,6 +52,7 @@ class VehicleController extends Controller
         $vehicle->category_id = $request->category_id;
         $vehicle->model = $request->model;
         $vehicle->rent_type = $request->rent_type;
+        $vehicle->price = $request->price;
         $vehicle->licence_no = $request->licence_no;
         $vehicle->registration_date = $request->registration_date;
         $vehicle->chassis_no = $request->chassis_no;
@@ -117,6 +118,7 @@ class VehicleController extends Controller
         $vehicle->brand_id = $request->brand_id;
         $vehicle->category_id = $request->category_id;
         $vehicle->rent_type = $request->rent_type;
+        $vehicle->price = $request->price;
         $vehicle->model = $request->model;
         $vehicle->licence_no = $request->licence_no;
         $vehicle->registration_date = $request->registration_date;
@@ -190,5 +192,9 @@ class VehicleController extends Controller
 
     public function check_already_vehicle_assigned_or_free_edit(Request $request){
         return checkAlreadyVehicleAssignedOrFreeEdit($request->vehicle_id, $request->vehicle_driver_assign_id);
+    }
+
+    public function get_vehicle_price(Request $request){
+        return getVehiclePrice($request->vehicle_id);
     }
 }

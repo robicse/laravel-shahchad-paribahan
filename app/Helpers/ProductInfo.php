@@ -7,6 +7,7 @@
  */
 use App\Model\VehicleDriverAssign;
 use App\Model\OrderItem;
+use App\Model\Vehicle;
 
 // order start
 if (!function_exists('orderItemByOrderId')) {
@@ -58,6 +59,13 @@ if (!function_exists('checkAlreadyVehicleAssignedOrFreeEdit')) {
             ->where('end_date','>=',date('Y-m-d'))
             ->where('id','!=',$vehicle_driver_assign_id)
             ->get()->count();
+    }
+}
+
+if (!function_exists('getVehiclePrice')) {
+    function getVehiclePrice($vehicle_id) {
+        return Vehicle::where('id',$vehicle_id)
+            ->pluck('price')->first();
     }
 }
 // vehicle end
