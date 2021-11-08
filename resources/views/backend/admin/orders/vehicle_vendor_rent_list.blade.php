@@ -58,11 +58,16 @@
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{$vehicleVendorRent->vendor->name}} ({{$vehicleVendorRent->vendor->phone}})</td>
-                                <td>{{$orderItem->vehicle_name}} ({{$orderItem->owner_name}})</td>
-                                <td>{{$orderItem->start_date}}</td>
-                                <td>{{$orderItem->end_date}}</td>
+                                <td>{{$orderItem['vehicle_name']}} ({{$orderItem['owner_name']}})</td>
+                                <td>{{$orderItem['start_date']}}</td>
+                                <td>{{$orderItem['end_date']}}</td>
                                 <td>{{$vehicleVendorRent->grand_total}}</td>
-                                <td>{{$vehicleVendorRent->due_price}}</td>
+                                <td>
+                                    {{$vehicleVendorRent->due_price}}
+                                    @if($vehicleVendorRent->due_price > 0)
+                                        <a href="" class="btn btn-warning btn-sm mx-1" data-toggle="modal" data-target="#exampleModal-<?= $vehicleVendorRent->id;?>"> Pay Due</a>
+                                    @endif
+                                </td>
                                 <td>
                                     <a class="btn btn-info waves-effect" href="{{route('admin.vehicle-vendor-rent-edit',$vehicleVendorRent->id)}}">
                                         <i class="fa fa-edit"></i>
@@ -73,6 +78,56 @@
 {{--                                    </button>--}}
                                 </td>
                             </tr>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal-{{$vehicleVendorRent->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Pay Due</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{route('admin.pay.due')}}" method="post">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="due">Enter Due Amount</label>
+                                                        <input type="hidden" class="form-control" name="product_sale_id" value="{{$vehicleVendorRent->id}}">
+                                                        <input type="number" class="form-control" id="due" aria-describedby="emailHelp" name="new_paid" min="" max="{{$vehicleVendorRent->due_price}}" value="{{$vehicleVendorRent->due_price}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="payment_type">Payment Method</label>
+                                                        <select name="payment_type_id" id="payment_type_id" class="form-control" required>
+                                                            <option value="">Select One</option>
+                                                            @foreach($payment_types as $payment_type)
+                                                                <option value="{{$payment_type->id}}">{{$payment_type->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        @push('js')
+                                            <script>
+                                                $(function() {
+                                                    $('#cheque_number').hide();
+                                                    $('#payment_type').change(function(){
+                                                        if($('#payment_type').val() == 'Cheque') {
+                                                            $('#cheque_number').show();
+                                                        } else {
+                                                            $('#cheque_number').val('');
+                                                            $('#cheque_number').hide();
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        @endpush
+                                    </div>
+                                </div>
                             @endforeach
                             </tbody>
                             <tfoot>

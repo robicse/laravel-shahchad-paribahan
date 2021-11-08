@@ -197,4 +197,12 @@ class VehicleController extends Controller
     public function get_vehicle_price(Request $request){
         return getVehiclePrice($request->vehicle_id);
     }
+
+//    public function check_already_vehicle_rent_or_not($vehicle_id){
+//        return checkAlreadyVehicleRentOrNot($vehicle_id);
+//    }
+
+    public function check_already_vehicle_rent_or_not_this_date(Request $request){
+        return checkAlreadyVehicleRentOrNotThisDate($request->vehicle_id, $request->start_date);
+    }
 }

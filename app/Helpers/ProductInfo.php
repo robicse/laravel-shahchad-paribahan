@@ -68,6 +68,33 @@ if (!function_exists('getVehiclePrice')) {
             ->pluck('price')->first();
     }
 }
+
+//if (!function_exists('checkAlreadyVehicleRentOrNot')) {
+//    function checkAlreadyVehicleRentOrNot($vehicle_id) {
+//        return OrderItem::where('vehicle_id',$vehicle_id)
+//            ->where('start_date','<=',date('Y-m-d'))
+//            ->where('end_date','>=',date('Y-m-d'))
+//            ->get()->count();
+//    }
+//}
+
+if (!function_exists('checkAlreadyVehicleRentOrNotThisDate')) {
+    function checkAlreadyVehicleRentOrNotThisDate($vehicle_id, $start_date) {
+        return OrderItem::where('vehicle_id',$vehicle_id)
+            ->where('start_date','<=',$start_date)
+            ->where('end_date','>=',$start_date)
+            ->get()->count();
+    }
+}
+
+if (!function_exists('getVehicleAssignedDriver')) {
+    function getVehicleAssignedDriver($vehicle_id, $start_date) {
+        return VehicleDriverAssign::where('vehicle_id',$vehicle_id)
+            ->where('start_date','<=',$start_date)
+            ->where('end_date','>=',$start_date)
+            ->pluck('driver_id')->first();
+    }
+}
 // vehicle end
 
 

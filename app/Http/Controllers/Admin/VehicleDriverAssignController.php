@@ -123,4 +123,8 @@ class VehicleDriverAssignController extends Controller
 //        Toastr::success('Vehicle Driver Assign deleted successfully','Success');
 //        return back();
 //    }
+
+    public function get_vehicle_assigned_driver(Request $request){
+        return getVehicleAssignedDriver($request->vehicle_id, $request->start_date);
+    }
 }

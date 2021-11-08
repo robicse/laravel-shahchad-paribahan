@@ -31,11 +31,16 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::get('vehicle/vendor/rent/create','OrderController@vehicle_vendor_rent_create')->name('vehicle-vendor-rent-create');
     Route::post('vehicle/vendor/rent/store','OrderController@vehicle_vendor_rent_store')->name('vehicle-vendor-rent-store');
     Route::get('vehicle/vendor/rent/edit/{id}','OrderController@vehicle_vendor_rent_edit')->name('vehicle-vendor-rent-edit');
+    Route::put('vehicle/vendor/rent/update/{id}','OrderController@vehicle_vendor_rent_update')->name('vehicle-vendor-rent-update');
     Route::get('check/already/vehicle/assigned/or/free/{id}','VehicleController@check_already_vehicle_assigned_or_free');
     Route::get('check/already/driver/assigned/or/free/{id}','DriverController@check_already_driver_assigned_or_free');
     Route::post('check/already/vehicle/assigned/or/free/edit','VehicleController@check_already_vehicle_assigned_or_free_edit');
     Route::post('check/already/driver/assigned/or/free/edit','DriverController@check_already_driver_assigned_or_free_edit');
     Route::post('get/vehicle/price','VehicleController@get_vehicle_price');
+    //Route::get('check/already/vehicle/rent/or/not/{id}','VehicleController@check_already_vehicle_rent_or_not');
+    Route::post('check/already/vehicle/rent/or/not/this/date','VehicleController@check_already_vehicle_rent_or_not_this_date');
+    Route::post('get/vehicle/assigned/driver','VehicleDriverAssignController@get_vehicle_assigned_driver');
+    Route::post('pay-due','OrderController@payDue')->name('pay.due');
 
     Route::post('categories/is_home', 'CategoryController@updateIsHome')->name('categories.is_home');
 //    Route::resource('attributes','AttributeController');

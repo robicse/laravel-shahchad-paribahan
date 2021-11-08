@@ -61,15 +61,19 @@
                         </div>
                         <div class="form-group">
                             <label for="start_date">Start Date <span>*</span></label>
-                            <input type="text" class="datepicker form-control" name="start_date" id="start_date" >
+                            <input type="text" class="datepicker form-control" name="start_date" id="start_date" required>
                         </div>
                         <div class="form-group">
                             <label for="end_date">End Date <span>*</span></label>
-                            <input type="text" class="datepicker form-control" name="end_date" id="end_date" >
+                            <input type="text" class="datepicker form-control" name="end_date" id="end_date" required>
                         </div>
                         <div class="form-group">
                             <label for="rent_duration">Rent Duration <span>*</span></label>
                             <input type="text" class="form-control" name="rent_duration" id="rent_duration" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="driver_id">Driver <span>*</span></label>
+                            <input type="text" class="form-control" name="driver_id" id="driver_id" required readonly>
                         </div>
                         <div class="form-group">
                             <label for="quantity">Quantity <span>*</span></label>
@@ -143,6 +147,84 @@
             todayHighlight: true
         });
 
+        {{--$('#vehicle_id').change(function (){--}}
+        {{--    //alert();--}}
+        {{--    var vehicle_id = $('#vehicle_id').val();--}}
+        {{--    $.ajax({--}}
+        {{--        url:"{{URL('/admin/get/vehicle/assigned/driver')}}/" + vehicle_id,--}}
+        {{--        method:"GET",--}}
+        {{--        success:function (data){--}}
+        {{--            console.log(data)--}}
+        {{--            // if(data > 0){--}}
+        {{--            //     alert('Please select another vehicle, This vehicle already assigned.');--}}
+        {{--            //     $('#vehicle_id').val('');--}}
+        {{--            // }--}}
+        {{--        },--}}
+        {{--        error:function (err){--}}
+        {{--            console.log(err)--}}
+        {{--        }--}}
+        {{--    })--}}
+        {{--})--}}
+
+        $('#start_date').change(function (){
+            var start_date = $('#start_date').val();
+            //var end_date = $('#end_date').val();
+            var vehicle_id = $('#vehicle_id').val();
+            if(vehicle_id == ''){
+                alert('Vehicle Select First!');
+                $('#start_date').val('');
+            }
+
+            $.ajax({
+                url: "{{URL('admin/check/already/vehicle/rent/or/not/this/date')}}",
+                method:"POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    vehicle_id : vehicle_id,
+                    start_date : start_date,
+                    //end_date : end_date,
+                },
+                success:function (data){
+                    console.log(data)
+                    if(data > 0){
+                        alert('Please select another vehicle, This vehicle already rent now.');
+                        $('#vehicle_id').val('');
+                    }else{
+                        $.ajax({
+                            url:"{{URL('/admin/get/vehicle/assigned/driver')}}",
+                            method:"POST",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                vehicle_id : vehicle_id,
+                                start_date : start_date,
+                                //end_date : end_date,
+                            },
+                            success:function (res){
+                                console.log(res)
+                                if(res == 0){
+                                    alert('Please select another vehicle Or Date, This vehicle already rent now OR Not driver assign yet!');
+                                    $('#vehicle_id').val('');
+                                }else{
+                                    $('#driver_id').val(res);
+                                }
+                            },
+                            error:function (err){
+                                console.log(err)
+                            }
+                        })
+                    }
+
+                },
+                error:function (err){
+                    console.log(err)
+                }
+            })
+        })
+
         $('#rent_type').change(function (){
             //alert();
             var vehicle_id = $('#vehicle_id').val();
@@ -186,6 +268,8 @@
                 alert('Start Date Select First!');
                 $('#end_date').val('');
             }
+
+
             //alert(start_date);
             const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
             const firstDate = new Date(start_date);

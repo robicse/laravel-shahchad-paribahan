@@ -32,7 +32,8 @@ class OrderController extends Controller
     public function vehicle_vendor_rent_list()
     {
         $vehicleVendorRents = Order::where('type','Vendor')->get();
-        return view('backend.admin.orders.vehicle_vendor_rent_list', compact('vehicleVendorRents'));
+        $payment_types = PaymentType::where('name','!=','Credit')->get();
+        return view('backend.admin.orders.vehicle_vendor_rent_list', compact('vehicleVendorRents','payment_types'));
     }
 
     public function vehicle_vendor_rent_create()
@@ -80,7 +81,7 @@ class OrderController extends Controller
             $orderItem->rent_type=$vehicle->rent_type;
             $orderItem->start_date=$request->start_date;
             $orderItem->end_date=$request->end_date;
-            $orderItem->rent_duration=1;
+            $orderItem->rent_duration=$request->rent_duration;
             $orderItem->quantity=$request->quantity;
             $orderItem->price=$request->price;
             $orderItem->discount=$request->discount;
@@ -91,7 +92,7 @@ class OrderController extends Controller
             $orderItem->save();
 
             $payment = new Payment();
-            $payment->date=$date;
+            $payment->date=date('Y-m-d');
             $payment->order_id=$insert_id;
             $payment->payment_type_id = $request->payment_type_id;
             $payment->paid = $paid_amount;
@@ -115,37 +116,56 @@ class OrderController extends Controller
         //
     }
 
-    public function edit($id)
+    public function vehicle_vendor_rent_edit($id)
     {
         $vehicles = Vehicle::where('status',1)->where('own_vehicle_status','Rent')->get();
         $vendors = Vendor::where('status',1)->get();
-        $vehicleDriverAssign = VehicleDriverAssign::find($id);
-        return view('backend.admin.orders.vehicle_vendor_rent_edit',compact('vehicleDriverAssign','vendors','vehicles'));
+        $payment_types = PaymentType::all();
+        $vehicleVendorRent = Order::where('order_type','receiving')->where('id',$id)->first();
+        $vehicleVendorRentDetail = OrderItem::where('order_id',$id)->first();
+        return view('backend.admin.orders.vehicle_vendor_rent_edit',compact('vehicleVendorRent','vehicleVendorRentDetail','vendors','vehicles','payment_types'));
     }
 
-    public function update(Request $request, $id)
+    public function vehicle_vendor_rent_update(Request $request, $id)
     {
+        //dd($request->all());
+        //dd($id);
         $this->validate($request, [
             //'name'=> 'required|unique:vehicles,name,'.$id,
         ]);
 
-        $vehicleVendorRent = VehicleVendorRent::find($id);
-        $vehicleVendorRent->invoice_no = $request->invoice_no;
-        $vehicleVendorRent->vendor_id = $request->vendor_id;
-        $vehicleVendorRent->final_rent_amount = $request->final_rent_amount;
-        $vehicleVendorRent->date = $request->date;
-        $updated_row = $vehicleVendorRent->save();
+        $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
+        $vehicleDriver = VehicleDriverAssign::where('vehicle_id',$request->vehicle_id)->first();
+        $due_amount = $request->payment_type_id == 1 ? 0 :$request->grand_total;
+        $paid_amount = $request->payment_type_id == 2 ? 0 :$request->grand_total;
+
+        $order = Order::find($id);
+        $order->vendor_id = $request->vendor_id;
+        $order->payment_type_id = $request->payment_type_id;
+        $order->sub_total = $request->sub_total;
+        $order->grand_total = $request->grand_total;
+        $order->due_price = $due_amount;
+        $updated_row = $order->save();
+
         if($updated_row){
-            $vehicleVendorRentDetail = VehicleVendorRentDetail::find($request->vehicle_vendor_rent_id);
-            $vehicleVendorRentDetail->vehicle_id=$request->vehicle_id;
-            $vehicleVendorRentDetail->rent_type=$request->rent_type;
-            $vehicleVendorRentDetail->start_date=$request->start_date;
-            $vehicleVendorRentDetail->end_date=$request->end_date;
-            $vehicleVendorRentDetail->rent_duration=$request->rent_duration;
-            $vehicleVendorRentDetail->quantity=$request->quantity;
-            $vehicleVendorRentDetail->per_day_rent_amount=$request->per_day_rent_amount;
-            $vehicleVendorRentDetail->sub_total_amount=$request->sub_total_amount;
-            $vehicleVendorRentDetail->save();
+            $orderItem = OrderItem::where('order_id',$id)->first();
+            $orderItem->vehicle_id=$request->vehicle_id;
+            $orderItem->driver_id=$vehicleDriver->driver_id;
+            $orderItem->rent_type=$vehicle->rent_type;
+            $orderItem->start_date=$request->start_date;
+            $orderItem->end_date=$request->end_date;
+            $orderItem->rent_duration=$request->rent_duration;
+            $orderItem->quantity=$request->quantity;
+            $orderItem->price=$request->price;
+            $orderItem->discount=$request->discount;
+            $orderItem->sub_total=$request->sub_total;
+            $orderItem->note=$request->note;
+            $orderItem->save();
+
+            $payment = Payment::where('order_id',$id)->first();
+            $payment->payment_type_id = $request->payment_type_id;
+            $payment->paid = $paid_amount;
+            $payment->save();
 
             $accessLog = new AccessLog();
             $accessLog->user_id=Auth::user()->id;
