@@ -54,9 +54,6 @@ class OrderController extends Controller
         $date = date('Y-m-d H:i:s');
         $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
         $vehicleDriver = VehicleDriverAssign::where('vehicle_id',$request->vehicle_id)->first();
-        $due_amount = $request->payment_type_id == 1 ? 0 :$request->grand_total;
-        $paid_amount = $request->payment_type_id == 2 ? 0 :$request->grand_total;
-        //dd($vehicle);
 
         $order = new Order();
         $order->date = $date;
@@ -67,7 +64,9 @@ class OrderController extends Controller
         $order->payment_type_id = $request->payment_type_id;
         $order->sub_total = $request->sub_total;
         $order->grand_total = $request->grand_total;
-        $order->due_price = $due_amount;
+        $order->paid = $request->payment_type_id == 1 ? $request->grand_total : $request->paid;
+        $order->exchange = 0;
+        $order->due_price = $request->payment_type_id == 1 ? 0 : $request->due_price;
         $order->status = 'Done';
         $order->save();
 
@@ -91,12 +90,34 @@ class OrderController extends Controller
             $orderItem->type = 'Vendor';
             $orderItem->save();
 
-            $payment = new Payment();
-            $payment->date=date('Y-m-d');
-            $payment->order_id=$insert_id;
-            $payment->payment_type_id = $request->payment_type_id;
-            $payment->paid = $paid_amount;
-            $payment->save();
+            if($request->payment_type_id == 1){
+                $payment = new Payment();
+                $payment->date=date('Y-m-d');
+                $payment->order_id=$insert_id;
+                $payment->payment_type_id = 1;
+                $payment->paid = $request->grand_total;
+                $payment->exchange = 0;
+                $payment->save();
+            }else{
+                // paid
+                $payment = new Payment();
+                $payment->date=date('Y-m-d');
+                $payment->order_id=$insert_id;
+                $payment->payment_type_id = 1;
+                $payment->paid = $request->paid;
+                $payment->exchange = 0;
+                $payment->save();
+
+                // due
+                $payment = new Payment();
+                $payment->date=date('Y-m-d');
+                $payment->order_id=$insert_id;
+                $payment->payment_type_id = 2;
+                $payment->paid = $request->due_price;
+                $payment->exchange = 0;
+                $payment->save();
+            }
+
 
             $accessLog = new AccessLog();
             $accessLog->user_id=Auth::user()->id;
@@ -108,7 +129,7 @@ class OrderController extends Controller
         }
 
         Toastr::success('Vehicle Vendor Rent Created Successfully');
-        return back();
+        return redirect()->route('admin.vehicle-vendor-rent-list');
     }
 
     public function show($id)
@@ -137,14 +158,17 @@ class OrderController extends Controller
         $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
         $vehicleDriver = VehicleDriverAssign::where('vehicle_id',$request->vehicle_id)->first();
         $due_amount = $request->payment_type_id == 1 ? 0 :$request->grand_total;
-        $paid_amount = $request->payment_type_id == 2 ? 0 :$request->grand_total;
+        //$paid_amount = $request->payment_type_id == 2 ? 0 :$request->grand_total;
 
         $order = Order::find($id);
+        $prev_payment_type_id = $order->payment_type_id;
         $order->vendor_id = $request->vendor_id;
         $order->payment_type_id = $request->payment_type_id;
         $order->sub_total = $request->sub_total;
         $order->grand_total = $request->grand_total;
-        $order->due_price = $due_amount;
+        $order->paid = $request->payment_type_id == 1 ? $request->grand_total : $request->paid;
+        $order->exchange = 0;
+        $order->due_price = $request->payment_type_id == 1 ? 0 : $request->due_price;
         $updated_row = $order->save();
 
         if($updated_row){
@@ -162,10 +186,50 @@ class OrderController extends Controller
             $orderItem->note=$request->note;
             $orderItem->save();
 
-            $payment = Payment::where('order_id',$id)->first();
-            $payment->payment_type_id = $request->payment_type_id;
-            $payment->paid = $paid_amount;
-            $payment->save();
+
+
+            if( ($prev_payment_type_id == 1) && ($request->payment_type_id == 1) ){
+                $payment = Payment::where('order_id',$id)->where('payment_type_id',1)->first();
+                $payment->paid = $request->grand_total;
+                $payment->save();
+            }elseif(($prev_payment_type_id == 1) && ($request->payment_type_id == 2)){
+                // paid
+                $payment = Payment::where('order_id',$id)->where('payment_type_id',1)->first();
+                $payment->paid = $request->paid;
+                $payment->save();
+
+                // due
+                $payment = new Payment();
+                $payment->date=date('Y-m-d');
+                $payment->order_id=$id;
+                $payment->payment_type_id = 2;
+                $payment->paid = $request->due_price;
+                $payment->exchange = 0;
+                $payment->save();
+            }elseif(($prev_payment_type_id == 2) && ($request->payment_type_id == 2)){
+                // paid
+                $payment = Payment::where('order_id',$id)->where('payment_type_id',1)->first();
+                $payment->paid = $request->paid;
+                $payment->save();
+
+                // due
+                $payment = Payment::where('order_id',$id)->where('payment_type_id',2)->first();
+                $payment->paid = $request->due_price;
+                $payment->save();
+            }elseif(($prev_payment_type_id == 2) && ($request->payment_type_id == 1)){
+                // due
+                Payment::where('order_id',$id)->where('payment_type_id',2)->delete();
+
+                // paid
+                $payment = Payment::where('order_id',$id)->where('payment_type_id',1)->first();
+                $payment->paid = $request->grand_total;
+                $payment->save();
+
+
+            }else{
+                Toastr::success('Something went wrong!','Success');
+                return back();
+            }
 
             $accessLog = new AccessLog();
             $accessLog->user_id=Auth::user()->id;
@@ -177,7 +241,7 @@ class OrderController extends Controller
         }
 
         Toastr::success('Vehicle Vendor Rent updated successfully','Success');
-        return back();
+        return redirect()->route('admin.vehicle-vendor-rent-list');
     }
 
 //    public function destroy($id)
@@ -197,4 +261,44 @@ class OrderController extends Controller
 //        Toastr::success('Vehicle Driver Assign deleted successfully','Success');
 //        return back();
 //    }
+
+    public function payDue(Request $request){
+        //dd($request->all());
+
+        // update due
+        $order = Order::find($request->order_id);
+        $last_due_price = $order->due_price - $request->new_paid;
+        $order->due_price=$last_due_price;
+        $order->save();
+
+        // delete previous due
+        Payment::where('order_id',$request->order_id)->where('payment_type_id',2)->delete();
+
+        // new due paid
+        $payment = new Payment();
+        $payment->date=date('Y-m-d');
+        $payment->order_id=$request->order_id;
+        $payment->payment_type_id = $request->payment_type_id;
+        $payment->paid = $request->new_paid;
+        $payment->save();
+
+        // current due
+        $payment = new Payment();
+        $payment->date=date('Y-m-d');
+        $payment->order_id=$request->order_id;
+        $payment->payment_type_id = 2;
+        $payment->paid = $last_due_price;
+        $payment->save();
+
+        $accessLog = new AccessLog();
+        $accessLog->user_id=Auth::user()->id;
+        $accessLog->action_module='Vehicle Vendor Rent';
+        $accessLog->action_done='Due Update';
+        $accessLog->action_remarks='Vehicle Vendor Rent Order ID: '.$request->order_id;
+        $accessLog->action_date=date('Y-m-d');
+        $accessLog->save();
+
+        Toastr::success('Vehicle Vendor Rent Order Due Paid Successfully');
+        return back();
+    }
 }

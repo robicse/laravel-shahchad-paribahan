@@ -93,7 +93,7 @@
                                                     @csrf
                                                     <div class="form-group">
                                                         <label for="due">Enter Due Amount</label>
-                                                        <input type="hidden" class="form-control" name="product_sale_id" value="{{$vehicleVendorRent->id}}">
+                                                        <input type="hidden" class="form-control" name="order_id" value="{{$vehicleVendorRent->id}}">
                                                         <input type="number" class="form-control" id="due" aria-describedby="emailHelp" name="new_paid" min="" max="{{$vehicleVendorRent->due_price}}" value="{{$vehicleVendorRent->due_price}}">
                                                     </div>
                                                     <div class="form-group">
@@ -101,7 +101,7 @@
                                                         <select name="payment_type_id" id="payment_type_id" class="form-control" required>
                                                             <option value="">Select One</option>
                                                             @foreach($payment_types as $payment_type)
-                                                                <option value="{{$payment_type->id}}">{{$payment_type->name}}</option>
+                                                                <option value="{{$payment_type->id}}" {{$payment_type->id == 1 ? 'selected' : ''}}>{{$payment_type->name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

@@ -101,10 +101,6 @@
                                 <input type="number" class="form-control" name="grand_total" id="grand_total" value="{{$vehicleVendorRent->grand_total}}" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="note">Note</label>
-                                <textarea type="text" class="form-control" name="note" id="note" >{{$vehicleVendorRentDetail->note}}</textarea>
-                            </div>
-                            <div class="form-group">
                                 <label for="payment_type_id">Payment Type <span>*</span></label>
                                 <select name="payment_type_id" id="payment_type_id" class="form-control select2" required>
                                     <option value="">Select</option>
@@ -112,6 +108,22 @@
                                         <option value="{{$payment_type->id}}" {{$vehicleVendorRent->payment_type_id == $payment_type->id ? 'selected' : ''}}>{{$payment_type->name}}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="form-group" id="paid_div">
+                                <label for="paid">Paid</label>
+                                <input type="number" class="form-control" name="paid" id="paid" value="{{$vehicleVendorRent->paid}}">
+                            </div>
+                            <div class="form-group" id="due_price_div">
+                                <label for="due_price">Due</label>
+                                <input type="number" class="form-control" name="due_price" id="due_price"  value="{{$vehicleVendorRent->due_price}}" readonly>
+                            </div>
+                            {{--                        <div class="form-group">--}}
+                            {{--                            <label for="exchange">Exchange</label>--}}
+                            {{--                            <input type="number" class="form-control" name="exchange" id="exchange" >--}}
+                            {{--                        </div>--}}
+                            <div class="form-group">
+                                <label for="note">Note</label>
+                                <textarea type="text" class="form-control" name="note" id="note" >{{$vehicleVendorRentDetail->note}}</textarea>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -255,6 +267,35 @@
 
             const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
             $('#rent_duration').val(diffDays);
+        })
+
+        $('#paid').keyup(function (){
+            var grand_total = $('#grand_total').val();
+            var paid = $('#paid').val();
+            var due_price = grand_total - paid;
+            $('#due_price').val(due_price);
+        })
+
+        // check cash or credit paid
+        var current_payment_type_id = $('#payment_type_id').val();
+        if(current_payment_type_id == 1){
+            $('#paid_div').hide();
+            $('#due_price_div').hide();
+        }
+        $('#payment_type_id').change(function (){
+            var payment_type_id = $('#payment_type_id').val();
+            if(payment_type_id == 2){
+                $('#paid_div').show();
+                $('#due_price_div').show();
+                // $('#paid').val(0);
+                // var grand_total = $('#grand_total').val();
+                // $('#due_price').val(grand_total);
+            }else{
+                $('#paid_div').hide();
+                $('#due_price_div').hide();
+                $('#paid').val(0);
+                $('#due_price').val(0);
+            }
         })
     </script>
 @endpush

@@ -89,10 +89,11 @@ if (!function_exists('checkAlreadyVehicleRentOrNotThisDate')) {
 
 if (!function_exists('getVehicleAssignedDriver')) {
     function getVehicleAssignedDriver($vehicle_id, $start_date) {
-        return VehicleDriverAssign::where('vehicle_id',$vehicle_id)
-            ->where('start_date','<=',$start_date)
-            ->where('end_date','>=',$start_date)
-            ->pluck('driver_id')->first();
+        return VehicleDriverAssign::join('drivers','vehicle_driver_assigns.driver_id','drivers.id')
+            ->where('vehicle_driver_assigns.vehicle_id',$vehicle_id)
+            ->where('vehicle_driver_assigns.start_date','<=',$start_date)
+            ->where('vehicle_driver_assigns.end_date','>=',$start_date)
+            ->pluck('drivers.name')->first();
     }
 }
 // vehicle end

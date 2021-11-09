@@ -20,6 +20,7 @@ class CreatePaymentTypesTable extends Migration
             $table->string('status');
             $table->tinyInteger('is_default')->default(0);
             $table->integer('user_id')->default(9);
+            $table->integer('active_status')->default(1);
             $table->timestamps();
         });
     }
