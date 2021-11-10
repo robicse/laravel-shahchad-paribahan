@@ -11,6 +11,7 @@ use App\Model\PaymentType;
 use App\Model\Vehicle;
 use App\Model\VehicleDriverAssign;
 use App\Model\Vendor;
+use NumberFormatter;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -63,6 +64,7 @@ class OrderController extends Controller
         $order->type = 'Vendor';
         $order->payment_type_id = $request->payment_type_id;
         $order->sub_total = $request->sub_total;
+        $order->grand_discount = $request->grand_discount;
         $order->grand_total = $request->grand_total;
         $order->paid = $request->payment_type_id == 1 ? $request->grand_total : $request->paid;
         $order->exchange = 0;
@@ -83,7 +85,7 @@ class OrderController extends Controller
             $orderItem->rent_duration=$request->rent_duration;
             $orderItem->quantity=$request->quantity;
             $orderItem->price=$request->price;
-            $orderItem->discount=$request->discount;
+            //$orderItem->discount=$request->grand_discount;
             //$orderItem->per_day_price=$request->per_day_price;
             $orderItem->sub_total=$request->sub_total;
             $orderItem->note=$request->note;
@@ -132,9 +134,11 @@ class OrderController extends Controller
         return redirect()->route('admin.vehicle-vendor-rent-list');
     }
 
-    public function show($id)
+    public function vehicle_vendor_rent_show($id)
     {
-        //
+        $vehicleVendorRent = Order::where('order_type','receiving')->where('id',$id)->first();
+        $vehicleVendorRentDetail = OrderItem::where('order_id',$id)->first();
+        return view('backend.admin.orders.vehicle_vendor_rent_show',compact('vehicleVendorRent','vehicleVendorRentDetail'));
     }
 
     public function vehicle_vendor_rent_edit($id)
@@ -165,6 +169,7 @@ class OrderController extends Controller
         $order->vendor_id = $request->vendor_id;
         $order->payment_type_id = $request->payment_type_id;
         $order->sub_total = $request->sub_total;
+        $order->grand_discount = $request->grand_discount;
         $order->grand_total = $request->grand_total;
         $order->paid = $request->payment_type_id == 1 ? $request->grand_total : $request->paid;
         $order->exchange = 0;
@@ -181,7 +186,7 @@ class OrderController extends Controller
             $orderItem->rent_duration=$request->rent_duration;
             $orderItem->quantity=$request->quantity;
             $orderItem->price=$request->price;
-            $orderItem->discount=$request->discount;
+            //$orderItem->discount=$request->grand_discount;
             $orderItem->sub_total=$request->sub_total;
             $orderItem->note=$request->note;
             $orderItem->save();
@@ -300,5 +305,14 @@ class OrderController extends Controller
 
         Toastr::success('Vehicle Vendor Rent Order Due Paid Successfully');
         return back();
+    }
+
+    public function order_vendor_print($id){
+        $vehicleVendorRent = Order::where('order_type','receiving')->where('id',$id)->first();
+        $vehicleVendorRentDetail = OrderItem::where('order_id',$id)->first();
+        $vendor = Vendor::find($vehicleVendorRent->vendor_id);
+        $digit = new NumberFormatter("en", NumberFormatter::SPELLOUT);
+
+        return view('backend.admin.orders.invoice_vendor',compact('vehicleVendorRent','vehicleVendorRentDetail','vendor','digit'));
     }
 }

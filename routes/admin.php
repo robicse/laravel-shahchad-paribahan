@@ -30,8 +30,10 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::get('vehicle/vendor/rent/list','OrderController@vehicle_vendor_rent_list')->name('vehicle-vendor-rent-list');
     Route::get('vehicle/vendor/rent/create','OrderController@vehicle_vendor_rent_create')->name('vehicle-vendor-rent-create');
     Route::post('vehicle/vendor/rent/store','OrderController@vehicle_vendor_rent_store')->name('vehicle-vendor-rent-store');
+    Route::get('vehicle/vendor/rent/show/{id}','OrderController@vehicle_vendor_rent_show')->name('vehicle-vendor-rent-show');
     Route::get('vehicle/vendor/rent/edit/{id}','OrderController@vehicle_vendor_rent_edit')->name('vehicle-vendor-rent-edit');
     Route::put('vehicle/vendor/rent/update/{id}','OrderController@vehicle_vendor_rent_update')->name('vehicle-vendor-rent-update');
+    Route::get('order/vendor/print/{id}','OrderController@order_vendor_print')->name('order-vendor-print');
     Route::get('check/already/vehicle/assigned/or/free/{id}','VehicleController@check_already_vehicle_assigned_or_free');
     Route::get('check/already/driver/assigned/or/free/{id}','DriverController@check_already_driver_assigned_or_free');
     Route::post('check/already/vehicle/assigned/or/free/edit','VehicleController@check_already_vehicle_assigned_or_free_edit');

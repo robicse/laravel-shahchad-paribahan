@@ -68,9 +68,12 @@
                                         <a href="" class="btn btn-warning btn-sm mx-1" data-toggle="modal" data-target="#exampleModal-<?= $vehicleVendorRent->id;?>"> Pay Due</a>
                                     @endif
                                 </td>
-                                <td>
-                                    <a class="btn btn-info waves-effect" href="{{route('admin.vehicle-vendor-rent-edit',$vehicleVendorRent->id)}}">
+                                <td class="d-inline-flex">
+                                    <a class="btn btn-info float-left" href="{{route('admin.vehicle-vendor-rent-edit',$vehicleVendorRent->id)}}" style="margin-left: 5px">
                                         <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a class="btn btn-success" href="{{route('admin.vehicle-vendor-rent-show',$vehicleVendorRent->id)}}" style="margin-left: 5px">
+                                        <i class="fa fa-eye"></i>
                                     </a>
 {{--                                    <button class="btn btn-danger waves-effect" type="button"--}}
 {{--                                            onclick="deleteVehicle({{$vehicle->id}})">--}}

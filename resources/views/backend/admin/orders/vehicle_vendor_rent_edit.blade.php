@@ -93,11 +93,12 @@
                                 <input type="number" class="form-control" name="sub_total" id="sub_total" value="{{$vehicleVendorRent->sub_total}}" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="discount">Discount</label>
-                                <input type="number" class="form-control" name="discount" id="discount" value="{{$vehicleVendorRentDetail->discount}}" >
+                                <label for="grand_discount">Discount</label>
+                                <input type="number" class="form-control" name="grand_discount" id="grand_discount" value="{{$vehicleVendorRent->grand_discount}}" onkeyup="discountAmount('')">
                             </div>
                             <div class="form-group">
                                 <label for="grand_total">Grand Total</label>
+                                <input type="number" class="form-control" name="store_grand_total" id="store_grand_total" value="{{$vehicleVendorRent->grand_total}}" style="display: none">
                                 <input type="number" class="form-control" name="grand_total" id="grand_total" value="{{$vehicleVendorRent->grand_total}}" readonly>
                             </div>
                             <div class="form-group">
@@ -275,6 +276,25 @@
             var due_price = grand_total - paid;
             $('#due_price').val(due_price);
         })
+
+        function discountAmount(){
+
+            var store_grand_total = $('#store_grand_total').val();
+            console.log('store_grand_total= ' + store_grand_total);
+            console.log('store_grand_total= ' + typeof store_grand_total);
+
+            var grand_discount = $('#grand_discount').val();
+            console.log('grand_discount= ' + grand_discount);
+            console.log('grand_discount= ' + typeof grand_discount);
+
+            var grand_total = store_grand_total - grand_discount;
+            console.log('grand_total=' + grand_total);
+            console.log('grand_total=' + typeof grand_total);
+
+            $('#grand_discount').val(grand_discount)
+            $('#grand_total').val(grand_total);
+            $('#due_price').val(grand_total);
+        }
 
         // check cash or credit paid
         var current_payment_type_id = $('#payment_type_id').val();

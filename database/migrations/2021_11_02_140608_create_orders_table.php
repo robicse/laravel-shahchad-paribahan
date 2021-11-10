@@ -23,10 +23,11 @@ class CreateOrdersTable extends Migration
             $table->string('invoice_no');
             $table->integer('payment_type_id');
             $table->double('sub_total',8,2)->default(0);
-            $table->double('total_price',8,2);
+            $table->double('grand_discount',8,2)->default(0);
+            $table->double('grand_total',8,2);
             $table->double('paid',8,2)->default(0);
-            $table->double('exchange',8,2)->default(0);
             $table->double('due_price',8,2)->default(0);
+            $table->double('exchange',8,2)->default(0);
             $table->double('profit',8,2)->default(0);
             $table->string('status');
             $table->timestamps();
