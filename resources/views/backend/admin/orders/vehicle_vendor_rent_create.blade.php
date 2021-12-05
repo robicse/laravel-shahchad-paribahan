@@ -71,10 +71,10 @@
                             <label for="rent_duration">Rent Duration <span>*</span></label>
                             <input type="text" class="form-control" name="rent_duration" id="rent_duration" readonly>
                         </div>
-                        <div class="form-group">
-                            <label for="driver_id">Driver <span>*</span></label>
-                            <input type="text" class="form-control" name="driver_id" id="driver_id" required readonly>
-                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label for="driver_id">Driver <span>*</span></label>--}}
+{{--                            <input type="text" class="form-control" name="driver_id" id="driver_id" required readonly>--}}
+{{--                        </div>--}}
                         <div class="form-group">
                             <label for="quantity">Quantity <span>*</span></label>
                             <input type="number" class="form-control" name="quantity" id="quantity" value="1">
@@ -205,30 +205,30 @@
                         alert('Please select another vehicle, This vehicle already rent now.');
                         $('#vehicle_id').val('');
                     }else{
-                        $.ajax({
-                            url:"{{URL('/admin/get/vehicle/assigned/driver')}}",
-                            method:"POST",
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                vehicle_id : vehicle_id,
-                                start_date : start_date,
-                                //end_date : end_date,
-                            },
-                            success:function (res){
-                                console.log(res)
-                                if(res == 0){
-                                    alert('Please select another vehicle Or Date, This vehicle already rent now OR Not driver assign yet!');
-                                    $('#vehicle_id').val('');
-                                }else{
-                                    $('#driver_id').val(res);
-                                }
-                            },
-                            error:function (err){
-                                console.log(err)
-                            }
-                        })
+                        {{--$.ajax({--}}
+                        {{--    url:"{{URL('/admin/get/vehicle/assigned/driver')}}",--}}
+                        {{--    method:"POST",--}}
+                        {{--    headers: {--}}
+                        {{--        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+                        {{--    },--}}
+                        {{--    data: {--}}
+                        {{--        vehicle_id : vehicle_id,--}}
+                        {{--        start_date : start_date,--}}
+                        {{--        //end_date : end_date,--}}
+                        {{--    },--}}
+                        {{--    success:function (res){--}}
+                        {{--        console.log(res)--}}
+                        {{--        if(res == 0){--}}
+                        {{--            alert('Please select another vehicle Or Date, This vehicle already rent now OR Not driver assign yet!');--}}
+                        {{--            $('#vehicle_id').val('');--}}
+                        {{--        }else{--}}
+                        {{--            $('#driver_id').val(res);--}}
+                        {{--        }--}}
+                        {{--    },--}}
+                        {{--    error:function (err){--}}
+                        {{--        console.log(err)--}}
+                        {{--    }--}}
+                        {{--})--}}
                     }
 
                 },

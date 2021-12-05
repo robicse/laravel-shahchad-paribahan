@@ -91,8 +91,8 @@
                                 <input type="text" class="form-control" name="model" id="model" value="{{$vehicle->model}}">
                             </div>
                             <div class="form-group">
-                                <label for="licence_no">Licence NO</label>
-                                <input type="text" class="form-control" name="licence_no" id="licence_no" value="{{$vehicle->licence_no}}">
+                                <label for="registration_no">Registration NO</label>
+                                <input type="text" class="form-control" name="registration_no" id="registration_no" value="{{$vehicle->registration_no}}">
                             </div>
                             <div class="form-group">
                                 <label for="registration_date">Registration Date</label>

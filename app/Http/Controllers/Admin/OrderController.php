@@ -78,7 +78,7 @@ class OrderController extends Controller
             $orderItem->date = $date;
             $orderItem->order_id=$insert_id;
             $orderItem->vehicle_id=$request->vehicle_id;
-            $orderItem->driver_id=$vehicleDriver->driver_id;
+            //$orderItem->driver_id=$vehicleDriver->driver_id;
             $orderItem->rent_type=$vehicle->rent_type;
             $orderItem->start_date=$request->start_date;
             $orderItem->end_date=$request->end_date;
@@ -179,7 +179,7 @@ class OrderController extends Controller
         if($updated_row){
             $orderItem = OrderItem::where('order_id',$id)->first();
             $orderItem->vehicle_id=$request->vehicle_id;
-            $orderItem->driver_id=$vehicleDriver->driver_id;
+            //$orderItem->driver_id=$vehicleDriver->driver_id;
             $orderItem->rent_type=$vehicle->rent_type;
             $orderItem->start_date=$request->start_date;
             $orderItem->end_date=$request->end_date;

@@ -96,8 +96,8 @@
                             <input type="text" class="form-control" name="model" id="model" placeholder="" required>
                         </div>
                         <div class="form-group">
-                            <label for="licence_no">Licence NO</label>
-                            <input type="text" class="form-control" name="licence_no" id="licence_no" placeholder="" required>
+                            <label for="registration_no">Registration NO</label>
+                            <input type="text" class="form-control" name="registration_no" id="registration_no" placeholder="" required>
                         </div>
                         <div class="form-group">
                             <label for="registration_date">Registration Date</label>

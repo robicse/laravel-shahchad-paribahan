@@ -23,6 +23,52 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{$totalVendors}}</h3>
+
+                            <p>Total Vendors</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="{{route('admin.vendors.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>{{$totalDrivers}}</h3>
+
+                            <p>Total Drivers</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="{{route('admin.drivers.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>{{$totalCustomers}}</h3>
+
+                            <p>Total Customers</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="{{route('admin.customers.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
                     <div class="small-box bg-info">
@@ -37,96 +83,114 @@
                         <a href="{{route('admin.staffs.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
-{{--                <div class="col-lg-3 col-6">--}}
-{{--                    <!-- small box -->--}}
-{{--                    <div class="small-box bg-success">--}}
-{{--                        <div class="inner">--}}
-{{--                            <h3>{{$totalBrands}}</h3>--}}
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-dark">
+                        <div class="inner">
+                            <h3>{{$totalBrands}}</h3>
 
-{{--                            <p>Brands</p>--}}
-{{--                        </div>--}}
-{{--                        <div class="icon">--}}
-{{--                            <i class="ion ion-stats-bars"></i>--}}
-{{--                        </div>--}}
-{{--                        <a href="{{route('admin.brands.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                            <p>Total Brands</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-server"></i>
+                        </div>
+                        <a href="{{route('admin.brands.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>{{$totalCategories}}</h3>
+
+                            <p>Total Categories</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="{{route('admin.categories.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{$totalVehicles}}</h3>
+
+                            <p>Total Vehicles</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-battery"></i>
+                        </div>
+                        <a href="{{route('admin.vehicles.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-primary">
+                        <div class="inner">
+                            <h3>{{$totalVehicleDriverAssigns}}</h3>
+
+                            <p>Vehicle Driver Assign</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-parking"></i>
+                        </div>
+                        <a href="{{route('admin.vehicle-driver-assigns.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <!-- ./col -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-dark">
+                        <div class="inner">
+                            <h3>{{$totalVehicleVendorRents}}</h3>
+
+                            <p>Total Vehicle Vendor Rent</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-server"></i>
+                        </div>
+                        <a href="{{route('admin.vehicle-vendor-rent-list')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
                 <!-- ./col -->
 {{--                <div class="col-lg-3 col-6">--}}
 {{--                    <!-- small box -->--}}
 {{--                    <div class="small-box bg-warning">--}}
 {{--                        <div class="inner">--}}
-{{--                            <h3>{{$totalUsers}}</h3>--}}
-
-{{--                            <p>User Registrations</p>--}}
-{{--                        </div>--}}
-{{--                        <div class="icon">--}}
-{{--                            <i class="ion ion-person-add"></i>--}}
-{{--                        </div>--}}
-{{--                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-                <!-- ./col -->
-{{--                <div class="col-lg-3 col-6">--}}
-{{--                    <!-- small box -->--}}
-{{--                    <div class="small-box bg-danger">--}}
-{{--                        <div class="inner">--}}
 {{--                            <h3>{{$totalCategories}}</h3>--}}
 
-{{--                            <p>Categories</p>--}}
+{{--                            <p>Total Categories</p>--}}
 {{--                        </div>--}}
 {{--                        <div class="icon">--}}
-{{--                            <i class="ion ion-pie-graph"></i>--}}
+{{--                            <i class="ion ion-stats-bars"></i>--}}
 {{--                        </div>--}}
 {{--                        <a href="{{route('admin.categories.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>--}}
 {{--                    </div>--}}
 {{--                </div>--}}
-                <!-- ./col -->
-            </div>
-            <div class="row">
-{{--                <div class="col-lg-3 col-6">--}}
-{{--                    <!-- small box -->--}}
-{{--                    <div class="small-box bg-dark">--}}
-{{--                        <div class="inner">--}}
-{{--                            <h3>{{$totalSubCategories}}</h3>--}}
-
-{{--                            <p>Subcategories</p>--}}
-{{--                        </div>--}}
-{{--                        <div class="icon">--}}
-{{--                            <i class="fa fa-server"></i>--}}
-{{--                        </div>--}}
-{{--                        <a href="{{route('admin.subcategories.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-                <!-- ./col -->
-{{--                <div class="col-lg-3 col-6">--}}
-{{--                    <!-- small box -->--}}
-{{--                    <div class="small-box bg-warning">--}}
-{{--                        <div class="inner">--}}
-{{--                            <h3>{{$totalSubSubCategories}}</h3>--}}
-
-{{--                            <p>Sub Child Categories</p>--}}
-{{--                        </div>--}}
-{{--                        <div class="icon">--}}
-{{--                            <i class="ion ion-stats-bars"></i>--}}
-{{--                        </div>--}}
-{{--                        <a href="{{route('admin.sub-subcategories.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-                <!-- ./col -->
+{{--                <!-- ./col -->--}}
 {{--                <div class="col-lg-3 col-6">--}}
 {{--                    <!-- small box -->--}}
 {{--                    <div class="small-box bg-success">--}}
 {{--                        <div class="inner">--}}
-{{--                            <h3>{{$totalAttributes}}</h3>--}}
+{{--                            <h3>{{$totalVehicles}}</h3>--}}
 
-{{--                            <p>Attributes</p>--}}
+{{--                            <p>Total Vehicles</p>--}}
 {{--                        </div>--}}
 {{--                        <div class="icon">--}}
 {{--                            <i class="fa fa-battery"></i>--}}
 {{--                        </div>--}}
-{{--                        <a href="{{route('admin.attributes.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>--}}
+{{--                        <a href="{{route('admin.vehicles.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>--}}
 {{--                    </div>--}}
 {{--                </div>--}}
 {{--                <!-- ./col -->--}}
@@ -134,14 +198,14 @@
 {{--                    <!-- small box -->--}}
 {{--                    <div class="small-box bg-primary">--}}
 {{--                        <div class="inner">--}}
-{{--                            <h3>{{$totalProducts}}</h3>--}}
+{{--                            <h3>{{$totalVehicleDriverAssigns}}</h3>--}}
 
-{{--                            <p>Products</p>--}}
+{{--                            <p>Vehicle Driver Assign</p>--}}
 {{--                        </div>--}}
 {{--                        <div class="icon">--}}
 {{--                            <i class="fa fa-parking"></i>--}}
 {{--                        </div>--}}
-{{--                        <a href="{{route('admin.products.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>--}}
+{{--                        <a href="{{route('admin.vehicle-driver-assigns.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>--}}
 {{--                    </div>--}}
 {{--                </div>--}}
                 <!-- ./col -->

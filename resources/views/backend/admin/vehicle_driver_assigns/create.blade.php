@@ -46,7 +46,7 @@
                             <select name="vehicle_id" id="vehicle_id" class="form-control select2" required>
                                 <option value="">Select</option>
                                 @foreach($vehicles as $vehicle)
-                                    <option value="{{$vehicle->id}}">{{$vehicle->vehicle_name}} ({{$vehicle->owner_name}})</option>
+                                    <option value="{{$vehicle->id}}">{{$vehicle->vehicle_name}} ({{$vehicle->registration_no}})</option>
                                 @endforeach
                             </select>
                         </div>

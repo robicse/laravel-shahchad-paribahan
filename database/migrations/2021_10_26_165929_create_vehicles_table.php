@@ -23,7 +23,7 @@ class CreateVehiclesTable extends Migration
             $table->string('rent_type')->nullable();
             $table->string('price')->nullable();
             $table->string('model')->nullable();
-            $table->string('licence_no')->nullable();
+            $table->string('registration_no')->nullable();
             $table->string('registration_date')->nullable();
             $table->string('chassis_no')->nullable();
             $table->string('engine_no')->nullable();

@@ -58,7 +58,7 @@
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{$vehicleVendorRent->vendor->name}} ({{$vehicleVendorRent->vendor->phone}})</td>
-                                <td>{{$orderItem['vehicle_name']}} ({{$orderItem['owner_name']}})</td>
+                                <td>{{$orderItem['vehicle_name']}} ({{$orderItem['registration_no']}})</td>
                                 <td>{{$orderItem['start_date']}}</td>
                                 <td>{{$orderItem['end_date']}}</td>
                                 <td>{{$vehicleVendorRent->grand_total}}</td>

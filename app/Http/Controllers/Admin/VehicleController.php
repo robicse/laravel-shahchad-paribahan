@@ -53,7 +53,7 @@ class VehicleController extends Controller
         $vehicle->model = $request->model;
         $vehicle->rent_type = $request->rent_type;
         $vehicle->price = $request->price;
-        $vehicle->licence_no = $request->licence_no;
+        $vehicle->registration_no = $request->registration_no;
         $vehicle->registration_date = $request->registration_date;
         $vehicle->chassis_no = $request->chassis_no;
         $vehicle->engine_no = $request->engine_no;
@@ -120,7 +120,7 @@ class VehicleController extends Controller
         $vehicle->rent_type = $request->rent_type;
         $vehicle->price = $request->price;
         $vehicle->model = $request->model;
-        $vehicle->licence_no = $request->licence_no;
+        $vehicle->registration_no = $request->registration_no;
         $vehicle->registration_date = $request->registration_date;
         $vehicle->chassis_no = $request->chassis_no;
         $vehicle->engine_no = $request->engine_no;
