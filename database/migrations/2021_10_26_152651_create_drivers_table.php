@@ -22,6 +22,7 @@ class CreateDriversTable extends Migration
             $table->string('permanent_address')->nullable();
             $table->string('driving_licence_no');
             $table->string('driving_experience_duration');
+            $table->string('salary_type');
             $table->string('salary');
             $table->string('image')->nullable();
             $table->integer('status')->default(1);

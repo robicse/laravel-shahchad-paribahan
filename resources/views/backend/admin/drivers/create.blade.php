@@ -70,6 +70,13 @@
                             <input type="text" class="form-control" name="driving_experience_duration" id="driving_experience_duration" placeholder="" required>
                         </div>
                         <div class="form-group">
+                            <label for="salary_type">Salary Type <span>*</span></label>
+                            <select name="salary_type" id="salary_type" class="form-control select2" required>
+                                <option value="Daily">Daily</option>
+                                <option value="Monthly" selected>Monthly</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="salary">Salary <span>*</span></label>
                             <input type="number" class="form-control" name="salary" id="salary" placeholder="" required>
                         </div>

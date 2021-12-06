@@ -134,14 +134,14 @@
                     <!-- small box -->
                     <div class="small-box bg-primary">
                         <div class="inner">
-                            <h3>{{$totalVehicleDriverAssigns}}</h3>
+                            <h3>{{$totalVehicleVendorRents}}</h3>
 
-                            <p>Vehicle Driver Assign</p>
+                            <p>Total Vehicle Rent From Vendor</p>
                         </div>
                         <div class="icon">
-                            <i class="fa fa-parking"></i>
+                            <i class="fa fa-server"></i>
                         </div>
-                        <a href="{{route('admin.vehicle-driver-assigns.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{route('admin.vehicle-vendor-rent-list')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -153,14 +153,14 @@
                     <!-- small box -->
                     <div class="small-box bg-dark">
                         <div class="inner">
-                            <h3>{{$totalVehicleVendorRents}}</h3>
+                            <h3>{{$totalVehicleDriverAssigns}}</h3>
 
-                            <p>Total Vehicle Vendor Rent</p>
+                            <p>Vehicle Driver Assign</p>
                         </div>
                         <div class="icon">
-                            <i class="fa fa-server"></i>
+                            <i class="fa fa-parking"></i>
                         </div>
-                        <a href="{{route('admin.vehicle-vendor-rent-list')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{route('admin.vehicle-driver-assigns.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->

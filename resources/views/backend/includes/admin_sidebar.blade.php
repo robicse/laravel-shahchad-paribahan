@@ -31,19 +31,19 @@
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.vendors.index')}}" class="nav-link {{Request::is('admin.vendors*') ? 'active' : ''}}">
+                        <a href="{{route('admin.vendors.index')}}" class="nav-link {{Request::is('admin/vendors') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Vendors List</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.drivers.index')}}" class="nav-link {{Request::is('admin.drivers*') ? 'active' : ''}}">
+                        <a href="{{route('admin.drivers.index')}}" class="nav-link {{Request::is('admin/drivers') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Drivers List</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.customers.index')}}" class="nav-link {{Request::is('admin.customers*') ? 'active' : ''}}">
+                        <a href="{{route('admin.customers.index')}}" class="nav-link {{Request::is('admin/customers') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Customers List</p>
                         </a>
@@ -51,8 +51,7 @@
                     <li class="nav-item has-treeview {{(Request::is('admin/brands*')
                         || Request::is('admin/categories*')
                         || Request::is('admin/subcategories*')
-                        //|| Request::is('admin/sub-subcategories*')
-                        //|| Request::is('admin/products*')
+                        || Request::is('admin/vehicles*')
                         )
                     ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link">
@@ -101,13 +100,13 @@
                         </ul>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.vehicle-vendor-rent-list')}}" class="nav-link {{Request::is('admin.vehicle-vendor-rent-list*') ? 'active' : ''}}">
+                        <a href="{{route('admin.vehicle-vendor-rent-list')}}" class="nav-link {{Request::is('admin/vehicle/vendor/rent/list') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Vehicle Rent From Vendor List</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.vehicle-driver-assigns.index')}}" class="nav-link {{Request::is('admin.vehicle-driver-assigns*') ? 'active' : ''}}">
+                        <a href="{{route('admin.vehicle-driver-assigns.index')}}" class="nav-link {{Request::is('admin/vehicle-driver-assigns') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Vehicle Driver Assign List</p>
                         </a>
@@ -140,7 +139,7 @@
                         </ul>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.profile.index')}}" class="nav-link {{Request::is('admin.profile*') ? 'active' : ''}}">
+                        <a href="{{route('admin.profile.index')}}" class="nav-link {{Request::is('admin/profile') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-user-circle"></i>
                             <p>Profile</p>
                         </a>
@@ -172,13 +171,13 @@
 {{--                        </ul>--}}
 {{--                    </li>--}}
                     <li class="nav-item ">
-                        <a href="{{route('admin.access-logs.index')}}" class="nav-link {{Request::is('admin.access-logs*') ? 'active' : ''}}">
+                        <a href="{{route('admin.access-logs.index')}}" class="nav-link {{Request::is('admin/access-logs') ? 'active' : ''}}">
                             <i class="nav-icon fa fa-cog"></i>
                             <p>Access Log</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.site.optimize')}}" class="nav-link {{Request::is('admin/site-optimize*') ? 'active' : ''}}">
+                        <a href="{{route('admin.site.optimize')}}" class="nav-link {{Request::is('admin/site-optimize') ? 'active' : ''}}">
                             <i class="nav-icon fa fa-cog"></i>
                             <p>Site Optimize</p>
                         </a>

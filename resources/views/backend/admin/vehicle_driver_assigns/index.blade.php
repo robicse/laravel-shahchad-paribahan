@@ -45,17 +45,21 @@
                                 <th>Driver</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
+                                <th>Status</th>
+                                <th>Duration</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($vehicleDriverAssigns as $key => $vehicleDriverAssign)
-                            <tr>
+                            <tr class="{{$vehicleDriverAssign->end_status == 0 ? 'bg-success' : ''}}">
                                 <td>{{$key + 1}}</td>
-                                <td>{{$vehicleDriverAssign->vehicle->vehicle_name}} ({{$vehicleDriverAssign->vehicle->owner_name}})</td>
+                                <td>{{$vehicleDriverAssign->vehicle->vehicle_name}} ({{$vehicleDriverAssign->vehicle->registration_no}})</td>
                                 <td>{{$vehicleDriverAssign->driver->name}} ({{$vehicleDriverAssign->driver->phone}})</td>
                                 <td>{{$vehicleDriverAssign->start_date}}</td>
                                 <td>{{$vehicleDriverAssign->end_date}}</td>
+                                <td>{{$vehicleDriverAssign->end_status == 1 ? 'Closed' : 'Running'}}</td>
+                                <td>{{$vehicleDriverAssign->duration}}</td>
                                 <td>
                                     <a class="btn btn-info waves-effect" href="{{route('admin.vehicle-driver-assigns.edit',$vehicleDriverAssign->id)}}">
                                         <i class="fa fa-edit"></i>
@@ -75,6 +79,8 @@
                                 <th>Driver</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
+                                <th>Status</th>
+                                <th>Duration</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>

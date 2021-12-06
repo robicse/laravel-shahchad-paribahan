@@ -46,11 +46,27 @@ class VehicleDriverAssignController extends Controller
             //'name'=> 'required|unique:vehicles,name',
         ]);
 
+        $end_status = 0;
+        $duration = 0;
+        if($request->end_date != NULL){
+            $end_status = 1;
+
+            $date1 = date_create($request->start_date);
+            $date2 = date_create($request->end_date);
+            //difference between two dates
+            $diff = date_diff($date1,$date2);
+            //count days
+            $duration = $diff->format("%a");
+        }
+
         $vehicleDriverAssign = new VehicleDriverAssign();
         $vehicleDriverAssign->vehicle_id = $request->vehicle_id;
         $vehicleDriverAssign->driver_id = $request->driver_id;
         $vehicleDriverAssign->start_date = $request->start_date;
         $vehicleDriverAssign->end_date = $request->end_date;
+        $vehicleDriverAssign->start_status = 1;
+        $vehicleDriverAssign->end_status = $end_status;
+        $vehicleDriverAssign->duration = $duration;
         $vehicleDriverAssign->save();
         $insert_id = $vehicleDriverAssign->id;
         if($insert_id){
@@ -86,11 +102,27 @@ class VehicleDriverAssignController extends Controller
             //'name'=> 'required|unique:vehicles,name,'.$id,
         ]);
 
+        $end_status = 0;
+        $duration = 0;
+        if($request->end_date != NULL){
+            $end_status = 1;
+
+            $date1 = date_create($request->start_date);
+            $date2 = date_create($request->end_date);
+            //difference between two dates
+            $diff = date_diff($date1,$date2);
+            //count days
+            $duration = $diff->format("%a");
+        }
+
         $vehicleDriverAssign = VehicleDriverAssign::find($id);
         $vehicleDriverAssign->vehicle_id = $request->vehicle_id;
-        $vehicleDriverAssign->driver_idstart_date = $request->driver_idstart_date;
+        $vehicleDriverAssign->driver_id = $request->driver_id;
         $vehicleDriverAssign->start_date = $request->start_date;
         $vehicleDriverAssign->end_date = $request->end_date;
+        $vehicleDriverAssign->start_status = 1;
+        $vehicleDriverAssign->end_status = $end_status;
+        $vehicleDriverAssign->duration = $duration;
         $updated_row = $vehicleDriverAssign->save();
         if($updated_row){
             $accessLog = new AccessLog();

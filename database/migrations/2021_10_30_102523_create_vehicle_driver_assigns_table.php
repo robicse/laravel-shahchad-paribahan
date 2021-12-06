@@ -19,6 +19,9 @@ class CreateVehicleDriverAssignsTable extends Migration
             $table->integer('driver_id');
             $table->string('start_date')->nullable();
             $table->string('end_date')->nullable();
+            $table->integer('start_status')->default(1);
+            $table->integer('end_status')->default(0);
+            $table->integer('duration')->nullable();
             $table->timestamps();
         });
     }

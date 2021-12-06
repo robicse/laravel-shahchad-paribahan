@@ -51,7 +51,7 @@
                             </thead>
                             <tbody>
                             @foreach($customers as $key => $customer)
-                            <tr>
+                            <tr class="{{$customer->status == 0 ? 'bg-warning' : ''}}">
                                 <td>{{$key + 1}}</td>
                                 <td>
                                     <img src="{{asset('uploads/customers/'.$customer->image)}}" width="80" height="50" alt="">

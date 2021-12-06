@@ -52,7 +52,7 @@
                             </thead>
                             <tbody>
                             @foreach($drivers as $key => $driver)
-                            <tr>
+                            <tr class="{{$driver->status == 0 ? 'bg-warning' : ''}}">
                                 <td>{{$key + 1}}</td>
                                 <td>
                                     <img src="{{asset('uploads/drivers/'.$driver->logo)}}" width="80" height="50" alt="">

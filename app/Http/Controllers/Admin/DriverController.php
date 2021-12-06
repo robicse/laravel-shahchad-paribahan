@@ -40,6 +40,13 @@ class DriverController extends Controller
             'name'=> 'required|unique:drivers,name',
         ]);
 
+        if($request->salary_type == 'Daily'){
+            $per_day_salary = $request->salary;
+        }else{
+            $per_day_salary = $request->salary/30;
+        }
+
+
         $driver = new Driver();
         $driver->name = $request->name;
         $driver->phone = $request->phone;
@@ -48,7 +55,9 @@ class DriverController extends Controller
         $driver->permanent_address = $request->permanent_address;
         $driver->driving_licence_no = $request->driving_licence_no;
         $driver->driving_experience_duration = $request->driving_experience_duration;
+        $driver->salary_type = $request->salary_type;
         $driver->salary = $request->salary;
+        $driver->per_day_salary = $per_day_salary;
         $image = $request->file('logo');
         if (isset($image)) {
             //make unique name for image
@@ -96,6 +105,12 @@ class DriverController extends Controller
             'name'=> 'required|unique:drivers,name,'.$id,
         ]);
 
+        if($request->salary_type == 'Daily'){
+            $per_day_salary = $request->salary;
+        }else{
+            $per_day_salary = $request->salary/30;
+        }
+
         $driver = Driver::find($id);
         $driver->name = $request->name;
         $driver->phone = $request->phone;
@@ -104,7 +119,9 @@ class DriverController extends Controller
         $driver->permanent_address = $request->permanent_address;
         $driver->driving_licence_no = $request->driving_licence_no;
         $driver->driving_experience_duration = $request->driving_experience_duration;
+        $driver->salary_type = $request->salary_type;
         $driver->salary = $request->salary;
+        $driver->per_day_salary = $per_day_salary;
         $driver->status = $request->status;
         $image = $request->file('logo');
         if (isset($image)) {

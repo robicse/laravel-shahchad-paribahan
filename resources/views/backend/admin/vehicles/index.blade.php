@@ -52,7 +52,7 @@
                             </thead>
                             <tbody>
                             @foreach($vehicles as $key => $vehicle)
-                            <tr>
+                            <tr class="{{$vehicle->status == 0 ? 'bg-warning' : ''}}">
                                 <td>{{$key + 1}}</td>
                                 <td>
                                     <img src="{{asset('uploads/vehicles/'.$vehicle->image)}}" width="80" height="50" alt="">
