@@ -111,6 +111,12 @@
                             <p>Vehicle Driver Assign List</p>
                         </a>
                     </li>
+                    <li class="nav-item ">
+                        <a href="{{route('admin.vehicle-customer-rent-list')}}" class="nav-link {{Request::is('admin/vehicle/customer/rent/list') ? 'active' : ''}}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Vehicle Rent To Customer List</p>
+                        </a>
+                    </li>
 
                     <div class="user-panel">&nbsp;</div>
                     <li class="nav-item has-treeview {{(Request::is('admin/roles*') || Request::is('admin/staffs*')) ? 'menu-open' : ''}}">

@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Add Vehicle Vendor Rent")
+@section("title","Add Vehicle Customer Rent")
 @push('css')
     <link rel="stylesheet" href="{{asset('backend/plugins/bootstrap-datepicker/bootstrap-datepicker.css')}}">
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add Vehicle Vendor Rent</h1>
+                    <h1>Add Vehicle Customer Rent</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Add Vehicle Vendor Rent</li>
+                        <li class="breadcrumb-item active">Add Vehicle Customer Rent</li>
                     </ol>
                 </div>
             </div>
@@ -26,9 +26,9 @@
             <!-- general form elements -->
                 <div class="card card-info card-outline">
                 <div class="card-header">
-                    <h3 class="card-title float-left">Add Vehicle Vendor Rent</h3>
+                    <h3 class="card-title float-left">Add Vehicle Customer Rent</h3>
                     <div class="float-right">
-                        <a href="{{route('admin.vehicle-vendor-rent-list')}}">
+                        <a href="{{route('admin.vehicle-customer-rent-list')}}">
                             <button class="btn btn-success">
                                 <i class="fa fa-backward"> </i>
                                 Back
@@ -38,15 +38,15 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" action="{{route('admin.vehicle-vendor-rent-store')}}" method="post" enctype="multipart/form-data">
+                <form role="form" action="{{route('admin.vehicle-customer-rent-store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="vendor_id">Vendor <span>*</span></label>
-                            <select name="vendor_id" id="vendor_id" class="form-control select2" required>
+                            <label for="customer_id">Customer <span>*</span></label>
+                            <select name="customer_id" id="customer_id" class="form-control select2" required>
                                 <option value="">Select</option>
-                                @foreach($vendors as $vendor)
-                                    <option value="{{$vendor->id}}">{{$vendor->name}} ({{$vendor->phone}})</option>
+                                @foreach($customers as $customer)
+                                    <option value="{{$customer->id}}">{{$customer->name}} ({{$customer->phone}})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -96,8 +96,20 @@
                             <input type="number" class="form-control" name="sub_total" id="sub_total" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="grand_discount">Discount</label>
-                            <input type="number" class="form-control" name="grand_discount" id="grand_discount" onkeyup="discountAmount('')">
+                            <label for="discount_type">Discount Type</label>
+                            <select name="discount_type" id="discount_type" class="form-control select2" required>
+                                <option value="">Select</option>
+                                <option value="Flat">Flat</option>
+                                <option value="Percent">Percent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="discount_percent">Discount</label>
+                            <input type="number" class="form-control" name="discount_percent" id="discount_percent" onkeyup="discountPercent('')">
+                        </div>
+                        <div class="form-group">
+                            <label for="discount_amount">Discount Amount</label>
+                            <input type="number" class="form-control" name="discount_amount" id="discount_amount" readonly>
                         </div>
                         <div class="form-group">
                             <label for="grand_total">Grand Total</label>
@@ -302,24 +314,46 @@
             $('#due_price').val(due_price);
         })
 
-        function discountAmount(){
+        function discountPercent(){
 
-            var store_grand_total = $('#store_grand_total').val();
-            console.log('store_grand_total= ' + store_grand_total);
-            console.log('store_grand_total= ' + typeof store_grand_total);
+            //var store_grand_total = $('#store_grand_total').val();
+            //console.log('store_grand_total= ' + store_grand_total);
+            //console.log('store_grand_total= ' + typeof store_grand_total);
+            var sub_total = $('#sub_total').val();
+            console.log('sub_total= ' + sub_total);
+            console.log('sub_total= ' + typeof sub_total);
 
-            var grand_discount = $('#grand_discount').val();
-            console.log('grand_discount= ' + grand_discount);
-            console.log('grand_discount= ' + typeof grand_discount);
-
-            var grand_total = store_grand_total - grand_discount;
-            console.log('grand_total=' + grand_total);
-            console.log('grand_total=' + typeof grand_total);
-
-            $('#grand_discount').val(grand_discount)
-            $('#grand_total').val(grand_total);
-            $('#due_price').val(grand_total);
+            // var grand_discount = $('#grand_discount').val();
+            // console.log('grand_discount= ' + grand_discount);
+            // console.log('grand_discount= ' + typeof grand_discount);
+            //
+            // var grand_total = store_grand_total - grand_discount;
+            // console.log('grand_total=' + grand_total);
+            // console.log('grand_total=' + typeof grand_total);
+            //
+            // $('#grand_discount').val(grand_discount)
+            // $('#grand_total').val(grand_total);
+            // $('#due_price').val(grand_total);
         }
+
+        // function discountAmount(){
+        //
+        //     var store_grand_total = $('#store_grand_total').val();
+        //     console.log('store_grand_total= ' + store_grand_total);
+        //     console.log('store_grand_total= ' + typeof store_grand_total);
+        //
+        //     var grand_discount = $('#grand_discount').val();
+        //     console.log('grand_discount= ' + grand_discount);
+        //     console.log('grand_discount= ' + typeof grand_discount);
+        //
+        //     var grand_total = store_grand_total - grand_discount;
+        //     console.log('grand_total=' + grand_total);
+        //     console.log('grand_total=' + typeof grand_total);
+        //
+        //     $('#grand_discount').val(grand_discount)
+        //     $('#grand_total').val(grand_total);
+        //     $('#due_price').val(grand_total);
+        // }
 
         // check cash or credit paid
         $('#paid_div').hide();

@@ -34,6 +34,11 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::get('vehicle/vendor/rent/edit/{id}','OrderController@vehicle_vendor_rent_edit')->name('vehicle-vendor-rent-edit');
     Route::put('vehicle/vendor/rent/update/{id}','OrderController@vehicle_vendor_rent_update')->name('vehicle-vendor-rent-update');
     Route::get('order/vendor/print/{id}','OrderController@order_vendor_print')->name('order-vendor-print');
+
+    Route::get('vehicle/customer/rent/list','OrderController@vehicle_customer_rent_list')->name('vehicle-customer-rent-list');
+    Route::get('vehicle/customer/rent/create','OrderController@vehicle_customer_rent_create')->name('vehicle-customer-rent-create');
+    Route::post('vehicle/customer/rent/store','OrderController@vehicle_customer_rent_store')->name('vehicle-customer-rent-store');
+
     Route::get('check/already/vehicle/assigned/or/free/{id}','VehicleController@check_already_vehicle_assigned_or_free');
     Route::get('check/already/driver/assigned/or/free/{id}','DriverController@check_already_driver_assigned_or_free');
     Route::post('check/already/vehicle/assigned/or/free/edit','VehicleController@check_already_vehicle_assigned_or_free_edit');
