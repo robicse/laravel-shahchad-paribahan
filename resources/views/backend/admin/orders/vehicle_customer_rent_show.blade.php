@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <span><b>Price:</b> {{$vehicleCustomerRentDetail->price}}</span>
+                                        <span><b>Price:</b> Tk.{{$vehicleCustomerRentDetail->price}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <span><b>Sub Total:</b> {{$vehicleCustomerRentDetail->sub_total}}</span>
+                                        <span><b>Sub Total:</b> Tk.{{$vehicleCustomerRentDetail->sub_total}}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <span><b>Discount:</b> {{$vehicleCustomerRent->discount_amount}}</span>
+                                        <span><b>Discount:</b> Tk.{{$vehicleCustomerRent->discount_amount}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <span><b>Grand Total:</b> {{$vehicleCustomerRent->grand_total}}</span>
+                                        <span><b>Grand Total:</b> Tk.{{$vehicleCustomerRent->grand_total}}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -141,12 +141,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group" id="paid_div">
-                                        <span><b>Paid:</b> {{$vehicleCustomerRent->paid}}</span>
+                                        <span><b>Paid:</b> Tk.{{$vehicleCustomerRent->paid}}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group" id="due_price_div">
-                                        <span><b>Due:</b> {{$vehicleCustomerRent->due_price}}</span>
+                                        <span><b>Due:</b> Tk.{{$vehicleCustomerRent->due_price}}</span>
                                     </div>
                                     {{--                        <div class="form-group">--}}
                                     {{--                            <label for="exchange">Exchange</label>--}}

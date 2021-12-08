@@ -93,8 +93,20 @@
                                 <input type="number" class="form-control" name="sub_total" id="sub_total" value="{{$vehicleVendorRent->sub_total}}" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="grand_discount">Discount</label>
-                                <input type="number" class="form-control" name="grand_discount" id="grand_discount" value="{{$vehicleVendorRent->grand_discount}}" onkeyup="discountAmount('')">
+                                <label for="discount_type">Discount Type</label>
+                                <select name="discount_type" id="discount_type" class="form-control select2" required>
+                                    <option value="">Select</option>
+                                    <option value="Flat" {{$vehicleVendorRent->discount_type == 'Flat' ? 'selected' : ''}}>Flat</option>
+                                    <option value="Percent" {{$vehicleVendorRent->discount_type == 'Percent' ? 'selected' : ''}}>Percent</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="discount_percent">Discount</label>
+                                <input type="number" class="form-control" name="discount_percent" id="discount_percent" value="{{$vehicleVendorRent->discount_percent}}" onkeyup="discountPercent('')">
+                            </div>
+                            <div class="form-group">
+                                <label for="discount_amount">Discount Amount</label>
+                                <input type="number" class="form-control" name="discount_amount" id="discount_amount" value="{{$vehicleVendorRent->discount_amount}}" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="grand_total">Grand Total</label>

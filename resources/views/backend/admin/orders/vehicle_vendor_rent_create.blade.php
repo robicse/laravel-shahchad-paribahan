@@ -96,8 +96,20 @@
                             <input type="number" class="form-control" name="sub_total" id="sub_total" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="grand_discount">Discount</label>
-                            <input type="number" class="form-control" name="grand_discount" id="grand_discount" onkeyup="discountAmount('')">
+                            <label for="discount_type">Discount Type</label>
+                            <select name="discount_type" id="discount_type" class="form-control select2" required>
+                                <option value="">Select</option>
+                                <option value="Flat">Flat</option>
+                                <option value="Percent">Percent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="discount_percent">Discount</label>
+                            <input type="number" class="form-control" name="discount_percent" id="discount_percent" onkeyup="discountPercent('')">
+                        </div>
+                        <div class="form-group">
+                            <label for="discount_amount">Discount Amount</label>
+                            <input type="number" class="form-control" name="discount_amount" id="discount_amount" readonly>
                         </div>
                         <div class="form-group">
                             <label for="grand_total">Grand Total</label>
@@ -152,7 +164,7 @@
         //     todayHighlight: true,
         // });
         $('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
+            format: 'yyyy-mm',
             startDate: '-3d',
             //startDate: '-0d',
             todayBtn: "linked",
@@ -302,24 +314,41 @@
             $('#due_price').val(due_price);
         })
 
-        function discountAmount(){
-
-            var store_grand_total = $('#store_grand_total').val();
-            console.log('store_grand_total= ' + store_grand_total);
-            console.log('store_grand_total= ' + typeof store_grand_total);
-
-            var grand_discount = $('#grand_discount').val();
-            console.log('grand_discount= ' + grand_discount);
-            console.log('grand_discount= ' + typeof grand_discount);
-
-            var grand_total = store_grand_total - grand_discount;
-            console.log('grand_total=' + grand_total);
-            console.log('grand_total=' + typeof grand_total);
-
-            $('#grand_discount').val(grand_discount)
+        function discountPercent(){
+            var discount_type = $('#discount_type').val();
+            var sub_total = $('#sub_total').val();
+            var discount = $('#discount_percent').val();
+            if(discount_type == 'Percent'){
+                var discount_percent = (sub_total*discount)/100;
+                var discount_amount = discount_percent;
+                var grand_total = sub_total - discount_percent;
+            }else{
+                var discount_amount = discount;
+                var grand_total = sub_total - discount;
+            }
+            $('#discount_amount').val(discount_amount);
             $('#grand_total').val(grand_total);
             $('#due_price').val(grand_total);
         }
+
+        // function discountAmount(){
+        //
+        //     var store_grand_total = $('#store_grand_total').val();
+        //     console.log('store_grand_total= ' + store_grand_total);
+        //     console.log('store_grand_total= ' + typeof store_grand_total);
+        //
+        //     var grand_discount = $('#grand_discount').val();
+        //     console.log('grand_discount= ' + grand_discount);
+        //     console.log('grand_discount= ' + typeof grand_discount);
+        //
+        //     var grand_total = store_grand_total - grand_discount;
+        //     console.log('grand_total=' + grand_total);
+        //     console.log('grand_total=' + typeof grand_total);
+        //
+        //     $('#grand_discount').val(grand_discount)
+        //     $('#grand_total').val(grand_total);
+        //     $('#due_price').val(grand_total);
+        // }
 
         // check cash or credit paid
         $('#paid_div').hide();

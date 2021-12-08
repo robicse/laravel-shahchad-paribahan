@@ -65,7 +65,9 @@ class OrderController extends Controller
         $order->type = 'Vendor';
         $order->payment_type_id = $request->payment_type_id;
         $order->sub_total = $request->sub_total;
-        $order->grand_discount = $request->grand_discount;
+        $order->discount_type = $request->discount_type;
+        $order->discount_percent = $request->discount_percent;
+        $order->discount_amount = $request->discount_amount;
         $order->grand_total = $request->grand_total;
         $order->paid = $request->payment_type_id == 1 ? $request->grand_total : $request->paid;
         $order->exchange = 0;
@@ -88,7 +90,7 @@ class OrderController extends Controller
             $orderItem->price=$request->price;
             //$orderItem->discount=$request->grand_discount;
             //$orderItem->per_day_price=$request->per_day_price;
-            $orderItem->sub_total=$request->sub_total;
+            //$orderItem->total=$request->sub_total;
             $orderItem->note=$request->note;
             $orderItem->type = 'Vendor';
             $orderItem->save();
@@ -170,7 +172,9 @@ class OrderController extends Controller
         $order->vendor_id = $request->vendor_id;
         $order->payment_type_id = $request->payment_type_id;
         $order->sub_total = $request->sub_total;
-        $order->grand_discount = $request->grand_discount;
+        $order->discount_type = $request->discount_type;
+        $order->discount_percent = $request->discount_percent;
+        $order->discount_amount = $request->discount_amount;
         $order->grand_total = $request->grand_total;
         $order->paid = $request->payment_type_id == 1 ? $request->grand_total : $request->paid;
         $order->exchange = 0;
@@ -188,7 +192,7 @@ class OrderController extends Controller
             $orderItem->quantity=$request->quantity;
             $orderItem->price=$request->price;
             //$orderItem->discount=$request->grand_discount;
-            $orderItem->sub_total=$request->sub_total;
+            //$orderItem->total=$request->sub_total;
             $orderItem->note=$request->note;
             $orderItem->save();
 

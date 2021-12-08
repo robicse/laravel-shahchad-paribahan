@@ -72,7 +72,7 @@
                     <thead>
                         <tr>
                             <th>Vehicle Name</th>
-                            <th>Driver Name</th>
+{{--                            <th>Driver Name</th>--}}
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Price (Tk.)</th>
@@ -83,7 +83,7 @@
                     <tbody>
                         <tr>
                             <td>{{$vehicleVendorRentDetail->vehicle->vehicle_name}}</td>
-                            <td>{{$vehicleVendorRentDetail->driver->name}}</td>
+{{--                            <td>{{$vehicleVendorRentDetail->driver->name}}</td>--}}
                             <td>{{$vehicleVendorRentDetail->start_date}}</td>
                             <td>{{$vehicleVendorRentDetail->end_date}}</td>
                             <td>{{number_format($vehicleVendorRentDetail->price, 2)}}</td>
@@ -115,7 +115,7 @@
                         <tr>
                             <th>Discount :</th>
                             <td>
-                                Tk. {{number_format($vehicleVendorRent->grand_discount, 2)}}
+                                Tk. {{number_format($vehicleVendorRent->discount_amount, 2)}}
                             </td>
                         </tr>
                         <tr>
