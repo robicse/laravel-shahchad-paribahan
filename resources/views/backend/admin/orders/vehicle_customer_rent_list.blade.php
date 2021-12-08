@@ -57,7 +57,7 @@
                                 @endphp
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>{{$vehicleCustomerRent->vendor->name}} ({{$vehicleCustomerRent->vendor->phone}})</td>
+                                <td>{{$vehicleCustomerRent->customer->name}} ({{$vehicleCustomerRent->customer->phone}})</td>
                                 <td>{{$orderItem['vehicle_name']}} ({{$orderItem['registration_no']}})</td>
                                 <td>{{$orderItem['start_date']}}</td>
                                 <td>{{$orderItem['end_date']}}</td>
@@ -69,10 +69,10 @@
                                     @endif
                                 </td>
                                 <td class="d-inline-flex">
-                                    <a class="btn btn-info float-left" href="{{route('admin.vehicle-vendor-rent-edit',$vehicleCustomerRent->id)}}" style="margin-left: 5px">
+                                    <a class="btn btn-info float-left" href="{{route('admin.vehicle-customer-rent-edit',$vehicleCustomerRent->id)}}" style="margin-left: 5px">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a class="btn btn-success" href="{{route('admin.vehicle-vendor-rent-show',$vehicleCustomerRent->id)}}" style="margin-left: 5px">
+                                    <a class="btn btn-success" href="{{route('admin.vehicle-customer-rent-show',$vehicleCustomerRent->id)}}" style="margin-left: 5px">
                                         <i class="fa fa-eye"></i>
                                     </a>
 {{--                                    <button class="btn btn-danger waves-effect" type="button"--}}

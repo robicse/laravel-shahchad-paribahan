@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Add Vehicle Customer Rent")
+@section("title","Edit Vehicle Customer Rent")
 @push('css')
     <link rel="stylesheet" href="{{asset('backend/plugins/bootstrap-datepicker/bootstrap-datepicker.css')}}">
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add Vehicle Customer Rent</h1>
+                    <h1>Edit Vehicle Customer Rent</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Add Vehicle Customer Rent</li>
+                        <li class="breadcrumb-item active">Edit Vehicle Customer Rent</li>
                     </ol>
                 </div>
             </div>
@@ -23,30 +23,30 @@
     <section class="content">
         <div class="row">
             <div class="col-8 offset-2">
-            <!-- general form elements -->
+                <!-- general form elements -->
                 <div class="card card-info card-outline">
-                <div class="card-header">
-                    <h3 class="card-title float-left">Add Vehicle Customer Rent</h3>
-                    <div class="float-right">
-                        <a href="{{route('admin.vehicle-customer-rent-list')}}">
-                            <button class="btn btn-success">
-                                <i class="fa fa-backward"> </i>
-                                Back
-                            </button>
-                        </a>
+                    <div class="card-header">
+                        <h3 class="card-title float-left">Edit Vehicle Customer Rent</h3>
+                        <div class="float-right">
+                            <a href="{{route('admin.vehicle-customer-rent-list')}}">
+                                <button class="btn btn-success">
+                                    <i class="fa fa-backward"> </i>
+                                    Back
+                                </button>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form role="form" action="{{route('admin.vehicle-customer-rent-store')}}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <div class="card-body">
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" action="{{route('admin.vehicle-customer-rent-update',$vehicleCustomerRent->id)}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label for="customer_id">Customer <span>*</span></label>
                             <select name="customer_id" id="customer_id" class="form-control select2" required>
                                 <option value="">Select</option>
                                 @foreach($customers as $customer)
-                                    <option value="{{$customer->id}}">{{$customer->name}} ({{$customer->phone}})</option>
+                                    <option value="{{$customer->id}}" {{$vehicleCustomerRent->customer_id == $customer->id ? 'selected' : ''}}>{{$customer->name}} ({{$customer->phone}})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -55,98 +55,93 @@
                             <select name="vehicle_id" id="vehicle_id" class="form-control select2" required>
                                 <option value="">Select</option>
                                 @foreach($vehicles as $vehicle)
-                                    <option value="{{$vehicle->id}}">{{$vehicle->vehicle_name}} ({{$vehicle->registration_no}})</option>
+                                    <option value="{{$vehicle->id}}" {{$vehicleCustomerRentDetail['vehicle_id'] == $vehicle->id ? 'selected' : ''}}>{{$vehicle->vehicle_name}} ({{$vehicle->registration_no}})</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="start_date">Start Date <span>*</span></label>
-                            <input type="text" class="datepicker form-control" name="start_date" id="start_date" required>
+                            <input type="text" class="datepicker form-control" name="start_date" id="start_date" value="{{$vehicleCustomerRentDetail->start_date}}" required>
                         </div>
                         <div class="form-group">
                             <label for="end_date">End Date <span>*</span></label>
-                            <input type="text" class="datepicker form-control" name="end_date" id="end_date" required>
+                            <input type="text" class="datepicker form-control" name="end_date" id="end_date" value="{{$vehicleCustomerRentDetail->end_date}}" required>
                         </div>
                         <div class="form-group">
                             <label for="rent_duration">Rent Duration <span>*</span></label>
-                            <input type="text" class="form-control" name="rent_duration" id="rent_duration" readonly>
+                            <input type="text" class="form-control" name="rent_duration" id="rent_duration" value="{{$vehicleCustomerRentDetail->rent_duration}}" readonly>
                         </div>
-{{--                        <div class="form-group">--}}
-{{--                            <label for="driver_id">Driver <span>*</span></label>--}}
-{{--                            <input type="text" class="form-control" name="driver_id" id="driver_id" required readonly>--}}
-{{--                        </div>--}}
+                        {{--                        <div class="form-group">--}}
+                        {{--                            <label for="driver_id">Driver <span>*</span></label>--}}
+                        {{--                            <input type="text" class="form-control" name="driver_id" id="driver_id" required readonly>--}}
+                        {{--                        </div>--}}
                         <div class="form-group">
                             <label for="quantity">Quantity <span>*</span></label>
-                            <input type="number" class="form-control" name="quantity" id="quantity" value="1">
+                            <input type="number" class="form-control" name="quantity" id="quantity" value="{{$vehicleCustomerRentDetail->quantity}}">
                         </div>
                         <div class="form-group">
                             <label for="rent_type">Rent Type <span>*</span></label>
                             <select name="rent_type" id="rent_type" class="form-control select2" required>
                                 <option value="">Select</option>
-                                <option value="Daily">Daily</option>
-                                <option value="Monthly">Monthly</option>
+                                <option value="Daily" {{$vehicleCustomerRentDetail->rent_type == 'Daily' ? 'selected' : ''}}>Daily</option>
+                                <option value="Monthly" {{$vehicleCustomerRentDetail->rent_type == 'Monthly' ? 'selected' : ''}}>Monthly</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="price">Price</label>
-                            <input type="number" class="form-control" name="price" id="price" >
+                            <input type="number" class="form-control" name="price" id="price" value="{{$vehicleCustomerRentDetail->price}}" >
                         </div>
                         <div class="form-group">
                             <label for="sub_total">Sub Total</label>
-                            <input type="number" class="form-control" name="sub_total" id="sub_total" readonly>
+                            <input type="number" class="form-control" name="sub_total" id="sub_total" value="{{$vehicleCustomerRent->sub_total}}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="discount_type">Discount Type</label>
                             <select name="discount_type" id="discount_type" class="form-control select2" required>
                                 <option value="">Select</option>
-                                <option value="Flat">Flat</option>
-                                <option value="Percent">Percent</option>
+                                <option value="Flat" {{$vehicleCustomerRent->discount_type == 'Flat' ? 'selected' : ''}}>Flat</option>
+                                <option value="Percent" {{$vehicleCustomerRent->discount_type == 'Percent' ? 'selected' : ''}}>Percent</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="discount_percent">Discount</label>
-                            <input type="number" class="form-control" name="discount_percent" id="discount_percent" onkeyup="discountPercent('')">
+                            <input type="number" class="form-control" name="discount_percent" id="discount_percent" value="{{$vehicleCustomerRent->discount_percent}}" onkeyup="discountPercent('')">
                         </div>
                         <div class="form-group">
                             <label for="discount_amount">Discount Amount</label>
-                            <input type="number" class="form-control" name="discount_amount" id="discount_amount" readonly>
+                            <input type="number" class="form-control" name="discount_amount" id="discount_amount" value="{{$vehicleCustomerRent->discount_amount}}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="grand_total">Grand Total</label>
-                            <input type="number" class="form-control" name="grand_total" id="grand_total" readonly>
+                            <input type="number" class="form-control" name="grand_total" id="grand_total" value="{{$vehicleCustomerRent->grand_total}}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="payment_type_id">Payment Type <span>*</span></label>
                             <select name="payment_type_id" id="payment_type_id" class="form-control select2" required>
                                 <option value="">Select</option>
                                 @foreach($payment_types as $payment_type)
-                                    <option value="{{$payment_type->id}}">{{$payment_type->name}}</option>
+                                    <option value="{{$payment_type->id}}" {{$vehicleCustomerRent->payment_type_id == $payment_type->id ? 'selected' : ''}}>{{$payment_type->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group" id="paid_div">
                             <label for="paid">Paid</label>
-                            <input type="number" class="form-control" name="paid" id="paid">
+                            <input type="number" class="form-control" name="paid" id="paid" value="{{$vehicleCustomerRent->paid}}">
                         </div>
                         <div class="form-group" id="due_price_div">
                             <label for="due_price">Due</label>
-                            <input type="number" class="form-control" name="due_price" id="due_price" readonly>
+                            <input type="number" class="form-control" name="due_price" id="due_price" value="{{$vehicleCustomerRent->due_price}}" readonly>
                         </div>
-{{--                        <div class="form-group">--}}
-{{--                            <label for="exchange">Exchange</label>--}}
-{{--                            <input type="number" class="form-control" name="exchange" id="exchange" >--}}
-{{--                        </div>--}}
                         <div class="form-group">
                             <label for="note">Note</label>
-                            <textarea type="text" class="form-control" name="note" id="note" ></textarea>
+                            <textarea type="text" class="form-control" name="note" id="note" >{{$vehicleCustomerRentDetail->note}}</textarea>
                         </div>
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -170,25 +165,6 @@
             autoclose: true,
             todayHighlight: true
         });
-
-        {{--$('#vehicle_id').change(function (){--}}
-        {{--    //alert();--}}
-        {{--    var vehicle_id = $('#vehicle_id').val();--}}
-        {{--    $.ajax({--}}
-        {{--        url:"{{URL('/admin/get/vehicle/assigned/driver')}}/" + vehicle_id,--}}
-        {{--        method:"GET",--}}
-        {{--        success:function (data){--}}
-        {{--            console.log(data)--}}
-        {{--            // if(data > 0){--}}
-        {{--            //     alert('Please select another vehicle, This vehicle already assigned.');--}}
-        {{--            //     $('#vehicle_id').val('');--}}
-        {{--            // }--}}
-        {{--        },--}}
-        {{--        error:function (err){--}}
-        {{--            console.log(err)--}}
-        {{--        }--}}
-        {{--    })--}}
-        {{--})--}}
 
         $('#start_date').change(function (){
             var start_date = $('#start_date').val();
@@ -276,11 +252,8 @@
                     console.log(result)
                     $('#price').val(result)
                     $('#sub_total').val(result*quantity)
-                    $('#grand_discount').val(0)
+                    $('#discount').val(0)
                     $('#grand_total').val(result*quantity)
-                    //$('#store_grand_total').val(result*quantity)
-                    $('#paid').val(0)
-                    $('#exchange').val(0)
                 },
                 error:function (err){
                     console.log(err)
@@ -331,16 +304,19 @@
         }
 
         // check cash or credit paid
-        $('#paid_div').hide();
-        $('#due_price_div').hide();
+        var current_payment_type_id = $('#payment_type_id').val();
+        if(current_payment_type_id == 1){
+            $('#paid_div').hide();
+            $('#due_price_div').hide();
+        }
         $('#payment_type_id').change(function (){
             var payment_type_id = $('#payment_type_id').val();
             if(payment_type_id == 2){
                 $('#paid_div').show();
                 $('#due_price_div').show();
-                $('#paid').val(0);
-                var grand_total = $('#grand_total').val();
-                $('#due_price').val(grand_total);
+                // $('#paid').val(0);
+                // var grand_total = $('#grand_total').val();
+                // $('#due_price').val(grand_total);
             }else{
                 $('#paid_div').hide();
                 $('#due_price_div').hide();

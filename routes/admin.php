@@ -38,6 +38,10 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::get('vehicle/customer/rent/list','OrderController@vehicle_customer_rent_list')->name('vehicle-customer-rent-list');
     Route::get('vehicle/customer/rent/create','OrderController@vehicle_customer_rent_create')->name('vehicle-customer-rent-create');
     Route::post('vehicle/customer/rent/store','OrderController@vehicle_customer_rent_store')->name('vehicle-customer-rent-store');
+    Route::get('vehicle/customer/rent/show/{id}','OrderController@vehicle_customer_rent_show')->name('vehicle-customer-rent-show');
+    Route::get('vehicle/customer/rent/edit/{id}','OrderController@vehicle_customer_rent_edit')->name('vehicle-customer-rent-edit');
+    Route::put('vehicle/customer/rent/update/{id}','OrderController@vehicle_customer_rent_update')->name('vehicle-customer-rent-update');
+    Route::get('order/customer/print/{id}','OrderController@order_customer_print')->name('order-customer-print');
 
     Route::get('check/already/vehicle/assigned/or/free/{id}','VehicleController@check_already_vehicle_assigned_or_free');
     Route::get('check/already/driver/assigned/or/free/{id}','DriverController@check_already_driver_assigned_or_free');

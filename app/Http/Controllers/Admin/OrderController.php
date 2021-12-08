@@ -60,7 +60,7 @@ class OrderController extends Controller
         $order = new Order();
         $order->date = $date;
         $order->invoice_no = '1000';
-        $order->order_type = 'Receiving';
+        $order->order_type = 'Purchases';
         $order->vendor_id = $request->vendor_id;
         $order->type = 'Vendor';
         $order->payment_type_id = $request->payment_type_id;
@@ -137,7 +137,7 @@ class OrderController extends Controller
 
     public function vehicle_vendor_rent_show($id)
     {
-        $vehicleVendorRent = Order::where('order_type','receiving')->where('id',$id)->first();
+        $vehicleVendorRent = Order::where('order_type','Purchases')->where('id',$id)->first();
         $vehicleVendorRentDetail = OrderItem::where('order_id',$id)->first();
         return view('backend.admin.orders.vehicle_vendor_rent_show',compact('vehicleVendorRent','vehicleVendorRentDetail'));
     }
@@ -147,7 +147,7 @@ class OrderController extends Controller
         $vehicles = Vehicle::where('status',1)->where('own_vehicle_status','Rent')->get();
         $vendors = Vendor::where('status',1)->get();
         $payment_types = PaymentType::all();
-        $vehicleVendorRent = Order::where('order_type','receiving')->where('id',$id)->first();
+        $vehicleVendorRent = Order::where('order_type','Purchases')->where('id',$id)->first();
         $vehicleVendorRentDetail = OrderItem::where('order_id',$id)->first();
         return view('backend.admin.orders.vehicle_vendor_rent_edit',compact('vehicleVendorRent','vehicleVendorRentDetail','vendors','vehicles','payment_types'));
     }
@@ -309,7 +309,7 @@ class OrderController extends Controller
     }
 
     public function order_vendor_print($id){
-        $vehicleVendorRent = Order::where('order_type','receiving')->where('id',$id)->first();
+        $vehicleVendorRent = Order::where('order_type','Purchases')->where('id',$id)->first();
         $vehicleVendorRentDetail = OrderItem::where('order_id',$id)->first();
         $vendor = Vendor::find($vehicleVendorRent->vendor_id);
         $digit = new NumberFormatter("en", NumberFormatter::SPELLOUT);
@@ -327,7 +327,8 @@ class OrderController extends Controller
 
     public function vehicle_customer_rent_create()
     {
-        $vehicles = Vehicle::where('status',1)->where('own_vehicle_status','Rent')->get();
+        //$vehicles = Vehicle::where('status',1)->where('own_vehicle_status','Own')->get();
+        $vehicles = Vehicle::where('status',1)->get();
         $customers = Customer::where('status',1)->get();
         $payment_types = PaymentType::all();
         return view('backend.admin.orders.vehicle_customer_rent_create', compact('vehicles','customers','payment_types'));
@@ -335,24 +336,27 @@ class OrderController extends Controller
 
     public function vehicle_customer_rent_store(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         $this->validate($request, [
             //'name'=> 'required|unique:vehicles,name',
         ]);
 
-        $date = date('Y-m-d H:i:s');
+        $date = date('Y-m-d');
+        $datetime = date('Y-m-d H:i:s');
         $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
         $vehicleDriver = VehicleDriverAssign::where('vehicle_id',$request->vehicle_id)->first();
 
         $order = new Order();
         $order->date = $date;
         $order->invoice_no = '1000';
-        $order->order_type = 'Receiving';
-        $order->vendor_id = $request->vendor_id;
-        $order->type = 'Vendor';
+        $order->order_type = 'Sales';
+        $order->customer_id = $request->customer_id;
+        $order->type = 'Customer';
         $order->payment_type_id = $request->payment_type_id;
         $order->sub_total = $request->sub_total;
-        $order->grand_discount = $request->grand_discount;
+        $order->discount_type = $request->discount_type;
+        $order->discount_percent = $request->discount_percent;
+        $order->discount_amount = $request->discount_amount;
         $order->grand_total = $request->grand_total;
         $order->paid = $request->payment_type_id == 1 ? $request->grand_total : $request->paid;
         $order->exchange = 0;
@@ -375,9 +379,9 @@ class OrderController extends Controller
             $orderItem->price=$request->price;
             //$orderItem->discount=$request->grand_discount;
             //$orderItem->per_day_price=$request->per_day_price;
-            $orderItem->sub_total=$request->sub_total;
+            //$orderItem->total=$request->sub_total;
             $orderItem->note=$request->note;
-            $orderItem->type = 'Vendor';
+            $orderItem->type = 'Customer';
             $orderItem->save();
 
             if($request->payment_type_id == 1){
@@ -391,7 +395,7 @@ class OrderController extends Controller
             }else{
                 // paid
                 $payment = new Payment();
-                $payment->date=date('Y-m-d');
+                $payment->date=$date;
                 $payment->order_id=$insert_id;
                 $payment->payment_type_id = 1;
                 $payment->paid = $request->paid;
@@ -400,7 +404,7 @@ class OrderController extends Controller
 
                 // due
                 $payment = new Payment();
-                $payment->date=date('Y-m-d');
+                $payment->date=$date;
                 $payment->order_id=$insert_id;
                 $payment->payment_type_id = 2;
                 $payment->paid = $request->due_price;
@@ -411,129 +415,142 @@ class OrderController extends Controller
 
             $accessLog = new AccessLog();
             $accessLog->user_id=Auth::user()->id;
-            $accessLog->action_module='Vehicle Vendor Rent';
+            $accessLog->action_module='Vehicle Customer Rent';
             $accessLog->action_done='Create';
-            $accessLog->action_remarks='Vehicle Vendor Rent ID: '.$insert_id;
+            $accessLog->action_remarks='Vehicle Customer Rent ID: '.$insert_id;
+            $accessLog->action_date=$date;
+            $accessLog->save();
+        }
+
+        Toastr::success('Vehicle Customer Rent Created Successfully');
+        return redirect()->route('admin.vehicle-customer-rent-list');
+    }
+
+    public function vehicle_customer_rent_show($id)
+    {
+        $vehicleCustomerRent = Order::where('order_type','Sales')->where('id',$id)->first();
+        $vehicleCustomerRentDetail = OrderItem::where('order_id',$id)->first();
+        return view('backend.admin.orders.vehicle_customer_rent_show',compact('vehicleCustomerRent','vehicleCustomerRentDetail'));
+    }
+
+    public function vehicle_customer_rent_edit($id)
+    {
+        //$vehicles = Vehicle::where('status',1)->where('own_vehicle_status','Own')->get();
+        $vehicles = Vehicle::where('status',1)->get();
+        $customers = Customer::where('status',1)->get();
+        $payment_types = PaymentType::all();
+        $vehicleCustomerRent = Order::where('order_type','Sales')->where('id',$id)->first();
+        $vehicleCustomerRentDetail = OrderItem::where('order_id',$id)->first();
+        //dd($vehicleCustomerRentDetail);
+        return view('backend.admin.orders.vehicle_customer_rent_edit',compact('vehicleCustomerRent','vehicleCustomerRentDetail','customers','vehicles','payment_types'));
+    }
+
+    public function vehicle_customer_rent_update(Request $request, $id)
+    {
+        //dd($request->all());
+        //dd($id);
+        $this->validate($request, [
+            //'name'=> 'required|unique:vehicles,name,'.$id,
+        ]);
+
+        $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
+        $vehicleDriver = VehicleDriverAssign::where('vehicle_id',$request->vehicle_id)->first();
+        $due_amount = $request->payment_type_id == 1 ? 0 :$request->grand_total;
+        //$paid_amount = $request->payment_type_id == 2 ? 0 :$request->grand_total;
+
+        $order = Order::find($id);
+        $prev_payment_type_id = $order->payment_type_id;
+        $order->vendor_id = $request->vendor_id;
+        $order->payment_type_id = $request->payment_type_id;
+        $order->discount_type = $request->discount_type;
+        $order->discount_percent = $request->discount_percent;
+        $order->discount_amount = $request->discount_amount;
+        $order->sub_total = $request->sub_total;
+        $order->grand_total = $request->grand_total;
+        $order->paid = $request->payment_type_id == 1 ? $request->grand_total : $request->paid;
+        $order->exchange = 0;
+        $order->due_price = $request->payment_type_id == 1 ? 0 : $request->due_price;
+        $updated_row = $order->save();
+
+        if($updated_row){
+            $orderItem = OrderItem::where('order_id',$id)->first();
+            $orderItem->vehicle_id=$request->vehicle_id;
+            //$orderItem->driver_id=$vehicleDriver->driver_id;
+            $orderItem->rent_type=$vehicle->rent_type;
+            $orderItem->start_date=$request->start_date;
+            $orderItem->end_date=$request->end_date;
+            $orderItem->rent_duration=$request->rent_duration;
+            $orderItem->quantity=$request->quantity;
+            $orderItem->price=$request->price;
+            //$orderItem->discount=$request->grand_discount;
+            //$orderItem->total=$request->sub_total;
+            $orderItem->note=$request->note;
+            $orderItem->save();
+
+
+
+            if( ($prev_payment_type_id == 1) && ($request->payment_type_id == 1) ){
+                $payment = Payment::where('order_id',$id)->where('payment_type_id',1)->first();
+                $payment->paid = $request->grand_total;
+                $payment->save();
+            }elseif(($prev_payment_type_id == 1) && ($request->payment_type_id == 2)){
+                // paid
+                $payment = Payment::where('order_id',$id)->where('payment_type_id',1)->first();
+                $payment->paid = $request->paid;
+                $payment->save();
+
+                // due
+                $payment = new Payment();
+                $payment->date=$date;
+                $payment->order_id=$id;
+                $payment->payment_type_id = 2;
+                $payment->paid = $request->due_price;
+                $payment->exchange = 0;
+                $payment->save();
+            }elseif(($prev_payment_type_id == 2) && ($request->payment_type_id == 2)){
+                // paid
+                $payment = Payment::where('order_id',$id)->where('payment_type_id',1)->first();
+                $payment->paid = $request->paid;
+                $payment->save();
+
+                // due
+                $payment = Payment::where('order_id',$id)->where('payment_type_id',2)->first();
+                $payment->paid = $request->due_price;
+                $payment->save();
+            }elseif(($prev_payment_type_id == 2) && ($request->payment_type_id == 1)){
+                // due
+                Payment::where('order_id',$id)->where('payment_type_id',2)->delete();
+
+                // paid
+                $payment = Payment::where('order_id',$id)->where('payment_type_id',1)->first();
+                $payment->paid = $request->grand_total;
+                $payment->save();
+
+
+            }else{
+                Toastr::success('Something went wrong!','Success');
+                return back();
+            }
+
+            $accessLog = new AccessLog();
+            $accessLog->user_id=Auth::user()->id;
+            $accessLog->action_module='Vehicle Customer Rent';
+            $accessLog->action_done='Update';
+            $accessLog->action_remarks='Vehicle Customer Rent ID: '.$id;
             $accessLog->action_date=date('Y-m-d');
             $accessLog->save();
         }
 
-        Toastr::success('Vehicle Vendor Rent Created Successfully');
-        return redirect()->route('admin.vehicle-vendor-rent-list');
+        Toastr::success('Vehicle Customer Rent updated successfully','Success');
+        return redirect()->route('admin.vehicle-customer-rent-list');
     }
 
-//    public function vehicle_vendor_rent_show($id)
-//    {
-//        $vehicleVendorRent = Order::where('order_type','receiving')->where('id',$id)->first();
-//        $vehicleVendorRentDetail = OrderItem::where('order_id',$id)->first();
-//        return view('backend.admin.orders.vehicle_vendor_rent_show',compact('vehicleVendorRent','vehicleVendorRentDetail'));
-//    }
-//
-//    public function vehicle_vendor_rent_edit($id)
-//    {
-//        $vehicles = Vehicle::where('status',1)->where('own_vehicle_status','Rent')->get();
-//        $vendors = Vendor::where('status',1)->get();
-//        $payment_types = PaymentType::all();
-//        $vehicleVendorRent = Order::where('order_type','receiving')->where('id',$id)->first();
-//        $vehicleVendorRentDetail = OrderItem::where('order_id',$id)->first();
-//        return view('backend.admin.orders.vehicle_vendor_rent_edit',compact('vehicleVendorRent','vehicleVendorRentDetail','vendors','vehicles','payment_types'));
-//    }
-//
-//    public function vehicle_vendor_rent_update(Request $request, $id)
-//    {
-//        //dd($request->all());
-//        //dd($id);
-//        $this->validate($request, [
-//            //'name'=> 'required|unique:vehicles,name,'.$id,
-//        ]);
-//
-//        $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
-//        $vehicleDriver = VehicleDriverAssign::where('vehicle_id',$request->vehicle_id)->first();
-//        $due_amount = $request->payment_type_id == 1 ? 0 :$request->grand_total;
-//        //$paid_amount = $request->payment_type_id == 2 ? 0 :$request->grand_total;
-//
-//        $order = Order::find($id);
-//        $prev_payment_type_id = $order->payment_type_id;
-//        $order->vendor_id = $request->vendor_id;
-//        $order->payment_type_id = $request->payment_type_id;
-//        $order->sub_total = $request->sub_total;
-//        $order->grand_discount = $request->grand_discount;
-//        $order->grand_total = $request->grand_total;
-//        $order->paid = $request->payment_type_id == 1 ? $request->grand_total : $request->paid;
-//        $order->exchange = 0;
-//        $order->due_price = $request->payment_type_id == 1 ? 0 : $request->due_price;
-//        $updated_row = $order->save();
-//
-//        if($updated_row){
-//            $orderItem = OrderItem::where('order_id',$id)->first();
-//            $orderItem->vehicle_id=$request->vehicle_id;
-//            //$orderItem->driver_id=$vehicleDriver->driver_id;
-//            $orderItem->rent_type=$vehicle->rent_type;
-//            $orderItem->start_date=$request->start_date;
-//            $orderItem->end_date=$request->end_date;
-//            $orderItem->rent_duration=$request->rent_duration;
-//            $orderItem->quantity=$request->quantity;
-//            $orderItem->price=$request->price;
-//            //$orderItem->discount=$request->grand_discount;
-//            $orderItem->sub_total=$request->sub_total;
-//            $orderItem->note=$request->note;
-//            $orderItem->save();
-//
-//
-//
-//            if( ($prev_payment_type_id == 1) && ($request->payment_type_id == 1) ){
-//                $payment = Payment::where('order_id',$id)->where('payment_type_id',1)->first();
-//                $payment->paid = $request->grand_total;
-//                $payment->save();
-//            }elseif(($prev_payment_type_id == 1) && ($request->payment_type_id == 2)){
-//                // paid
-//                $payment = Payment::where('order_id',$id)->where('payment_type_id',1)->first();
-//                $payment->paid = $request->paid;
-//                $payment->save();
-//
-//                // due
-//                $payment = new Payment();
-//                $payment->date=date('Y-m-d');
-//                $payment->order_id=$id;
-//                $payment->payment_type_id = 2;
-//                $payment->paid = $request->due_price;
-//                $payment->exchange = 0;
-//                $payment->save();
-//            }elseif(($prev_payment_type_id == 2) && ($request->payment_type_id == 2)){
-//                // paid
-//                $payment = Payment::where('order_id',$id)->where('payment_type_id',1)->first();
-//                $payment->paid = $request->paid;
-//                $payment->save();
-//
-//                // due
-//                $payment = Payment::where('order_id',$id)->where('payment_type_id',2)->first();
-//                $payment->paid = $request->due_price;
-//                $payment->save();
-//            }elseif(($prev_payment_type_id == 2) && ($request->payment_type_id == 1)){
-//                // due
-//                Payment::where('order_id',$id)->where('payment_type_id',2)->delete();
-//
-//                // paid
-//                $payment = Payment::where('order_id',$id)->where('payment_type_id',1)->first();
-//                $payment->paid = $request->grand_total;
-//                $payment->save();
-//
-//
-//            }else{
-//                Toastr::success('Something went wrong!','Success');
-//                return back();
-//            }
-//
-//            $accessLog = new AccessLog();
-//            $accessLog->user_id=Auth::user()->id;
-//            $accessLog->action_module='Vehicle Vendor Rent';
-//            $accessLog->action_done='Update';
-//            $accessLog->action_remarks='Vehicle Vendor Rent ID: '.$id;
-//            $accessLog->action_date=date('Y-m-d');
-//            $accessLog->save();
-//        }
-//
-//        Toastr::success('Vehicle Vendor Rent updated successfully','Success');
-//        return redirect()->route('admin.vehicle-vendor-rent-list');
-//    }
+    public function order_Customer_print($id){
+        $vehicleCustomerRent = Order::where('order_type','Sales')->where('id',$id)->first();
+        $vehicleCustomerRentDetail = OrderItem::where('order_id',$id)->first();
+        $customer = Customer::find($vehicleCustomerRent->customer_id);
+        $digit = new NumberFormatter("en", NumberFormatter::SPELLOUT);
+
+        return view('backend.admin.orders.invoice_customer',compact('vehicleCustomerRent','vehicleCustomerRentDetail','customer','digit'));
+    }
 }
