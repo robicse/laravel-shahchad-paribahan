@@ -40,8 +40,18 @@ class VendorController extends Controller
             //'name'=> 'required|unique:vendors,name',
         ]);
 
+        $get_vendor_code = Vendor::latest('id','desc')->pluck('vendor_code')->first();
+        if(!empty($get_vendor_code)){
+            $get_vendor_code_after_replace = str_replace("CC-","",$get_vendor_code);
+            $vendor_code = $get_vendor_code_after_replace+1;
+        }else{
+            $vendor_code = 1;
+        }
+        $final_vendor_code = 'CC-'.$vendor_code;
+
         $vendor = new Vendor();
         $vendor->name = $request->name;
+        $vendor->vendor_code = $final_vendor_code;
         $vendor->phone = $request->phone;
         $vendor->email = $request->email;
         $vendor->vendor_address = $request->vendor_address;

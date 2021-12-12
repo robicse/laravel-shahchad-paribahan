@@ -106,6 +106,12 @@
                         </a>
                     </li>
                     <li class="nav-item ">
+                        <a href="{{route('admin.vehicle-vendor-rent-due')}}" class="nav-link {{Request::is('admin/vehicle/vendor/rent/due') ? 'active' : ''}}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Vendor Due List</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
                         <a href="{{route('admin.vehicle-driver-assigns.index')}}" class="nav-link {{Request::is('admin/vehicle-driver-assigns') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Vehicle Driver Assign List</p>
@@ -116,6 +122,47 @@
                             <i class="nav-icon fas fa-users"></i>
                             <p>Vehicle Rent To Customer List</p>
                         </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="{{route('admin.vehicle-customer-rent-due')}}" class="nav-link {{Request::is('admin/vehicle/customer/rent/due') ? 'active' : ''}}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Customer Due List</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="{{route('admin.overall-cost-categories.index')}}" class="nav-link {{Request::is('admin/overall-cost-categories') ? 'active' : ''}}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Overall Cost Category</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="{{route('admin.overall-cost.index')}}" class="nav-link {{Request::is('admin/overall-cost') ? 'active' : ''}}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Overall Cost</p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview {{(Request::is('admin/payments*')
+                        //|| Request::is('admin/categories*')
+                        //|| Request::is('admin/subcategories*')
+                        //|| Request::is('admin/vehicles*')
+                        )
+                    ? 'menu-open' : ''}}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-shopping-cart"></i>
+                            <p>
+                                Report
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('admin.report-payment')}}"
+                                   class="nav-link {{Request::is('admin/payments*') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/payments*') ? 'folder-open':'folder'}} nav-icon"></i>
+                                    <p>Payments</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <div class="user-panel">&nbsp;</div>

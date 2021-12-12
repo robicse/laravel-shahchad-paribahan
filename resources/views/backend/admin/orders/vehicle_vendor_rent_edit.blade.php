@@ -47,7 +47,7 @@
                                 <select name="vendor_id" id="vendor_id" class="form-control select2" required>
                                     <option value="">Select</option>
                                     @foreach($vendors as $vendor)
-                                        <option value="{{$vendor->id}}" {{$vehicleVendorRent->vendor_id == $vendor->id ? 'selected' : ''}}>{{$vendor->name}} ({{$vendor->phone}})</option>
+                                        <option value="{{$vendor->id}}" {{$vehicleVendorRent->vendor_id == $vendor->id ? 'selected' : ''}}>{{$vendor->name}} ({{$vendor->vendor_code}})</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -56,7 +56,7 @@
                                 <select name="vehicle_id" id="vehicle_id" class="form-control select2" required>
                                     <option value="">Select</option>
                                     @foreach($vehicles as $vehicle)
-                                        <option value="{{$vehicle->id}}" {{$vehicleVendorRentDetail->vehicle_id == $vehicle->id ? 'selected' : ''}}>{{$vehicle->vehicle_name}} ({{$vehicle->registration_no}})</option>
+                                        <option value="{{$vehicle->id}}" {{$vehicleVendorRentDetail->vehicle_id == $vehicle->id ? 'selected' : ''}}>{{$vehicle->vehicle_name}} ({{$vehicle->vehicle_code}})</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Vehicle Customer Rent List")
+@section("title","Customer Due List")
 @push('css')
     <link rel="stylesheet" href="{{asset('backend/plugins/datatables/dataTables.bootstrap4.css')}}">
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Vehicle Customer Rent List</h1>
+                    <h1>Customer Due List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Vehicle Customer Rent List</li>
+                        <li class="breadcrumb-item active">Customer Due List</li>
                     </ol>
                 </div>
             </div>
@@ -25,7 +25,7 @@
             <div class="col-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title float-left">Vehicle Customer Rent Lists</h3>
+                        <h3 class="card-title float-left">Customer Due Lists</h3>
                         <div class="float-right">
                             <a href="{{route('admin.vehicle-customer-rent-create')}}">
                                 <button class="btn btn-success">

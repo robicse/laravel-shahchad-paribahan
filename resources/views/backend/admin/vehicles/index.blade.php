@@ -44,9 +44,10 @@
                                 <th>Image</th>
                                 <th>Owner Name</th>
                                 <th>Vehicle Name</th>
-                                <th>Brand</th>
+                                <th>Code</th>
+                                <th>Registration NO</th>
                                 <th>Active/Inactive</th>
-                                <th>Driver Assign Status</th>
+{{--                                <th>Driver Assign Status</th>--}}
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -59,11 +60,12 @@
                                 </td>
                                 <td>{{$vehicle->owner_name}}</td>
                                 <td>{{$vehicle->vehicle_name}}</td>
-                                <td>{{$vehicle->brand->name}}</td>
+                                <td>{{$vehicle->vehicle_code}}</td>
+                                <td>{{$vehicle->registration_no}}</td>
                                 <td>{{$vehicle->status == 1 ? 'Active' : 'Inactive'}}</td>
-                                <td>
-                                    {{checkAlreadyVehicleAssignedOrFree($vehicle->id) > 0 ? 'Assigned' : 'Free'}}
-                                </td>
+{{--                                <td>--}}
+{{--                                    {{checkAlreadyVehicleAssignedOrFree($vehicle->id) > 0 ? 'Assigned' : 'Free'}}--}}
+{{--                                </td>--}}
                                 <td>
                                     <a class="btn btn-info waves-effect" href="{{route('admin.vehicles.edit',$vehicle->id)}}">
                                         <i class="fa fa-edit"></i>
@@ -82,9 +84,9 @@
                                 <th>Image</th>
                                 <th>Owner Name</th>
                                 <th>Vehicle Name</th>
-                                <th>Brand</th>
+                                <th>Registration NO</th>
                                 <th>Active/Inactive</th>
-                                <th>Driver Assign Status</th>
+{{--                                <th>Driver Assign Status</th>--}}
                                 <th>Action</th>
                             </tr>
                             </tfoot>

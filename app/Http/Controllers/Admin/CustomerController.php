@@ -41,8 +41,18 @@ class CustomerController extends Controller
             //'name'=> 'required|unique:vendors,name',
         ]);
 
+        $get_customer_code = Customer::latest('id','desc')->pluck('customer_code')->first();
+        if(!empty($get_customer_code)){
+            $get_customer_code_after_replace = str_replace("CC-","",$get_customer_code);
+            $customer_code = $get_customer_code_after_replace+1;
+        }else{
+            $customer_code = 1;
+        }
+        $final_customer_code = 'CC-'.$customer_code;
+
         $customer = new Customer();
         $customer->name = $request->name;
+        $customer->customer_code = $final_customer_code;
         $customer->phone = $request->phone;
         $customer->email = $request->email;
         $customer->customer_address = $request->customer_address;

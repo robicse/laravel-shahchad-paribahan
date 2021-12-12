@@ -43,6 +43,7 @@
                                 <th>#Id</th>
                                 <th>Image</th>
                                 <th>Name</th>
+                                <th>Code</th>
                                 <th>Phone</th>
                                 <th>Email</th>
                                 <th>Active/Inactive</th>
@@ -57,6 +58,7 @@
                                     <img src="{{asset('uploads/customers/'.$customer->image)}}" width="80" height="50" alt="">
                                 </td>
                                 <td>{{$customer->name}}</td>
+                                <td>{{$customer->customer_code}}</td>
                                 <td>{{$customer->phone}}</td>
                                 <td>{{$customer->email}}</td>
                                 <td>{{$customer->status == 1 ? 'Active' : 'Inactive'}}</td>

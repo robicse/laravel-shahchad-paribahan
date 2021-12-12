@@ -46,7 +46,7 @@
                             <select name="vendor_id" id="vendor_id" class="form-control select2" required>
                                 <option value="">Select</option>
                                 @foreach($vendors as $vendor)
-                                    <option value="{{$vendor->id}}">{{$vendor->name}} ({{$vendor->phone}})</option>
+                                    <option value="{{$vendor->id}}">{{$vendor->name}} ({{$vendor->vendor_code}})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -55,17 +55,37 @@
                             <select name="vehicle_id" id="vehicle_id" class="form-control select2" required>
                                 <option value="">Select</option>
                                 @foreach($vehicles as $vehicle)
-                                    <option value="{{$vehicle->id}}">{{$vehicle->vehicle_name}} ({{$vehicle->registration_no}})</option>
+                                    <option value="{{$vehicle->id}}">{{$vehicle->vehicle_name}} ({{$vehicle->vehicle_code}})</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="start_date">Start Date <span>*</span></label>
-                            <input type="text" class="datepicker form-control" name="start_date" id="start_date" required>
+                            <label for="rent_type">Rent Type <span>*</span></label>
+                            <select name="rent_type" id="rent_type" class="form-control select2" required>
+                                <option value="">Select</option>
+                                <option value="Daily">Daily</option>
+                                <option value="Monthly">Monthly</option>
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label for="end_date">End Date <span>*</span></label>
-                            <input type="text" class="datepicker form-control" name="end_date" id="end_date" required>
+                        <div id="monthly_basis">
+                            <div class="form-group">
+                                <label for="start_year_month">Start Year Month <span>*</span></label>
+                                <input type="text" class="datepicker2 form-control" name="start_year_month" id="start_year_month" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="end_year_month">End Year Month <span>*</span></label>
+                                <input type="text" class="datepicker2 form-control" name="end_year_month" id="end_year_month" required>
+                            </div>
+                        </div>
+                        <div id="daily_basis">
+                            <div class="form-group">
+                                <label for="start_date">Start Date <span>*</span></label>
+                                <input type="text" class="datepicker form-control" name="start_date" id="start_date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="end_date">End Date <span>*</span></label>
+                                <input type="text" class="datepicker form-control" name="end_date" id="end_date" required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="rent_duration">Rent Duration <span>*</span></label>
@@ -78,14 +98,6 @@
                         <div class="form-group">
                             <label for="quantity">Quantity <span>*</span></label>
                             <input type="number" class="form-control" name="quantity" id="quantity" value="1">
-                        </div>
-                        <div class="form-group">
-                            <label for="rent_type">Rent Type <span>*</span></label>
-                            <select name="rent_type" id="rent_type" class="form-control select2" required>
-                                <option value="">Select</option>
-                                <option value="Daily">Daily</option>
-                                <option value="Monthly">Monthly</option>
-                            </select>
                         </div>
                         <div class="form-group">
                             <label for="price">Price</label>
@@ -164,6 +176,15 @@
         //     todayHighlight: true,
         // });
         $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            startDate: '-3d',
+            //startDate: '-0d',
+            todayBtn: "linked",
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $('.datepicker2').datepicker({
             format: 'yyyy-mm',
             startDate: '-3d',
             //startDate: '-0d',
@@ -250,43 +271,89 @@
             })
         })
 
+        {{--$('#rent_type').change(function (){--}}
+        {{--    var vehicle_id = $('#vehicle_id').val();--}}
+        {{--    if(vehicle_id == ''){--}}
+        {{--        alert('Vehicle Select First!');--}}
+        {{--        $('#rent_type').val('');--}}
+        {{--    }--}}
+        {{--    var rent_duration = $('#rent_duration').val();--}}
+        {{--    if(rent_duration == ''){--}}
+        {{--        alert('Start Date And End Date Select First!');--}}
+        {{--        $('#rent_type').val('');--}}
+        {{--    }--}}
+        {{--    var quantity = $('#quantity').val();--}}
+        {{--    var rent_type = $('#rent_type').val();--}}
+        {{--    $.ajax({--}}
+        {{--        url:"{{URL('/admin/get/vehicle/price')}}",--}}
+        {{--        method:"POST",--}}
+        {{--        headers: {--}}
+        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+        {{--        },--}}
+        {{--        data: {--}}
+        {{--            vehicle_id : vehicle_id--}}
+        {{--        },--}}
+        {{--        success:function (result){--}}
+        {{--            console.log(result)--}}
+        {{--            $('#price').val(result)--}}
+        {{--            $('#sub_total').val(result*quantity)--}}
+        {{--            $('#grand_discount').val(0)--}}
+        {{--            $('#grand_total').val(result*quantity)--}}
+        {{--            $('#store_grand_total').val(result*quantity)--}}
+        {{--            $('#paid').val(0)--}}
+        {{--            $('#exchange').val(0)--}}
+        {{--        },--}}
+        {{--        error:function (err){--}}
+        {{--            console.log(err)--}}
+        {{--        }--}}
+        {{--    })--}}
+        {{--})--}}
+
+
+
+        $('#monthly_basis').hide();
+        $('#daily_basis').hide();
         $('#rent_type').change(function (){
-            //alert();
             var vehicle_id = $('#vehicle_id').val();
             if(vehicle_id == ''){
                 alert('Vehicle Select First!');
                 $('#rent_type').val('');
             }
-            var rent_duration = $('#rent_duration').val();
-            if(rent_duration == ''){
-                alert('Start Date And End Date Select First!');
-                $('#rent_type').val('');
-            }
             var quantity = $('#quantity').val();
             var rent_type = $('#rent_type').val();
-            $.ajax({
-                url:"{{URL('/admin/get/vehicle/price')}}",
-                method:"POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    vehicle_id : vehicle_id
-                },
-                success:function (result){
-                    console.log(result)
-                    $('#price').val(result)
-                    $('#sub_total').val(result*quantity)
-                    $('#grand_discount').val(0)
-                    $('#grand_total').val(result*quantity)
-                    $('#store_grand_total').val(result*quantity)
-                    $('#paid').val(0)
-                    $('#exchange').val(0)
-                },
-                error:function (err){
-                    console.log(err)
-                }
-            })
+
+            if(rent_type == 'Daily'){
+                $('#daily_basis').show();
+                $('#monthly_basis').hide();
+            }else{
+                $('#monthly_basis').show();
+                $('#daily_basis').hide();
+            }
+
+
+            {{--$.ajax({--}}
+            {{--    url:"{{URL('/admin/get/vehicle/price')}}",--}}
+            {{--    method:"POST",--}}
+            {{--    headers: {--}}
+            {{--        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+            {{--    },--}}
+            {{--    data: {--}}
+            {{--        vehicle_id : vehicle_id--}}
+            {{--    },--}}
+            {{--    success:function (result){--}}
+            {{--        console.log(result)--}}
+            {{--        $('#price').val(result)--}}
+            {{--        $('#sub_total').val(result*quantity)--}}
+            {{--        $('#grand_discount').val(0)--}}
+            {{--        $('#grand_total').val(result*quantity)--}}
+            {{--        $('#store_grand_total').val(result*quantity)--}}
+            {{--        $('#paid').val(0)--}}
+            {{--        $('#exchange').val(0)--}}
+            {{--    },--}}
+            {{--    error:function (err){--}}
+            {{--        console.log(err)--}}
+            {{--    }--}}
+            {{--})--}}
         })
 
         $('#end_date').change(function (){

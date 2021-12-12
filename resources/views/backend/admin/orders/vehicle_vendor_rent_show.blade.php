@@ -48,110 +48,106 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <span><b>Vehicle:</b> {{$vehicleVendorRentDetail->vehicle->vehicle_name}}</span>
+                                        <span><b>Vehicle Name:</b> {{$vehicleVendorRentDetail->vehicle->vehicle_name}}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <span><b>Vehicle Code:</b> {{$vehicleVendorRentDetail->vehicle->vehicle_code}}</span>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>Start Date:</b> {{$vehicleVendorRentDetail->start_date}}</span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>End Date:</b> {{$vehicleVendorRentDetail->start_date}}</span>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>Rent Duration:</b> {{$vehicleVendorRentDetail->rent_duration}}</span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>Quantity:</b> {{$vehicleVendorRentDetail->quantity}}</span>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>Rent Type:</b> {{$vehicleVendorRentDetail->rent_type}}</span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>Price:</b> Tk.{{$vehicleVendorRentDetail->price}}</span>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>Sub Total:</b> Tk.{{$vehicleVendorRentDetail->sub_total}}</span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>Discount Type:</b> {{$vehicleVendorRent->discount_type}}</span>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>Discount Percent:</b> {{$vehicleVendorRent->discount_percent}}</span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>Discount:</b> Tk.{{$vehicleVendorRent->discount_amount}}</span>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>Grand Total:</b> Tk.{{$vehicleVendorRent->grand_total}}</span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <span><b>Payment Type:</b> {{$vehicleVendorRent->payment_type->name}}</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group" id="paid_div">
-                                        <span><b>Paid:</b> Tk.{{$vehicleVendorRent->paid}}</span>
+                                    <div class="form-group">
+                                        <span><b>Payment Type:</b> {{$vehicleVendorRent->payment_type->name}}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group" id="due_price_div">
-                                        <span><b>Due:</b> Tk.{{$vehicleVendorRent->due_price}}</span>
+                                    <div class="form-group" id="paid_div">
+                                        <span><b>Paid:</b> Tk.{{$vehicleVendorRent->paid}}</span>
                                     </div>
-                                    {{--                        <div class="form-group">--}}
-                                    {{--                            <label for="exchange">Exchange</label>--}}
-                                    {{--                            <input type="number" class="form-control" name="exchange" id="exchange" >--}}
-                                    {{--                        </div>--}}
                                 </div>
                             </div>
                         </div>
@@ -162,6 +158,15 @@
 {{--                                        <span><b>Driver:</b> {{$vehicleVendorRentDetail->driver->name}}</span>--}}
 {{--                                    </div>--}}
 {{--                                </div>--}}
+                                <div class="col-md-6">
+                                    <div class="form-group" id="due_price_div">
+                                        <span><b>Due:</b> Tk.{{$vehicleVendorRent->due_price}}</span>
+                                    </div>
+                                    {{--                        <div class="form-group">--}}
+                                    {{--                            <label for="exchange">Exchange</label>--}}
+                                    {{--                            <input type="number" class="form-control" name="exchange" id="exchange" >--}}
+                                    {{--                        </div>--}}
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>Note:</b> {{$vehicleVendorRentDetail->note}}</span>

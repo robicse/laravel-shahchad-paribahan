@@ -40,6 +40,15 @@ class DriverController extends Controller
             'name'=> 'required|unique:drivers,name',
         ]);
 
+        $get_driver_code = Driver::latest('id','desc')->pluck('driver_code')->first();
+        if(!empty($get_driver_code)){
+            $get_driver_code_after_replace = str_replace("CC-","",$get_driver_code);
+            $driver_code = $get_driver_code_after_replace+1;
+        }else{
+            $driver_code = 1;
+        }
+        $final_driver_code = 'CC-'.$driver_code;
+
         if($request->salary_type == 'Daily'){
             $per_day_salary = $request->salary;
         }else{
@@ -49,6 +58,7 @@ class DriverController extends Controller
 
         $driver = new Driver();
         $driver->name = $request->name;
+        $driver->driver_code = $final_driver_code;
         $driver->phone = $request->phone;
         $driver->email = $request->email;
         $driver->present_address = $request->present_address;

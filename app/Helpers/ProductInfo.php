@@ -14,7 +14,7 @@ if (!function_exists('orderItemByOrderId')) {
     function orderItemByOrderId($order_id) {
         return OrderItem::join('vehicles','order_items.vehicle_id','vehicles.id')
             ->where('order_items.order_id',$order_id)
-            ->select('order_items.start_date','order_items.end_date','vehicles.vehicle_name','vehicles.owner_name','vehicles.registration_no')
+            ->select('order_items.start_date','order_items.end_date','vehicles.vehicle_name','vehicles.vehicle_code','vehicles.owner_name','vehicles.registration_no')
             ->first();
     }
 }

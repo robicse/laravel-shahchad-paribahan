@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Driver List")
+@section("title","Payment List")
 @push('css')
     <link rel="stylesheet" href="{{asset('backend/plugins/datatables/dataTables.bootstrap4.css')}}">
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Driver List</h1>
+                    <h1>Payment List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Driver List</li>
+                        <li class="breadcrumb-item active">Payment List</li>
                     </ol>
                 </div>
             </div>
@@ -25,14 +25,14 @@
             <div class="col-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title float-left">Driver Lists</h3>
+                        <h3 class="card-title float-left">Payment Lists</h3>
                         <div class="float-right">
-                            <a href="{{route('admin.drivers.create')}}">
-                                <button class="btn btn-success">
-                                    <i class="fa fa-plus-circle"></i>
-                                    Add
-                                </button>
-                            </a>
+{{--                            <a href="{{route('admin.vehicle-customer-rent-create')}}">--}}
+{{--                                <button class="btn btn-success">--}}
+{{--                                    <i class="fa fa-plus-circle"></i>--}}
+{{--                                    Add--}}
+{{--                                </button>--}}
+{{--                            </a>--}}
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -40,58 +40,45 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>#Id</th>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Code</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th>Active/Inactive</th>
-                                <th>Vehicle Assign Status</th>
-                                <th>Action</th>
+                                <th>#SL NO</th>
+                                <th>Invoice NO</th>
+                                <th>Date</th>
+                                <th>Method</th>
+                                <th>Paid To</th>
+                                <th>Amount</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($drivers as $key => $driver)
-                            <tr class="{{$driver->status == 0 ? 'bg-warning' : ''}}">
+                            @foreach($payments as $key => $payment)
+                                @php
+                                    //$orderItem = orderItemByOrderId($vehicleCustomerRent->id);
+                                @endphp
+                            <tr>
                                 <td>{{$key + 1}}</td>
+                                <td>{{$payment->order->invoice_no}}</td>
+                                <td>{{$payment->date}}</td>
+                                <td>{{$payment->payment_type->name}}</td>
                                 <td>
-                                    <img src="{{asset('uploads/drivers/'.$driver->logo)}}" width="80" height="50" alt="">
+                                    @if($payment->order->order_type == 'Purchases')
+                                        {{$payment->order->vendor->name}}
+                                    @elseif($payment->order->order_type == 'Sales')
+                                        {{$payment->order->customer->name}}
+                                    @else
+
+                                    @endif
                                 </td>
-                                <td>{{$driver->name}}</td>
-                                <td>{{$driver->driver_code}}</td>
-                                <td>{{$driver->phone}}</td>
-                                <td>{{$driver->email}}</td>
-                                <td>{{$driver->status == 1 ? 'Active' : 'Inactive'}}</td>
-                                <td>
-                                    {{checkAlreadyDriverAssignedOrFree($driver->id) > 0 ? 'Assigned' : 'Free'}}
-                                </td>
-                                <td>
-                                    <a class="btn btn-info waves-effect" href="{{route('admin.drivers.edit',$driver->id)}}">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-{{--                                    <button class="btn btn-danger waves-effect" type="button"--}}
-{{--                                            onclick="deleteDriver({{$driver->id}})">--}}
-{{--                                        <i class="fa fa-trash"></i>--}}
-{{--                                    </button>--}}
-{{--                                    <form id="delete-form-{{$driver->id}}" action="{{route('admin.drivers.destroy',$driver->id)}}" method="POST" style="display: none;">--}}
-{{--                                        @csrf--}}
-{{--                                        @method('DELETE')--}}
-{{--                                    </form>--}}
-                                </td>
+                                <td>{{$payment->paid}}</td>
                             </tr>
                             @endforeach
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>#Id</th>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th>Active/Inactive</th>
-                                <th>Vehicle Assign Status</th>
-                                <th>Action</th>
+                                <th>#SL NO</th>
+                                <th>Invoice NO</th>
+                                <th>Date</th>
+                                <th>Method</th>
+                                <th>Paid To</th>
+                                <th>Amount</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -121,7 +108,7 @@
         });
 
         //sweet alert
-        function deleteDriver(id) {
+        function deleteVehicle(id) {
             swal({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",

@@ -57,9 +57,31 @@ class OrderController extends Controller
         $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
         $vehicleDriver = VehicleDriverAssign::where('vehicle_id',$request->vehicle_id)->first();
 
+        // invoice no
+        if($request->payment_type_id == 1){
+            $get_invoice_no = Order::latest()->pluck('invoice_no')->where('payment_type_id',1)->first();
+            if(!empty($get_invoice_no)){
+                $get_invoice = str_replace("CS-","",$get_invoice_no);
+                $invoice_no = $get_invoice+1;
+            }else{
+                $invoice_no = 1;
+            }
+            $final_invoice = 'CS-'.$invoice_no;
+        }else{
+            $get_invoice_no = Order::latest()->pluck('invoice_no')->where('payment_type_id',2)->first();
+            if(!empty($get_invoice_no)){
+                $get_invoice = str_replace("CR-","",$get_invoice_no);
+                $invoice_no = $get_invoice+1;
+            }else{
+                $invoice_no = 1;
+            }
+            $final_invoice = 'CR-'.$invoice_no;
+        }
+
+
         $order = new Order();
         $order->date = $date;
-        $order->invoice_no = '1000';
+        $order->invoice_no = $final_invoice;
         $order->order_type = 'Purchases';
         $order->vendor_id = $request->vendor_id;
         $order->type = 'Vendor';
@@ -272,6 +294,12 @@ class OrderController extends Controller
 //        return back();
 //    }
 
+    public function vehicle_vendor_rent_due()
+    {
+        $vehicleVendorRents = Order::where('type','Vendor')->where('due_price','>',0)->get();
+        $payment_types = PaymentType::where('name','!=','Credit')->get();
+        return view('backend.admin.orders.vehicle_vendor_rent_due', compact('vehicleVendorRents','payment_types'));
+    }
     public function payDue(Request $request){
         //dd($request->all());
 
@@ -350,9 +378,30 @@ class OrderController extends Controller
         $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
         $vehicleDriver = VehicleDriverAssign::where('vehicle_id',$request->vehicle_id)->first();
 
+        // invoice no
+        if($request->payment_type_id == 1){
+            $get_invoice_no = Order::latest()->pluck('invoice_no')->where('payment_type_id',1)->first();
+            if(!empty($get_invoice_no)){
+                $get_invoice = str_replace("CS-","",$get_invoice_no);
+                $invoice_no = $get_invoice+1;
+            }else{
+                $invoice_no = 1;
+            }
+            $final_invoice = 'CS-'.$invoice_no;
+        }else{
+            $get_invoice_no = Order::latest()->pluck('invoice_no')->where('payment_type_id',2)->first();
+            if(!empty($get_invoice_no)){
+                $get_invoice = str_replace("CR-","",$get_invoice_no);
+                $invoice_no = $get_invoice+1;
+            }else{
+                $invoice_no = 1;
+            }
+            $final_invoice = 'CR-'.$invoice_no;
+        }
+
         $order = new Order();
         $order->date = $date;
-        $order->invoice_no = '1000';
+        $order->invoice_no = $final_invoice;
         $order->order_type = 'Sales';
         $order->customer_id = $request->customer_id;
         $order->type = 'Customer';
@@ -556,5 +605,12 @@ class OrderController extends Controller
         $digit = new NumberFormatter("en", NumberFormatter::SPELLOUT);
 
         return view('backend.admin.orders.invoice_customer',compact('vehicleCustomerRent','vehicleCustomerRentDetail','customer','digit'));
+    }
+
+    public function vehicle_customer_rent_due()
+    {
+        $vehicleCustomerRents = Order::where('type','Customer')->where('due_price','>',0)->get();
+        $payment_types = PaymentType::where('name','!=','Credit')->get();
+        return view('backend.admin.orders.vehicle_customer_rent_due', compact('vehicleCustomerRents','payment_types'));
     }
 }

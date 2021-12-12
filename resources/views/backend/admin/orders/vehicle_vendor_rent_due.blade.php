@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Vehicle Customer Rent List")
+@section("title","Vendor Due List")
 @push('css')
     <link rel="stylesheet" href="{{asset('backend/plugins/datatables/dataTables.bootstrap4.css')}}">
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Vehicle Customer Rent List</h1>
+                    <h1>Vendor Due List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Vehicle Customer Rent List</li>
+                        <li class="breadcrumb-item active">Vendor Due List</li>
                     </ol>
                 </div>
             </div>
@@ -25,9 +25,9 @@
             <div class="col-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title float-left">Vehicle Customer Rent Lists</h3>
+                        <h3 class="card-title float-left">Vendor Due Lists</h3>
                         <div class="float-right">
-                            <a href="{{route('admin.vehicle-customer-rent-create')}}">
+                            <a href="{{route('admin.vehicle-vendor-rent-create')}}">
                                 <button class="btn btn-success">
                                     <i class="fa fa-plus-circle"></i>
                                     Add
@@ -41,7 +41,7 @@
                             <thead>
                             <tr>
                                 <th>#Id</th>
-                                <th>Customer</th>
+                                <th>Vendor</th>
                                 <th>Vehicle</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
@@ -51,28 +51,28 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($vehicleCustomerRents as $key => $vehicleCustomerRent)
+                            @foreach($vehicleVendorRents as $key => $vehicleVendorRent)
                                 @php
-                                    $orderItem = orderItemByOrderId($vehicleCustomerRent->id);
+                                    $orderItem = orderItemByOrderId($vehicleVendorRent->id);
                                 @endphp
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>{{$vehicleCustomerRent->customer->name}} ({{$vehicleCustomerRent->customer->customer_code}})</td>
-                                <td>{{$orderItem['vehicle_name']}} ({{$orderItem['registration_no']}})</td>
+                                <td>{{$vehicleVendorRent->vendor->name}} ({{$vehicleVendorRent->vendor->vendor_code}})</td>
+                                <td>{{$orderItem['vehicle_name']}} ({{$orderItem['vehicle_code']}})</td>
                                 <td>{{$orderItem['start_date']}}</td>
                                 <td>{{$orderItem['end_date']}}</td>
-                                <td>{{$vehicleCustomerRent->grand_total}}</td>
+                                <td>{{$vehicleVendorRent->grand_total}}</td>
                                 <td>
-                                    {{$vehicleCustomerRent->due_price}}
-                                    @if($vehicleCustomerRent->due_price > 0)
-                                        <a href="" class="btn btn-warning btn-sm mx-1" data-toggle="modal" data-target="#exampleModal-<?= $vehicleCustomerRent->id;?>"> Pay Due</a>
+                                    {{$vehicleVendorRent->due_price}}
+                                    @if($vehicleVendorRent->due_price > 0)
+                                        <a href="" class="btn btn-warning btn-sm mx-1" data-toggle="modal" data-target="#exampleModal-<?= $vehicleVendorRent->id;?>"> Pay Due</a>
                                     @endif
                                 </td>
                                 <td class="d-inline-flex">
-                                    <a class="btn btn-info float-left" href="{{route('admin.vehicle-customer-rent-edit',$vehicleCustomerRent->id)}}" style="margin-left: 5px">
+                                    <a class="btn btn-info float-left" href="{{route('admin.vehicle-vendor-rent-edit',$vehicleVendorRent->id)}}" style="margin-left: 5px">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a class="btn btn-success" href="{{route('admin.vehicle-customer-rent-show',$vehicleCustomerRent->id)}}" style="margin-left: 5px">
+                                    <a class="btn btn-success" href="{{route('admin.vehicle-vendor-rent-show',$vehicleVendorRent->id)}}" style="margin-left: 5px">
                                         <i class="fa fa-eye"></i>
                                     </a>
 {{--                                    <button class="btn btn-danger waves-effect" type="button"--}}
@@ -82,7 +82,7 @@
                                 </td>
                             </tr>
                                 <!-- Modal -->
-                                <div class="modal fade" id="exampleModal-{{$vehicleCustomerRent->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="exampleModal-{{$vehicleVendorRent->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -96,8 +96,8 @@
                                                     @csrf
                                                     <div class="form-group">
                                                         <label for="due">Enter Due Amount</label>
-                                                        <input type="hidden" class="form-control" name="order_id" value="{{$vehicleCustomerRent->id}}">
-                                                        <input type="number" class="form-control" id="due" aria-describedby="emailHelp" name="new_paid" min="" max="{{$vehicleCustomerRent->due_price}}" value="{{$vehicleCustomerRent->due_price}}">
+                                                        <input type="hidden" class="form-control" name="order_id" value="{{$vehicleVendorRent->id}}">
+                                                        <input type="number" class="form-control" id="due" aria-describedby="emailHelp" name="new_paid" min="" max="{{$vehicleVendorRent->due_price}}" value="{{$vehicleVendorRent->due_price}}">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="payment_type">Payment Method</label>
@@ -136,7 +136,7 @@
                             <tfoot>
                             <tr>
                                 <th>#Id</th>
-                                <th>Customer</th>
+                                <th>Vendor</th>
                                 <th>Vehicle</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>

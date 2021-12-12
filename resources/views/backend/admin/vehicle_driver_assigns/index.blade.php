@@ -54,13 +54,14 @@
                             @foreach($vehicleDriverAssigns as $key => $vehicleDriverAssign)
                             <tr class="{{$vehicleDriverAssign->end_status == 0 ? 'bg-success' : ''}}">
                                 <td>{{$key + 1}}</td>
-                                <td>{{$vehicleDriverAssign->vehicle->vehicle_name}} ({{$vehicleDriverAssign->vehicle->registration_no}})</td>
-                                <td>{{$vehicleDriverAssign->driver->name}} ({{$vehicleDriverAssign->driver->phone}})</td>
+                                <td>{{$vehicleDriverAssign->vehicle->vehicle_name}} ({{$vehicleDriverAssign->vehicle->vehicle_code}})</td>
+                                <td>{{$vehicleDriverAssign->driver->name}} ({{$vehicleDriverAssign->driver->driver_code}})</td>
                                 <td>{{$vehicleDriverAssign->start_date}}</td>
                                 <td>{{$vehicleDriverAssign->end_date}}</td>
                                 <td>{{$vehicleDriverAssign->end_status == 1 ? 'Closed' : 'Running'}}</td>
                                 <td>{{$vehicleDriverAssign->duration}}</td>
                                 <td>
+                                    @if($vehicleDriverAssign->end_status == 0)
                                     <a class="btn btn-info waves-effect" href="{{route('admin.vehicle-driver-assigns.edit',$vehicleDriverAssign->id)}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
@@ -68,6 +69,7 @@
 {{--                                            onclick="deleteVehicle({{$vehicle->id}})">--}}
 {{--                                        <i class="fa fa-trash"></i>--}}
 {{--                                    </button>--}}
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

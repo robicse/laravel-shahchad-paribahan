@@ -18,6 +18,7 @@ class CreateVehiclesTable extends Migration
             $table->string('own_vehicle_status');
             $table->string('owner_name');
             $table->string('name');
+            $table->string('vehicle_code');
             $table->integer('brand_id');
             $table->integer('category_id');
             $table->string('rent_type')->nullable();

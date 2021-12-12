@@ -47,7 +47,7 @@
                                 <label for="vehicle_id">Vehicle <span>*</span></label>
                                 <select name="vehicle_id" id="vehicle_id" class="form-control select2" required>
                                     @foreach($vehicles as $vehicle)
-                                        <option value="{{$vehicle->id}}" {{$vehicle->id == $vehicleDriverAssign->vehicle_id ? 'selected' : ''}}>{{$vehicle->vehicle_name}} ({{$vehicle->registration_no}})</option>
+                                        <option value="{{$vehicle->id}}" {{$vehicle->id == $vehicleDriverAssign->vehicle_id ? 'selected' : ''}}>{{$vehicle->vehicle_name}} ({{$vehicle->vehicle_code}})</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -55,7 +55,7 @@
                                 <label for="driver_id">Driver <span>*</span></label>
                                 <select name="driver_id" id="driver_id" class="form-control select2" required>
                                     @foreach($drivers as $driver)
-                                        <option value="{{$driver->id}}" {{$driver->id == $vehicleDriverAssign->driver_id ? 'selected' : ''}}>{{$driver->name}} ({{$driver->phone}})</option>
+                                        <option value="{{$driver->id}}" {{$driver->id == $vehicleDriverAssign->driver_id ? 'selected' : ''}}>{{$driver->name}} ({{$driver->driver_code}})</option>
                                     @endforeach
                                 </select>
                             </div>

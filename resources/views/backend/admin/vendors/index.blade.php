@@ -43,6 +43,7 @@
                                 <th>#Id</th>
                                 <th>Image</th>
                                 <th>Name</th>
+                                <th>Code</th>
                                 <th>Phone</th>
                                 <th>Email</th>
                                 <th>Active/Inactive</th>
@@ -57,6 +58,7 @@
                                     <img src="{{asset('uploads/vendors/'.$vendor->logo)}}" width="80" height="50" alt="">
                                 </td>
                                 <td>{{$vendor->name}}</td>
+                                <td>{{$vendor->vendor_code}}</td>
                                 <td>{{$vendor->phone}}</td>
                                 <td>{{$vendor->email}}</td>
                                 <td>{{$vendor->status == 1 ? 'Active' : 'Inactive'}}</td>

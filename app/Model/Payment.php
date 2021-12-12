@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     protected $guarded = [];
-    public function seller()
-    {
-        return $this->belongsTo('App\Model\Seller', 'seller_id');
+    public function payment_type(){
+        return $this->belongsTo(PaymentType::class);
+    }
+    public function order(){
+        return $this->belongsTo(Order::class);
     }
 }

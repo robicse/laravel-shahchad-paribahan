@@ -45,14 +45,24 @@ class VehicleController extends Controller
             //'name'=> 'required|unique:vehicles,name',
         ]);
 
+        $get_vehicle_code = Vehicle::latest('id','desc')->pluck('vehicle_code')->first();
+        if(!empty($get_vehicle_code)){
+            $get_vehicle_code_after_replace = str_replace("CC-","",$get_vehicle_code);
+            $vehicle_code = $get_vehicle_code_after_replace+1;
+        }else{
+            $vehicle_code = 1;
+        }
+        $final_vehicle_code = 'CC-'.$vehicle_code;
+
         $vehicle = new Vehicle();
         $vehicle->owner_name = $request->owner_name;
         $vehicle->vehicle_name = $request->vehicle_name;
+        $vehicle->vehicle_code = $final_vehicle_code;
         $vehicle->brand_id = $request->brand_id;
         $vehicle->category_id = $request->category_id;
         $vehicle->model = $request->model;
-        $vehicle->rent_type = $request->rent_type;
-        $vehicle->price = $request->price;
+        //$vehicle->rent_type = $request->rent_type;
+        //$vehicle->price = $request->price;
         $vehicle->registration_no = $request->registration_no;
         $vehicle->registration_date = $request->registration_date;
         $vehicle->chassis_no = $request->chassis_no;
@@ -117,8 +127,8 @@ class VehicleController extends Controller
         $vehicle->vehicle_name = $request->vehicle_name;
         $vehicle->brand_id = $request->brand_id;
         $vehicle->category_id = $request->category_id;
-        $vehicle->rent_type = $request->rent_type;
-        $vehicle->price = $request->price;
+        //$vehicle->rent_type = $request->rent_type;
+        //$vehicle->price = $request->price;
         $vehicle->model = $request->model;
         $vehicle->registration_no = $request->registration_no;
         $vehicle->registration_date = $request->registration_date;
