@@ -62,35 +62,56 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <span><b>Start Date:</b> {{$vehicleVendorRentDetail->start_date}}</span>
+                                        <span><b>Rent Type:</b> {{$vehicleVendorRentDetail->rent_type}}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <span><b>End Date:</b> {{$vehicleVendorRentDetail->start_date}}</span>
+                        @if($vehicleVendorRentDetail->rent_type == 'Daily')
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <span><b>Start Date:</b> {{$vehicleVendorRentDetail->start_date}}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <span><b>Rent Duration:</b> {{$vehicleVendorRentDetail->rent_duration}}</span>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <span><b>End Date:</b> {{$vehicleVendorRentDetail->start_date}}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <span><b>Start Year Month:</b> {{$vehicleVendorRentDetail->start_year}}-{{$vehicleVendorRentDetail->start_month}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <span><b>End Year Month:</b> {{$vehicleVendorRentDetail->end_year}}-{{$vehicleVendorRentDetail->end_month}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         <div class="col-md-12">
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @if($vehicleVendorRentDetail->rent_type == 'Daily')
+                                            <span><b>Rent Duration Day:</b> {{$vehicleVendorRentDetail->rent_duration_day}}</span>
+                                        @else
+                                            <span><b>Rent Duration Month:</b> {{$vehicleVendorRentDetail->rent_duration_month}}</span>
+                                        @endif
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span><b>Quantity:</b> {{$vehicleVendorRentDetail->quantity}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <span><b>Rent Type:</b> {{$vehicleVendorRentDetail->rent_type}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +125,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <span><b>Sub Total:</b> Tk.{{$vehicleVendorRentDetail->sub_total}}</span>
+                                        <span><b>Sub Total:</b> Tk.{{$vehicleVendorRent->sub_total}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -153,11 +174,6 @@
                         </div>
                         <div class="col-md-12">
                             <div class="row">
-{{--                                <div class="col-md-6">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <span><b>Driver:</b> {{$vehicleVendorRentDetail->driver->name}}</span>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
                                 <div class="col-md-6">
                                     <div class="form-group" id="due_price_div">
                                         <span><b>Due:</b> Tk.{{$vehicleVendorRent->due_price}}</span>
@@ -166,6 +182,11 @@
                                     {{--                            <label for="exchange">Exchange</label>--}}
                                     {{--                            <input type="number" class="form-control" name="exchange" id="exchange" >--}}
                                     {{--                        </div>--}}
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <span><b>Driver:</b> {{$vehicleVendorRent->vendor->name}}</span>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">

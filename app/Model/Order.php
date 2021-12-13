@@ -25,4 +25,8 @@ class Order extends Model
     public function payment_type(){
         return $this->belongsTo(PaymentType::class);
     }
+
+    public function order_item(){
+        return $this->belongsTo(OrderItem::class);
+    }
 }

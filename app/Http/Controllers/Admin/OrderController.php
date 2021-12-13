@@ -53,6 +53,41 @@ class OrderController extends Controller
             //'name'=> 'required|unique:vehicles,name',
         ]);
 
+
+
+        //if($request->rent_type == 'Daily'){
+            $start_year = date('Y', strtotime($request->start_date));
+            $start_month = date('m', strtotime($request->start_date));
+            $start_day = date('d', strtotime($request->start_date));
+
+            $end_year = date('Y', strtotime($request->end_date));
+            $end_month = date('m', strtotime($request->end_date));
+            $end_day = date('d', strtotime($request->end_date));
+
+
+
+            $date1 = $request->start_date;
+            $date2 = $request->end_date;
+
+            $ts1 = strtotime($date1);
+            $ts2 = strtotime($date2);
+
+            $year1 = date('Y', $ts1);
+            $year2 = date('Y', $ts2);
+
+            $month1 = date('m', $ts1);
+            $month2 = date('m', $ts2);
+
+            $diff = (($year2 - $year1) * 12) + ($month2 - $month1);
+
+            // Robeul CUSTOM  ADD 1
+            $diff ++;
+        //}
+
+
+
+
+
         $date = date('Y-m-d H:i:s');
         $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
         $vehicleDriver = VehicleDriverAssign::where('vehicle_id',$request->vehicle_id)->first();
@@ -77,7 +112,7 @@ class OrderController extends Controller
             }
             $final_invoice = 'CR-'.$invoice_no;
         }
-
+        // invoice no
 
         $order = new Order();
         $order->date = $date;
@@ -104,10 +139,15 @@ class OrderController extends Controller
             $orderItem->order_id=$insert_id;
             $orderItem->vehicle_id=$request->vehicle_id;
             //$orderItem->driver_id=$vehicleDriver->driver_id;
-            $orderItem->rent_type=$vehicle->rent_type;
+            $orderItem->rent_type=$request->rent_type;
+            $orderItem->start_year=$start_year;
+            $orderItem->end_year=$end_year;
+            $orderItem->start_month=$start_month;
+            $orderItem->end_month=$end_month;
             $orderItem->start_date=$request->start_date;
             $orderItem->end_date=$request->end_date;
-            $orderItem->rent_duration=$request->rent_duration;
+            $orderItem->rent_duration_month=$diff;
+            $orderItem->rent_duration_day=$request->rent_duration_day;
             $orderItem->quantity=$request->quantity;
             $orderItem->price=$request->price;
             //$orderItem->discount=$request->grand_discount;
@@ -184,6 +224,35 @@ class OrderController extends Controller
             //'name'=> 'required|unique:vehicles,name,'.$id,
         ]);
 
+        //if($request->rent_type == 'Daily'){
+        $start_year = date('Y', strtotime($request->start_date));
+        $start_month = date('m', strtotime($request->start_date));
+        $start_day = date('d', strtotime($request->start_date));
+
+        $end_year = date('Y', strtotime($request->end_date));
+        $end_month = date('m', strtotime($request->end_date));
+        $end_day = date('d', strtotime($request->end_date));
+
+
+
+        $date1 = $request->start_date;
+        $date2 = $request->end_date;
+
+        $ts1 = strtotime($date1);
+        $ts2 = strtotime($date2);
+
+        $year1 = date('Y', $ts1);
+        $year2 = date('Y', $ts2);
+
+        $month1 = date('m', $ts1);
+        $month2 = date('m', $ts2);
+
+        $diff = (($year2 - $year1) * 12) + ($month2 - $month1);
+
+        // Robeul CUSTOM  ADD 1
+        $diff ++;
+        //}
+
         $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
         $vehicleDriver = VehicleDriverAssign::where('vehicle_id',$request->vehicle_id)->first();
         $due_amount = $request->payment_type_id == 1 ? 0 :$request->grand_total;
@@ -207,10 +276,15 @@ class OrderController extends Controller
             $orderItem = OrderItem::where('order_id',$id)->first();
             $orderItem->vehicle_id=$request->vehicle_id;
             //$orderItem->driver_id=$vehicleDriver->driver_id;
-            $orderItem->rent_type=$vehicle->rent_type;
+            $orderItem->rent_type=$request->rent_type;
+            $orderItem->start_year=$start_year;
+            $orderItem->end_year=$end_year;
+            $orderItem->start_month=$start_month;
+            $orderItem->end_month=$end_month;
             $orderItem->start_date=$request->start_date;
             $orderItem->end_date=$request->end_date;
-            $orderItem->rent_duration=$request->rent_duration;
+            $orderItem->rent_duration_month=$diff;
+            $orderItem->rent_duration_day=$request->rent_duration_day;
             $orderItem->quantity=$request->quantity;
             $orderItem->price=$request->price;
             //$orderItem->discount=$request->grand_discount;
@@ -373,6 +447,36 @@ class OrderController extends Controller
             //'name'=> 'required|unique:vehicles,name',
         ]);
 
+
+        //if($request->rent_type == 'Daily'){
+        $start_year = date('Y', strtotime($request->start_date));
+        $start_month = date('m', strtotime($request->start_date));
+        $start_day = date('d', strtotime($request->start_date));
+
+        $end_year = date('Y', strtotime($request->end_date));
+        $end_month = date('m', strtotime($request->end_date));
+        $end_day = date('d', strtotime($request->end_date));
+
+
+
+        $date1 = $request->start_date;
+        $date2 = $request->end_date;
+
+        $ts1 = strtotime($date1);
+        $ts2 = strtotime($date2);
+
+        $year1 = date('Y', $ts1);
+        $year2 = date('Y', $ts2);
+
+        $month1 = date('m', $ts1);
+        $month2 = date('m', $ts2);
+
+        $diff = (($year2 - $year1) * 12) + ($month2 - $month1);
+
+        // Robeul CUSTOM  ADD 1
+        $diff ++;
+        //}
+
         $date = date('Y-m-d');
         $datetime = date('Y-m-d H:i:s');
         $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
@@ -424,10 +528,15 @@ class OrderController extends Controller
             $orderItem->order_id=$insert_id;
             $orderItem->vehicle_id=$request->vehicle_id;
             //$orderItem->driver_id=$vehicleDriver->driver_id;
-            $orderItem->rent_type=$vehicle->rent_type;
+            $orderItem->rent_type=$request->rent_type;
+            $orderItem->start_year=$start_year;
+            $orderItem->end_year=$end_year;
+            $orderItem->start_month=$start_month;
+            $orderItem->end_month=$end_month;
             $orderItem->start_date=$request->start_date;
             $orderItem->end_date=$request->end_date;
-            $orderItem->rent_duration=$request->rent_duration;
+            $orderItem->rent_duration_month=$diff;
+            $orderItem->rent_duration_day=$request->rent_duration_day;
             $orderItem->quantity=$request->quantity;
             $orderItem->price=$request->price;
             //$orderItem->discount=$request->grand_discount;
@@ -506,6 +615,38 @@ class OrderController extends Controller
             //'name'=> 'required|unique:vehicles,name,'.$id,
         ]);
 
+
+        //if($request->rent_type == 'Daily'){
+        $start_year = date('Y', strtotime($request->start_date));
+        $start_month = date('m', strtotime($request->start_date));
+        $start_day = date('d', strtotime($request->start_date));
+
+        $end_year = date('Y', strtotime($request->end_date));
+        $end_month = date('m', strtotime($request->end_date));
+        $end_day = date('d', strtotime($request->end_date));
+
+
+
+        $date1 = $request->start_date;
+        $date2 = $request->end_date;
+
+        $ts1 = strtotime($date1);
+        $ts2 = strtotime($date2);
+
+        $year1 = date('Y', $ts1);
+        $year2 = date('Y', $ts2);
+
+        $month1 = date('m', $ts1);
+        $month2 = date('m', $ts2);
+
+        $diff = (($year2 - $year1) * 12) + ($month2 - $month1);
+
+        // Robeul CUSTOM  ADD 1
+        $diff ++;
+        //}
+
+        $date = date('Y-m-d');
+
         $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
         $vehicleDriver = VehicleDriverAssign::where('vehicle_id',$request->vehicle_id)->first();
         $due_amount = $request->payment_type_id == 1 ? 0 :$request->grand_total;
@@ -529,10 +670,15 @@ class OrderController extends Controller
             $orderItem = OrderItem::where('order_id',$id)->first();
             $orderItem->vehicle_id=$request->vehicle_id;
             //$orderItem->driver_id=$vehicleDriver->driver_id;
-            $orderItem->rent_type=$vehicle->rent_type;
+            $orderItem->rent_type=$request->rent_type;
+            $orderItem->start_year=$start_year;
+            $orderItem->end_year=$end_year;
+            $orderItem->start_month=$start_month;
+            $orderItem->end_month=$end_month;
             $orderItem->start_date=$request->start_date;
             $orderItem->end_date=$request->end_date;
-            $orderItem->rent_duration=$request->rent_duration;
+            $orderItem->rent_duration_month=$diff;
+            $orderItem->rent_duration_day=$request->rent_duration_day;
             $orderItem->quantity=$request->quantity;
             $orderItem->price=$request->price;
             //$orderItem->discount=$request->grand_discount;

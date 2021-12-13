@@ -41,104 +41,122 @@
                     <form role="form" action="{{route('admin.vehicle-customer-rent-update',$vehicleCustomerRent->id)}}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="form-group">
-                            <label for="customer_id">Customer <span>*</span></label>
-                            <select name="customer_id" id="customer_id" class="form-control select2" required>
-                                <option value="">Select</option>
-                                @foreach($customers as $customer)
-                                    <option value="{{$customer->id}}" {{$vehicleCustomerRent->customer_id == $customer->id ? 'selected' : ''}}>{{$customer->name}} ({{$customer->customer_code}})</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="vehicle_id">Vehicle <span>*</span></label>
-                            <select name="vehicle_id" id="vehicle_id" class="form-control select2" required>
-                                <option value="">Select</option>
-                                @foreach($vehicles as $vehicle)
-                                    <option value="{{$vehicle->id}}" {{$vehicleCustomerRentDetail['vehicle_id'] == $vehicle->id ? 'selected' : ''}}>{{$vehicle->vehicle_name}} ({{$vehicle->vehicle_code}})</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="start_date">Start Date <span>*</span></label>
-                            <input type="text" class="datepicker form-control" name="start_date" id="start_date" value="{{$vehicleCustomerRentDetail->start_date}}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="end_date">End Date <span>*</span></label>
-                            <input type="text" class="datepicker form-control" name="end_date" id="end_date" value="{{$vehicleCustomerRentDetail->end_date}}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="rent_duration">Rent Duration <span>*</span></label>
-                            <input type="text" class="form-control" name="rent_duration" id="rent_duration" value="{{$vehicleCustomerRentDetail->rent_duration}}" readonly>
-                        </div>
-                        {{--                        <div class="form-group">--}}
-                        {{--                            <label for="driver_id">Driver <span>*</span></label>--}}
-                        {{--                            <input type="text" class="form-control" name="driver_id" id="driver_id" required readonly>--}}
-                        {{--                        </div>--}}
-                        <div class="form-group">
-                            <label for="quantity">Quantity <span>*</span></label>
-                            <input type="number" class="form-control" name="quantity" id="quantity" value="{{$vehicleCustomerRentDetail->quantity}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="rent_type">Rent Type <span>*</span></label>
-                            <select name="rent_type" id="rent_type" class="form-control select2" required>
-                                <option value="">Select</option>
-                                <option value="Daily" {{$vehicleCustomerRentDetail->rent_type == 'Daily' ? 'selected' : ''}}>Daily</option>
-                                <option value="Monthly" {{$vehicleCustomerRentDetail->rent_type == 'Monthly' ? 'selected' : ''}}>Monthly</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="price">Price</label>
-                            <input type="number" class="form-control" name="price" id="price" value="{{$vehicleCustomerRentDetail->price}}" >
-                        </div>
-                        <div class="form-group">
-                            <label for="sub_total">Sub Total</label>
-                            <input type="number" class="form-control" name="sub_total" id="sub_total" value="{{$vehicleCustomerRent->sub_total}}" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="discount_type">Discount Type</label>
-                            <select name="discount_type" id="discount_type" class="form-control select2" required>
-                                <option value="">Select</option>
-                                <option value="Flat" {{$vehicleCustomerRent->discount_type == 'Flat' ? 'selected' : ''}}>Flat</option>
-                                <option value="Percent" {{$vehicleCustomerRent->discount_type == 'Percent' ? 'selected' : ''}}>Percent</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="discount_percent">Discount</label>
-                            <input type="number" class="form-control" name="discount_percent" id="discount_percent" value="{{$vehicleCustomerRent->discount_percent}}" onkeyup="discountPercent('')">
-                        </div>
-                        <div class="form-group">
-                            <label for="discount_amount">Discount Amount</label>
-                            <input type="number" class="form-control" name="discount_amount" id="discount_amount" value="{{$vehicleCustomerRent->discount_amount}}" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="grand_total">Grand Total</label>
-                            <input type="number" class="form-control" name="grand_total" id="grand_total" value="{{$vehicleCustomerRent->grand_total}}" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="payment_type_id">Payment Type <span>*</span></label>
-                            <select name="payment_type_id" id="payment_type_id" class="form-control select2" required>
-                                <option value="">Select</option>
-                                @foreach($payment_types as $payment_type)
-                                    <option value="{{$payment_type->id}}" {{$vehicleCustomerRent->payment_type_id == $payment_type->id ? 'selected' : ''}}>{{$payment_type->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group" id="paid_div">
-                            <label for="paid">Paid</label>
-                            <input type="number" class="form-control" name="paid" id="paid" value="{{$vehicleCustomerRent->paid}}">
-                        </div>
-                        <div class="form-group" id="due_price_div">
-                            <label for="due_price">Due</label>
-                            <input type="number" class="form-control" name="due_price" id="due_price" value="{{$vehicleCustomerRent->due_price}}" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="note">Note</label>
-                            <textarea type="text" class="form-control" name="note" id="note" >{{$vehicleCustomerRentDetail->note}}</textarea>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="customer_id">Customer <span>*</span></label>
+                                <select name="customer_id" id="customer_id" class="form-control select2" required>
+                                    <option value="">Select</option>
+                                    @foreach($customers as $customer)
+                                        <option value="{{$customer->id}}" {{$vehicleCustomerRent->customer_id == $customer->id ? 'selected' : ''}}>{{$customer->name}} ({{$customer->customer_code}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="vehicle_id">Vehicle <span>*</span></label>
+                                <select name="vehicle_id" id="vehicle_id" class="form-control select2" required>
+                                    <option value="">Select</option>
+                                    @foreach($vehicles as $vehicle)
+                                        <option value="{{$vehicle->id}}" {{$vehicleCustomerRentDetail->vehicle_id == $vehicle->id ? 'selected' : ''}}>{{$vehicle->vehicle_name}} ({{$vehicle->vehicle_code}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="rent_type">Rent Type <span>*</span></label>
+                                <select name="rent_type" id="rent_type" class="form-control select2" required>
+                                    <option value="">Select</option>
+                                    <option value="Daily" {{$vehicleCustomerRentDetail->rent_type == 'Daily' ? 'selected' : ''}}>Daily</option>
+                                    <option value="Monthly" {{$vehicleCustomerRentDetail->rent_type == 'Monthly' ? 'selected' : ''}}>Monthly</option>
+                                </select>
+                            </div>
+                            <div id="monthly_basis" style="@if($vehicleCustomerRentDetail->rent_type == 'Daily') display: none @endif">
+                                <div class="form-group">
+                                    <label for="start_year_month">Start Year Month <span>*</span></label>
+                                    <input type="text" class="datepicker2 form-control" name="start_year_month" id="start_year_month" value="{{$vehicleCustomerRentDetail->start_year}}-{{$vehicleCustomerRentDetail->start_month}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="end_year_month">End Year Month <span>*</span></label>
+                                    <input type="text" class="datepicker2 form-control" name="end_year_month" id="end_year_month" value="{{$vehicleCustomerRentDetail->end_year}}-{{$vehicleCustomerRentDetail->end_month}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="rent_duration_month">Rent Duration Month <span>*</span></label>
+                                    <input type="text" class="form-control" name="rent_duration_month" id="rent_duration_month" value="{{$vehicleCustomerRentDetail->rent_duration_month}}" readonly>
+                                </div>
+                            </div>
+                            <div id="daily_basis" style="@if($vehicleCustomerRentDetail->rent_type == 'Monthly') display: none @endif">
+                                <div class="form-group">
+                                    <label for="start_date">Start Date <span>*</span></label>
+                                    <input type="text" class="datepicker form-control" name="start_date" id="start_date" value="{{$vehicleCustomerRentDetail->start_date}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="end_date">End Date <span>*</span></label>
+                                    <input type="text" class="datepicker form-control" name="end_date" id="end_date" value="{{$vehicleCustomerRentDetail->end_date}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rent_duration_day">Rent Duration Day <span>*</span></label>
+                                    <input type="text" class="form-control" name="rent_duration_day" id="rent_duration_day" value="{{$vehicleCustomerRentDetail->rent_duration_day}}" readonly>
+                                </div>
+                            </div>
+                            {{--                        <div class="form-group">--}}
+                            {{--                            <label for="driver_id">Driver <span>*</span></label>--}}
+                            {{--                            <input type="text" class="form-control" name="driver_id" id="driver_id" required readonly>--}}
+                            {{--                        </div>--}}
+                            <div class="form-group">
+                                <label for="quantity">Quantity <span>*</span></label>
+                                <input type="number" class="form-control" name="quantity" id="quantity" value="{{$vehicleCustomerRentDetail->quantity}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="number" class="form-control" name="price" id="price" value="{{$vehicleCustomerRentDetail->price}}" >
+                            </div>
+                            <div class="form-group">
+                                <label for="sub_total">Sub Total</label>
+                                <input type="number" class="form-control" name="sub_total" id="sub_total" value="{{$vehicleCustomerRent->sub_total}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="discount_type">Discount Type</label>
+                                <select name="discount_type" id="discount_type" class="form-control select2" required>
+                                    <option value="">Select</option>
+                                    <option value="Flat" {{$vehicleCustomerRent->discount_type == 'Flat' ? 'selected' : ''}}>Flat</option>
+                                    <option value="Percent" {{$vehicleCustomerRent->discount_type == 'Percent' ? 'selected' : ''}}>Percent</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="discount_percent">Discount</label>
+                                <input type="number" class="form-control" name="discount_percent" id="discount_percent" value="{{$vehicleCustomerRent->discount_percent}}" onkeyup="discountPercent('')">
+                            </div>
+                            <div class="form-group">
+                                <label for="discount_amount">Discount Amount</label>
+                                <input type="number" class="form-control" name="discount_amount" id="discount_amount" value="{{$vehicleCustomerRent->discount_amount}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="grand_total">Grand Total</label>
+                                <input type="number" class="form-control" name="grand_total" id="grand_total" value="{{$vehicleCustomerRent->grand_total}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment_type_id">Payment Type <span>*</span></label>
+                                <select name="payment_type_id" id="payment_type_id" class="form-control select2" required>
+                                    <option value="">Select</option>
+                                    @foreach($payment_types as $payment_type)
+                                        <option value="{{$payment_type->id}}" {{$vehicleCustomerRent->payment_type_id == $payment_type->id ? 'selected' : ''}}>{{$payment_type->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group" id="paid_div">
+                                <label for="paid">Paid</label>
+                                <input type="number" class="form-control" name="paid" id="paid" value="{{$vehicleCustomerRent->paid}}">
+                            </div>
+                            <div class="form-group" id="due_price_div">
+                                <label for="due_price">Due</label>
+                                <input type="number" class="form-control" name="due_price" id="due_price" value="{{$vehicleCustomerRent->due_price}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="note">Note</label>
+                                <textarea type="text" class="form-control" name="note" id="note" >{{$vehicleCustomerRentDetail->note}}</textarea>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -159,6 +177,15 @@
         // });
         $('.datepicker').datepicker({
             format: 'yyyy-mm-dd',
+            startDate: '-3d',
+            //startDate: '-0d',
+            todayBtn: "linked",
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $('.datepicker2').datepicker({
+            format: 'yyyy-mm',
             startDate: '-3d',
             //startDate: '-0d',
             todayBtn: "linked",
@@ -225,40 +252,115 @@
             })
         })
 
+        {{--$('#rent_type').change(function (){--}}
+        {{--    var vehicle_id = $('#vehicle_id').val();--}}
+        {{--    if(vehicle_id == ''){--}}
+        {{--        alert('Vehicle Select First!');--}}
+        {{--        $('#rent_type').val('');--}}
+        {{--    }--}}
+        {{--    var rent_duration = $('#rent_duration').val();--}}
+        {{--    if(rent_duration == ''){--}}
+        {{--        alert('Start Date And End Date Select First!');--}}
+        {{--        $('#rent_type').val('');--}}
+        {{--    }--}}
+        {{--    var quantity = $('#quantity').val();--}}
+        {{--    var rent_type = $('#rent_type').val();--}}
+        {{--    $.ajax({--}}
+        {{--        url:"{{URL('/admin/get/vehicle/price')}}",--}}
+        {{--        method:"POST",--}}
+        {{--        headers: {--}}
+        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+        {{--        },--}}
+        {{--        data: {--}}
+        {{--            vehicle_id : vehicle_id--}}
+        {{--        },--}}
+        {{--        success:function (result){--}}
+        {{--            console.log(result)--}}
+        {{--            $('#price').val(result)--}}
+        {{--            $('#sub_total').val(result*quantity)--}}
+        {{--            $('#grand_discount').val(0)--}}
+        {{--            $('#grand_total').val(result*quantity)--}}
+        {{--            $('#store_grand_total').val(result*quantity)--}}
+        {{--            $('#paid').val(0)--}}
+        {{--            $('#exchange').val(0)--}}
+        {{--        },--}}
+        {{--        error:function (err){--}}
+        {{--            console.log(err)--}}
+        {{--        }--}}
+        {{--    })--}}
+        {{--})--}}
+
+
+
+        //$('#monthly_basis').hide();
+        //$('#daily_basis').hide();
         $('#rent_type').change(function (){
-            //alert();
             var vehicle_id = $('#vehicle_id').val();
             if(vehicle_id == ''){
                 alert('Vehicle Select First!');
                 $('#rent_type').val('');
             }
-            var rent_duration = $('#rent_duration').val();
-            if(rent_duration == ''){
-                alert('Start Date And End Date Select First!');
-                $('#rent_type').val('');
-            }
             var quantity = $('#quantity').val();
             var rent_type = $('#rent_type').val();
-            $.ajax({
-                url:"{{URL('/admin/get/vehicle/price')}}",
-                method:"POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    vehicle_id : vehicle_id
-                },
-                success:function (result){
-                    console.log(result)
-                    $('#price').val(result)
-                    $('#sub_total').val(result*quantity)
-                    $('#discount').val(0)
-                    $('#grand_total').val(result*quantity)
-                },
-                error:function (err){
-                    console.log(err)
-                }
-            })
+
+            if(rent_type == 'Daily'){
+                $('#daily_basis').show();
+                $('#monthly_basis').hide();
+            }else{
+                $('#monthly_basis').show();
+                $('#daily_basis').hide();
+            }
+
+
+            {{--$.ajax({--}}
+            {{--    url:"{{URL('/admin/get/vehicle/price')}}",--}}
+            {{--    method:"POST",--}}
+            {{--    headers: {--}}
+            {{--        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+            {{--    },--}}
+            {{--    data: {--}}
+            {{--        vehicle_id : vehicle_id--}}
+            {{--    },--}}
+            {{--    success:function (result){--}}
+            {{--        console.log(result)--}}
+            {{--        $('#price').val(result)--}}
+            {{--        $('#sub_total').val(result*quantity)--}}
+            {{--        $('#grand_discount').val(0)--}}
+            {{--        $('#grand_total').val(result*quantity)--}}
+            {{--        $('#store_grand_total').val(result*quantity)--}}
+            {{--        $('#paid').val(0)--}}
+            {{--        $('#exchange').val(0)--}}
+            {{--    },--}}
+            {{--    error:function (err){--}}
+            {{--        console.log(err)--}}
+            {{--    }--}}
+            {{--})--}}
+        })
+
+        $('#end_year_month').change(function (){
+            var start_year_month = $('#start_year_month').val();
+            var end_year_month = $('#end_year_month').val();
+            if(start_year_month == ''){
+                alert('Start Year Month Select First!');
+                $('#end_year_month').val('');
+            }
+
+            var start_date = start_year_month+'-01';
+            var end_date = end_year_month+'-30';
+
+            $('#start_date').val(start_date)
+            $('#end_date').val(end_date)
+
+
+            //alert(start_date);
+            const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            const firstDate = new Date(start_date);
+            const secondDate = new Date(end_date);
+
+            const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+            const diffMonths = Math.round(Math.abs((firstDate - secondDate) / (oneDay*28)));
+            $('#rent_duration_day').val(diffDays);
+            $('#rent_duration_month').val(diffMonths);
         })
 
         $('#end_date').change(function (){
@@ -276,7 +378,28 @@
             const secondDate = new Date(end_date);
 
             const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
-            $('#rent_duration').val(diffDays);
+            $('#rent_duration_day').val(diffDays);
+        })
+
+        $('#price').keyup(function (){
+            var price = $('#price').val();
+            var rent_type = $('#rent_type').val();
+            var quantity = $('#quantity').val();
+
+            var grand_total = 0
+            if(rent_type == 'Daily'){
+                var rent_duration_day = $('#rent_duration_day').val();
+                grand_total = (price*rent_duration_day)*quantity;
+            }else{
+                var rent_duration_month = $('#rent_duration_month').val();
+                grand_total = (price*rent_duration_month)*quantity;
+            }
+
+            $('#sub_total').val(grand_total);
+            $('#grand_total').val(grand_total);
+            var paid = $('#paid').val();
+            var due_price = grand_total - paid;
+            $('#due_price').val(due_price);
         })
 
         $('#paid').keyup(function (){

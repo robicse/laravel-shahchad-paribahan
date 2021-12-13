@@ -43,8 +43,9 @@
                                 <th>#SL NO</th>
                                 <th>Invoice NO</th>
                                 <th>Date</th>
-                                <th>Method</th>
+                                <th>Vehicle</th>
                                 <th>Paid To</th>
+                                <th>Method</th>
                                 <th>Amount</th>
                             </tr>
                             </thead>
@@ -52,12 +53,13 @@
                             @foreach($payments as $key => $payment)
                                 @php
                                     //$orderItem = orderItemByOrderId($vehicleCustomerRent->id);
+                                    $orderItem = orderItemByOrderId($payment->order_id);
                                 @endphp
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{$payment->order->invoice_no}}</td>
                                 <td>{{$payment->date}}</td>
-                                <td>{{$payment->payment_type->name}}</td>
+                                <td>{{$orderItem->vehicle_name}}({{$orderItem->registration_no}})</td>
                                 <td>
                                     @if($payment->order->order_type == 'Purchases')
                                         {{$payment->order->vendor->name}}
@@ -67,6 +69,7 @@
 
                                     @endif
                                 </td>
+                                <td>{{$payment->payment_type->name}}</td>
                                 <td>{{$payment->paid}}</td>
                             </tr>
                             @endforeach
@@ -76,8 +79,9 @@
                                 <th>#SL NO</th>
                                 <th>Invoice NO</th>
                                 <th>Date</th>
-                                <th>Method</th>
+                                <th>Vehicle</th>
                                 <th>Paid To</th>
+                                <th>Method</th>
                                 <th>Amount</th>
                             </tr>
                             </tfoot>
