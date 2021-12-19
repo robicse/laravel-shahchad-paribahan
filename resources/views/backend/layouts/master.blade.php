@@ -45,7 +45,8 @@
             padding-left: 0!important;
             padding-right: 0!important;
             overflow-y: auto;
-            height: calc(100% - 4rem);
+            /*height: calc(100% - 4rem);*/
+            height: 100%;
         }
         .nav-pills .nav-link {
              border-radius: 0!important;

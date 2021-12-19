@@ -29,6 +29,7 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::resource('overall-cost','OverallCostController');
     Route::resource('access-logs','AccessLogController');
 
+    // vehicle rent from vendor
     Route::get('vehicle/vendor/rent/due','OrderController@vehicle_vendor_rent_due')->name('vehicle-vendor-rent-due');
     Route::get('vehicle/vendor/rent/list','OrderController@vehicle_vendor_rent_list')->name('vehicle-vendor-rent-list');
     Route::get('vehicle/vendor/rent/create','OrderController@vehicle_vendor_rent_create')->name('vehicle-vendor-rent-create');
@@ -38,6 +39,7 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::put('vehicle/vendor/rent/update/{id}','OrderController@vehicle_vendor_rent_update')->name('vehicle-vendor-rent-update');
     Route::get('order/vendor/print/{id}','OrderController@order_vendor_print')->name('order-vendor-print');
 
+    // vehicle rent to customer
     Route::get('vehicle/customer/rent/due','OrderController@vehicle_customer_rent_due')->name('vehicle-customer-rent-due');
     Route::get('vehicle/customer/rent/list','OrderController@vehicle_customer_rent_list')->name('vehicle-customer-rent-list');
     Route::get('vehicle/customer/rent/create','OrderController@vehicle_customer_rent_create')->name('vehicle-customer-rent-create');
@@ -56,6 +58,13 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::post('check/already/vehicle/rent/or/not/this/date','VehicleController@check_already_vehicle_rent_or_not_this_date');
     Route::post('get/vehicle/assigned/driver','VehicleDriverAssignController@get_vehicle_assigned_driver');
     Route::post('pay-due','OrderController@payDue')->name('pay.due');
+
+    // driver salary
+    Route::get('driver/salary/list','DriverSalaryController@driver_salary_list')->name('driver-salary-list');
+    Route::get('driver/salary/create','DriverSalaryController@driver_salary_create')->name('driver-salary-create');
+    Route::post('driver/salary/store','DriverSalaryController@driver_salary_store')->name('driver-salary-store');
+    Route::get('driver/salary/show/{id}','DriverSalaryController@vehicle_customer_rent_show')->name('driver-salary-show');
+    Route::get('driver/salary/edit/{id}','DriverSalaryController@vehicle_customer_rent_edit')->name('driver-salary-edit');
 
     // report
     Route::get('report/payments','ReportController@reportPayment')->name('report-payment');

@@ -141,6 +141,12 @@
                             <p>Overall Cost</p>
                         </a>
                     </li>
+                    <li class="nav-item ">
+                        <a href="{{route('admin.driver-salary-list')}}" class="nav-link {{Request::is('admin/driver/salary/list') ? 'active' : ''}}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Driver Salary</p>
+                        </a>
+                    </li>
                     <li class="nav-item has-treeview {{(Request::is('admin/payments*')
                         //|| Request::is('admin/categories*')
                         //|| Request::is('admin/subcategories*')
