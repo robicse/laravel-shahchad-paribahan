@@ -42,31 +42,40 @@ class VehicleDriverAssignController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->all());
         $this->validate($request, [
             //'name'=> 'required|unique:vehicles,name',
         ]);
 
-        $end_status = 0;
-        $duration = 0;
-        if($request->end_date != NULL){
-            $end_status = 1;
+//        $end_status = 0;
+//        $duration = 0;
+//        if($request->end_date != NULL){
+//            $end_status = 1;
+//
+//            $date1 = date_create($request->start_date);
+//            $date2 = date_create($request->end_date);
+//            //difference between two dates
+//            $diff = date_diff($date1,$date2);
+//            //count days
+//            $duration = $diff->format("%a");
+//        }
 
-            $date1 = date_create($request->start_date);
-            $date2 = date_create($request->end_date);
-            //difference between two dates
-            $diff = date_diff($date1,$date2);
-            //count days
-            $duration = $diff->format("%a");
-        }
+        $year = date('Y', strtotime($request->start_date));
+        $month = date('m', strtotime($request->start_date));
 
         $vehicleDriverAssign = new VehicleDriverAssign();
         $vehicleDriverAssign->vehicle_id = $request->vehicle_id;
         $vehicleDriverAssign->driver_id = $request->driver_id;
+        $vehicleDriverAssign->year = $year;
+        $vehicleDriverAssign->month = $month;
+        $vehicleDriverAssign->salary_type = $request->salary_type;
         $vehicleDriverAssign->start_date = $request->start_date;
         $vehicleDriverAssign->end_date = $request->end_date;
         $vehicleDriverAssign->start_status = 1;
-        $vehicleDriverAssign->end_status = $end_status;
-        $vehicleDriverAssign->duration = $duration;
+        //$vehicleDriverAssign->end_status = $end_status;
+        $vehicleDriverAssign->end_status = 1;
+        //$vehicleDriverAssign->duration = $duration;
+        $vehicleDriverAssign->duration = $request->rent_duration_day;
         $vehicleDriverAssign->save();
         $insert_id = $vehicleDriverAssign->id;
         if($insert_id){
@@ -82,6 +91,94 @@ class VehicleDriverAssignController extends Controller
         Toastr::success('Vehicle Driver Assign Created Successfully');
         return back();
     }
+
+//    public function store(Request $request)
+//    {
+//        dd($request->all());
+//        $this->validate($request, [
+//            //'name'=> 'required|unique:vehicles,name',
+//        ]);
+//
+//
+//
+//
+//
+//        $rent_duration_month = $request->rent_duration_month;
+//        for($i=0;$i<$rent_duration_month;$i++){
+//            $end_status = 0;
+//            $duration = 0;
+//            if($request->end_date != NULL){
+//                $end_status = 1;
+//
+//                $date1 = date_create($request->start_date);
+//                $date2 = date_create($request->end_date);
+//                //difference between two dates
+//                $diff = date_diff($date1,$date2);
+//                //count days
+//                $duration = $diff->format("%a");
+//            }
+//
+//            $year = date('Y', strtotime($request->start_date));
+//            $month = date('m', strtotime($request->start_date));
+//
+//
+//
+//
+//            $start_year = date('Y', strtotime($request->start_date));
+//            $start_month = date('m', strtotime($request->start_date));
+//            $start_day = date('d', strtotime($request->start_date));
+//
+//            $end_year = date('Y', strtotime($request->end_date));
+//            $end_month = date('m', strtotime($request->end_date));
+//            $end_day = date('d', strtotime($request->end_date));
+//
+//
+//
+//            $date1 = $request->start_date;
+//            $date2 = $request->end_date;
+//
+//            $ts1 = strtotime($date1);
+//            $ts2 = strtotime($date2);
+//
+//            $year1 = date('Y', $ts1);
+//            $year2 = date('Y', $ts2);
+//
+//            $month1 = date('m', $ts1);
+//            $month2 = date('m', $ts2);
+//
+//            $diff = (($year2 - $year1) * 12) + ($month2 - $month1);
+//
+//            // Robeul CUSTOM  ADD 1
+//            $diff ++;
+//
+//
+//            $vehicleDriverAssign = new VehicleDriverAssign();
+//            $vehicleDriverAssign->vehicle_id = $request->vehicle_id;
+//            $vehicleDriverAssign->driver_id = $request->driver_id;
+//            $vehicleDriverAssign->year = $year;
+//            $vehicleDriverAssign->month = $month;
+//            $vehicleDriverAssign->start_date = $request->start_date;
+//            $vehicleDriverAssign->end_date = $request->end_date;
+//            $vehicleDriverAssign->start_status = 1;
+//            $vehicleDriverAssign->end_status = $end_status;
+//            $vehicleDriverAssign->duration = $duration;
+//            $vehicleDriverAssign->save();
+//            $insert_id = $vehicleDriverAssign->id;
+//            if($insert_id){
+//                $accessLog = new AccessLog();
+//                $accessLog->user_id=Auth::user()->id;
+//                $accessLog->action_module='Vehicle Driver Assign';
+//                $accessLog->action_done='Create';
+//                $accessLog->action_remarks='Vehicle Driver Assign ID: '.$insert_id;
+//                $accessLog->action_date=date('Y-m-d');
+//                $accessLog->save();
+//            }
+//        }
+//
+//
+//        Toastr::success('Vehicle Driver Assign Created Successfully');
+//        return back();
+//    }
 
     public function show($id)
     {
@@ -102,27 +199,34 @@ class VehicleDriverAssignController extends Controller
             //'name'=> 'required|unique:vehicles,name,'.$id,
         ]);
 
-        $end_status = 0;
-        $duration = 0;
-        if($request->end_date != NULL){
-            $end_status = 1;
+//        $end_status = 0;
+//        $duration = 0;
+//        if($request->end_date != NULL){
+//            $end_status = 1;
+//
+//            $date1 = date_create($request->start_date);
+//            $date2 = date_create($request->end_date);
+//            //difference between two dates
+//            $diff = date_diff($date1,$date2);
+//            //count days
+//            $duration = $diff->format("%a");
+//        }
 
-            $date1 = date_create($request->start_date);
-            $date2 = date_create($request->end_date);
-            //difference between two dates
-            $diff = date_diff($date1,$date2);
-            //count days
-            $duration = $diff->format("%a");
-        }
+        $year = date('Y', strtotime($request->start_date));
+        $month = date('m', strtotime($request->start_date));
 
         $vehicleDriverAssign = VehicleDriverAssign::find($id);
         $vehicleDriverAssign->vehicle_id = $request->vehicle_id;
         $vehicleDriverAssign->driver_id = $request->driver_id;
+        $vehicleDriverAssign->year = $year;
+        $vehicleDriverAssign->month = $month;
+        $vehicleDriverAssign->salary_type = $request->salary_type;
         $vehicleDriverAssign->start_date = $request->start_date;
         $vehicleDriverAssign->end_date = $request->end_date;
-        $vehicleDriverAssign->start_status = 1;
-        $vehicleDriverAssign->end_status = $end_status;
-        $vehicleDriverAssign->duration = $duration;
+        //$vehicleDriverAssign->start_status = 1;
+        //$vehicleDriverAssign->end_status = $end_status;
+        //$vehicleDriverAssign->duration = $duration;
+        $vehicleDriverAssign->duration = $request->rent_duration_day;
         $updated_row = $vehicleDriverAssign->save();
         if($updated_row){
             $accessLog = new AccessLog();

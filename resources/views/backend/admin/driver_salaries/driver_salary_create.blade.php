@@ -149,6 +149,17 @@
         });
 
 
+
+        var getDaysInMonth = function(month,year) {
+            // Here January is 1 based
+            //Day 0 is the last day in the previous month
+            return new Date(year, month, 0).getDate();
+            // Here January is 0 based
+            // return new Date(year, month+1, 0).getDate();
+        };
+
+
+
         $('#month').change(function (){
             var driver_id = $('#driver_id').val();
             var year = $('#year').val();
@@ -162,11 +173,31 @@
                 $('#month').val('');
             }
 
-            var start_date = year+'-'+month+'-'+'-01';
-            var end_date = year+'-'+month+'-'+'-30';
+            var month_days = getDaysInMonth(month, year);
+            console.log(month_days);
 
-            $('#start_date').val(start_date)
-            $('#end_date').val(end_date)
+            var start_date = year+'-'+month+'-'+'01';
+            var end_date = year+'-'+month+'-'+month_days;
+
+            $.ajax({
+                url:"{{URL('admin/check/driver/salary')}}",
+                method:"post",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{
+                    driver_id:driver_id,
+                    start_date:start_date,
+                    end_date:end_date,
+                    month_days:month_days
+                },
+                success:function (data){
+                    console.log(data)
+                },
+                error:function (err){
+                    console.log(err)
+                }
+            })
 
 
 

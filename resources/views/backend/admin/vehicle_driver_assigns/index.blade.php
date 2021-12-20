@@ -43,9 +43,12 @@
                                 <th>#Id</th>
                                 <th>Vehicle</th>
                                 <th>Driver</th>
+                                <th>Year</th>
+                                <th>Month</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Status</th>
+                                <th>Salary Type</th>
                                 <th>Duration</th>
                                 <th>Action</th>
                             </tr>
@@ -56,12 +59,15 @@
                                 <td>{{$key + 1}}</td>
                                 <td>{{$vehicleDriverAssign->vehicle->vehicle_name}} ({{$vehicleDriverAssign->vehicle->vehicle_code}})</td>
                                 <td>{{$vehicleDriverAssign->driver->name}} ({{$vehicleDriverAssign->driver->driver_code}})</td>
+                                <td>{{$vehicleDriverAssign->year}}</td>
+                                <td>{{$vehicleDriverAssign->month}}</td>
                                 <td>{{$vehicleDriverAssign->start_date}}</td>
                                 <td>{{$vehicleDriverAssign->end_date}}</td>
                                 <td>{{$vehicleDriverAssign->end_status == 1 ? 'Closed' : 'Running'}}</td>
+                                <td>{{$vehicleDriverAssign->driver->salary_type}}</td>
                                 <td>{{$vehicleDriverAssign->duration}}</td>
                                 <td>
-                                    @if($vehicleDriverAssign->end_status == 0)
+{{--                                    @if($vehicleDriverAssign->end_status == 0)--}}
                                     <a class="btn btn-info waves-effect" href="{{route('admin.vehicle-driver-assigns.edit',$vehicleDriverAssign->id)}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
@@ -69,7 +75,7 @@
 {{--                                            onclick="deleteVehicle({{$vehicle->id}})">--}}
 {{--                                        <i class="fa fa-trash"></i>--}}
 {{--                                    </button>--}}
-                                    @endif
+{{--                                    @endif--}}
                                 </td>
                             </tr>
                             @endforeach
@@ -79,9 +85,12 @@
                                 <th>#Id</th>
                                 <th>Vehicle</th>
                                 <th>Driver</th>
+                                <th>Year</th>
+                                <th>Month</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Status</th>
+                                <th>Salary Type</th>
                                 <th>Duration</th>
                                 <th>Action</th>
                             </tr>

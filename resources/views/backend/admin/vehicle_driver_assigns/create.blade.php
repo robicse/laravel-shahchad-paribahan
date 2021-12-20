@@ -60,12 +60,57 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="text">Start Date</label>
-                            <input type="text" class="datepicker form-control" name="start_date" id="start_date" >
+                            <label for="salary_type">Salary Type <span>*</span></label>
+                            <input type="text" class="form-control" name="salary_type" id="salary_type" readonly required>
                         </div>
-                        <div class="form-group">
-                            <label for="text">End Date</label>
-                            <input type="text" class="datepicker form-control" name="end_date" id="end_date" >
+                        <div id="monthly_basis">
+                            <div class="form-group">
+                                <label for="year">Year</label>
+                                <select name="year" id="year" class="form-control select2">
+                                    <option value="">Select</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="month">Month</label>
+                                <select name="month" id="month" class="form-control select2">
+                                    <option value="">Select</option>
+                                    <option value="01">January</option>
+                                    <option value="02">February</option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">May</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="display: none">
+                                <label for="rent_duration_month">Rent Duration Month <span>*</span></label>
+                                <input type="text" class="form-control" name="rent_duration_month" id="rent_duration_month" readonly>
+                            </div>
+                        </div>
+                        <div id="daily_basis">
+                            <div class="form-group">
+                                <label for="start_date">Start Date <span>*</span></label>
+                                <input type="text" class="datepicker form-control" name="start_date" id="start_date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="end_date">End Date <span>*</span></label>
+                                <input type="text" class="datepicker form-control" name="end_date" id="end_date" required>
+                            </div>
+                            <div class="form-group" style="display: none">
+                                <label for="rent_duration_day">Rent Duration Day <span>*</span></label>
+                                <input type="text" class="form-control" name="rent_duration_day" id="rent_duration_day" readonly>
+                            </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -100,40 +145,139 @@
 
         $('#vehicle_id').change(function (){
             //alert();
-            var vehicle_id = $('#vehicle_id').val();
-            $.ajax({
-                url:"{{URL('/admin/check/already/vehicle/assigned/or/free')}}/" + vehicle_id,
-                method:"GET",
-                success:function (data){
-                    //console.log(data)
-                    if(data > 0){
-                        alert('Please select another vehicle, This vehicle already assigned.');
-                        $('#vehicle_id').val('');
-                    }
-                },
-                error:function (err){
-                    console.log(err)
-                }
-            })
+            {{--var vehicle_id = $('#vehicle_id').val();--}}
+            {{--$.ajax({--}}
+            {{--    url:"{{URL('/admin/check/already/vehicle/assigned/or/free')}}/" + vehicle_id,--}}
+            {{--    method:"GET",--}}
+            {{--    success:function (data){--}}
+            {{--        //console.log(data)--}}
+            {{--        if(data > 0){--}}
+            {{--            alert('Please select another vehicle, This vehicle already assigned.');--}}
+            {{--            $('#vehicle_id').val('');--}}
+            {{--        }--}}
+            {{--    },--}}
+            {{--    error:function (err){--}}
+            {{--        console.log(err)--}}
+            {{--    }--}}
+            {{--})--}}
         })
 
+        $('#monthly_basis').hide();
+        $('#daily_basis').hide();
         $('#driver_id').change(function (){
             //alert();
             var driver_id = $('#driver_id').val();
+
             $.ajax({
-                url:"{{URL('/admin/check/already/driver/assigned/or/free')}}/" + driver_id,
+                url:"{{URL('/admin/check/driver/salary/info')}}/" + driver_id,
                 method:"GET",
                 success:function (data){
-                    //console.log(data)
-                    if(data > 0){
-                        alert('Please select another driver, This driver already assigned.');
-                        $('#driver_id').val('');
+                    console.log(data)
+                    if(data.salary_type == "Monthly"){
+                        $('#monthly_basis').show();
+                        $('#daily_basis').hide();
+                        $('#salary_type').val("Monthly");
+                    }else{
+                        $('#monthly_basis').hide();
+                        $('#daily_basis').show();
+                        $('#salary_type').val("Daily");
                     }
                 },
                 error:function (err){
                     console.log(err)
                 }
             })
+
+            {{--$.ajax({--}}
+            {{--    url:"{{URL('/admin/check/already/driver/assigned/or/free')}}/" + driver_id,--}}
+            {{--    method:"GET",--}}
+            {{--    success:function (data){--}}
+            {{--        //console.log(data)--}}
+            {{--        if(data > 0){--}}
+            {{--            alert('Please select another driver, This driver already assigned.');--}}
+            {{--            $('#driver_id').val('');--}}
+            {{--        }--}}
+            {{--    },--}}
+            {{--    error:function (err){--}}
+            {{--        console.log(err)--}}
+            {{--    }--}}
+            {{--})--}}
+        })
+
+        var getDaysInMonth = function(month,year) {
+            // Here January is 1 based
+            //Day 0 is the last day in the previous month
+            return new Date(year, month, 0).getDate();
+            // Here January is 0 based
+            // return new Date(year, month+1, 0).getDate();
+        };
+
+        $('#month').change(function (){
+            var year = $('#year').val();
+            var month = $('#month').val();
+            if(month == ''){
+                alert('Year Select First!');
+                $('#month').val('');
+            }
+
+            var start_date = year+'-'+month+'-01';
+            var dt = new Date(start_date);
+            var month = dt.getMonth() + 1;
+            var year = dt.getFullYear();
+            var month_days = getDaysInMonth(month, year);
+            console.log(month_days);
+            var end_date = year+'-'+month+'-'+month_days;
+
+            $('#start_date').val(start_date)
+            $('#end_date').val(end_date)
+
+
+            //alert(start_date);
+            const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            const firstDate = new Date(start_date);
+            const secondDate = new Date(end_date);
+
+            //const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+            const diffMonths = Math.round(Math.abs((firstDate - secondDate) / (oneDay*month_days)));
+            //$('#rent_duration_day').val(diffDays);
+            $('#rent_duration_day').val(month_days);
+            $('#rent_duration_month').val(diffMonths);
+        })
+
+        $('#end_date').change(function (){
+            var start_date = $('#start_date').val();
+            var end_date = $('#end_date').val();
+            if(start_date == ''){
+                alert('Start Date Select First!');
+                $('#end_date').val('');
+            }
+
+            var dt = new Date(start_date);
+            var month = dt.getMonth() + 1;
+            var year = dt.getFullYear();
+            var month_days = getDaysInMonth(month, year);
+            console.log(month_days);
+            console.log('month=',month)
+
+            //alert(start_date);
+            const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            const firstDate = new Date(start_date);
+            const secondDate = new Date(end_date);
+
+            //const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+            const diffMonths = Math.round(Math.abs((firstDate - secondDate) / (oneDay*month_days)));
+
+            if(diffMonths > 1){
+                alert('End Date Must be in same date!');
+                $('#end_date').val('');
+            }
+
+            $('#year').val(year)
+            $('#month').val(month)
+
+            //$('#rent_duration_day').val(diffDays);
+            $('#rent_duration_day').val(month_days);
+            $('#rent_duration_month').val(diffMonths);
         })
     </script>
 @endpush

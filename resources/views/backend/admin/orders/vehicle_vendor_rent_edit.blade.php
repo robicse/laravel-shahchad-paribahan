@@ -350,6 +350,14 @@
             {{--})--}}
         })
 
+        var getDaysInMonth = function(month,year) {
+            // Here January is 1 based
+            //Day 0 is the last day in the previous month
+            return new Date(year, month, 0).getDate();
+            // Here January is 0 based
+            // return new Date(year, month+1, 0).getDate();
+        };
+
         $('#end_year_month').change(function (){
             var start_year_month = $('#start_year_month').val();
             var end_year_month = $('#end_year_month').val();
@@ -359,7 +367,12 @@
             }
 
             var start_date = start_year_month+'-01';
-            var end_date = end_year_month+'-30';
+            var dt = new Date(start_date);
+            var month = dt.getMonth() + 1;
+            var year = dt.getFullYear();
+            var month_days = getDaysInMonth(month, year);
+            console.log(month_days);
+            var end_date = end_year_month+'-'+month_days;
 
             $('#start_date').val(start_date)
             $('#end_date').val(end_date)
@@ -371,7 +384,7 @@
             const secondDate = new Date(end_date);
 
             const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
-            const diffMonths = Math.round(Math.abs((firstDate - secondDate) / (oneDay*28)));
+            const diffMonths = Math.round(Math.abs((firstDate - secondDate) / (oneDay*month_days)));
             $('#rent_duration_day').val(diffDays);
             $('#rent_duration_month').val(diffMonths);
         })

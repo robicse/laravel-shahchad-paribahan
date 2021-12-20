@@ -40,6 +40,14 @@ if (!function_exists('checkAlreadyDriverAssignedOrFreeEdit')) {
             ->get()->count();
     }
 }
+
+// driver start
+if (!function_exists('checkDriverSalaryInfo')) {
+    function checkDriverSalaryInfo($driver_id) {
+        return \App\Model\Driver::where('id',$driver_id)
+            ->select('id','salary_type','salary','per_day_salary')->first();
+    }
+}
 // driver end
 
 // vehicle start

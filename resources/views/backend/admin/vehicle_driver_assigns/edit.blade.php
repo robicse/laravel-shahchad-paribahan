@@ -59,13 +59,66 @@
                                     @endforeach
                                 </select>
                             </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label for="text">Start Date</label>--}}
+{{--                                <input type="text" class="datepicker form-control" name="start_date" id="start_date" value="{{$vehicleDriverAssign->start_date}}">--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="text">End Date</label>--}}
+{{--                                <input type="text" class="datepicker form-control" name="end_date" id="end_date" value="{{$vehicleDriverAssign->end_date}}" >--}}
+{{--                            </div>--}}
                             <div class="form-group">
-                                <label for="text">Start Date</label>
-                                <input type="text" class="datepicker form-control" name="start_date" id="start_date" value="{{$vehicleDriverAssign->start_date}}">
+                                <label for="salary_type">Salary Type <span>*</span></label>
+                                <input type="text" class="form-control" name="salary_type" id="salary_type" value="{{$vehicleDriverAssign->salary_type}}" readonly required>
                             </div>
-                            <div class="form-group">
-                                <label for="text">End Date</label>
-                                <input type="text" class="datepicker form-control" name="end_date" id="end_date" value="{{$vehicleDriverAssign->end_date}}" >
+                            <div id="monthly_basis" @if($vehicleDriverAssign->salary_type == 'Daily') style="display: none" @endif>
+                                <div class="form-group">
+                                    <label for="year">Year</label>
+                                    <select name="year" id="year" class="form-control select2">
+                                        <option value="">Select</option>
+                                        <option value="2021" {{$vehicleDriverAssign->year == "2021" ? 'selected' : ''}}>2021</option>
+                                        <option value="2022" {{$vehicleDriverAssign->year == "2022" ? 'selected' : ''}}>2022</option>
+                                        <option value="2023" {{$vehicleDriverAssign->year == "2023" ? 'selected' : ''}}>2023</option>
+                                        <option value="2024" {{$vehicleDriverAssign->year == "2024" ? 'selected' : ''}}>2024</option>
+                                        <option value="2025" {{$vehicleDriverAssign->year == "2025" ? 'selected' : ''}}>2025</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="month">Month</label>
+                                    <select name="month" id="month" class="form-control select2">
+                                        <option value="">Select</option>
+                                        <option value="01" {{$vehicleDriverAssign->month == "01" ? 'selected' : ''}}>January</option>
+                                        <option value="02" {{$vehicleDriverAssign->month == "02" ? 'selected' : ''}}>February</option>
+                                        <option value="03" {{$vehicleDriverAssign->month == "03" ? 'selected' : ''}}>March</option>
+                                        <option value="04" {{$vehicleDriverAssign->month == "04" ? 'selected' : ''}}>April</option>
+                                        <option value="05" {{$vehicleDriverAssign->month == "05" ? 'selected' : ''}}>May</option>
+                                        <option value="06" {{$vehicleDriverAssign->month == "06" ? 'selected' : ''}}>June</option>
+                                        <option value="07" {{$vehicleDriverAssign->month == "07" ? 'selected' : ''}}>July</option>
+                                        <option value="08" {{$vehicleDriverAssign->month == "08" ? 'selected' : ''}}>August</option>
+                                        <option value="09" {{$vehicleDriverAssign->month == "09" ? 'selected' : ''}}>September</option>
+                                        <option value="10" {{$vehicleDriverAssign->month == "10" ? 'selected' : ''}}>October</option>
+                                        <option value="11" {{$vehicleDriverAssign->month == "11" ? 'selected' : ''}}>November</option>
+                                        <option value="12" {{$vehicleDriverAssign->month == "12" ? 'selected' : ''}}>December</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="display: none">
+                                    <label for="rent_duration_month">Rent Duration Month <span>*</span></label>
+                                    <input type="text" class="form-control" name="rent_duration_month" id="rent_duration_month" value="1" readonly>
+                                </div>
+                            </div>
+                            <div id="daily_basis" @if($vehicleDriverAssign->salary_type == 'Monthly') style="display: none" @endif>
+                                <div class="form-group">
+                                    <label for="start_date">Start Date <span>*</span></label>
+                                    <input type="text" class="datepicker form-control" name="start_date" id="start_date" value="{{$vehicleDriverAssign->start_date}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="end_date">End Date <span>*</span></label>
+                                    <input type="text" class="datepicker form-control" name="end_date" id="end_date" value="{{$vehicleDriverAssign->end_date}}" required>
+                                </div>
+                                <div class="form-group" style="display: none">
+                                    <label for="rent_duration_day">Rent Duration Day <span>*</span></label>
+                                    <input type="text" class="form-control" name="rent_duration_day" id="rent_duration_day" value="{{$vehicleDriverAssign->duration}}" readonly>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -148,6 +201,44 @@
                     console.log(err)
                 }
             })
+        })
+
+        var getDaysInMonth = function(month,year) {
+            // Here January is 1 based
+            //Day 0 is the last day in the previous month
+            return new Date(year, month, 0).getDate();
+            // Here January is 0 based
+            // return new Date(year, month+1, 0).getDate();
+        };
+
+        $('#end_date').change(function (){
+            var start_date = $('#start_date').val();
+            var end_date = $('#end_date').val();
+            if(start_date == ''){
+                alert('Start Date Select First!');
+                $('#end_date').val('');
+            }
+
+            var dt = new Date(start_date);
+            var month = dt.getMonth() + 1;
+            var year = dt.getFullYear();
+            var month_days = getDaysInMonth(month, year);
+            console.log(month_days);
+
+            //alert(start_date);
+            const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            const firstDate = new Date(start_date);
+            const secondDate = new Date(end_date);
+
+            const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+            const diffMonths = Math.round(Math.abs((firstDate - secondDate) / (oneDay*month_days)));
+
+            if(diffMonths > 1){
+                alert('End Date Must be in same date!');
+                $('#end_date').val('');
+            }
+            $('#rent_duration_day').val(diffDays+1);
+            $('#rent_duration_month').val(diffMonths);
         })
     </script>
 @endpush

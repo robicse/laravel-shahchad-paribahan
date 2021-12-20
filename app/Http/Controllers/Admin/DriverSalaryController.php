@@ -759,4 +759,29 @@ class DriverSalaryController extends Controller
         $payment_types = PaymentType::where('name','!=','Credit')->get();
         return view('backend.admin.orders.vehicle_customer_rent_due', compact('vehicleCustomerRents','payment_types'));
     }
+
+    public function check_driver_salary(Request $request)
+    {
+        //echo 'okk';
+        $driver_id = $request->driver_id;
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $month_days = $request->month_days;
+
+        $driver = Driver::find($driver_id);
+
+        $driver_duty_days = VehicleDriverAssign::join('drivers','vehicle_driver_assigns.driver_id','drivers.id')
+            ->select(
+                'drivers.salary_type',
+                'drivers.salary',
+                'drivers.per_day_salary',
+                'vehicle_driver_assigns.per_day_salary',
+
+            )
+            ->where('drivers.id',$driver_id)
+            ->latest('vehicle_driver_assigns.id')
+            ->first();
+        dd($driver_duty_days);
+
+    }
 }

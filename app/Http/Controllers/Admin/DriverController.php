@@ -196,4 +196,8 @@ class DriverController extends Controller
         return checkAlreadyDriverAssignedOrFreeEdit($request->driver_id, $request->vehicle_driver_assign_id);
     }
 
+    public function check_driver_salary_info($driver_id){
+        return checkDriverSalaryInfo($driver_id);
+    }
+
 }
