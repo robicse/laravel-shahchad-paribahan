@@ -160,6 +160,7 @@ class OrderController extends Controller
             if($request->payment_type_id == 1){
                 $payment = new Payment();
                 $payment->date=date('Y-m-d');
+                $payment->transaction_type='Vehicle Vendor Rent';
                 $payment->order_id=$insert_id;
                 $payment->payment_type_id = 1;
                 $payment->paid = $request->grand_total;
@@ -169,6 +170,7 @@ class OrderController extends Controller
                 // paid
                 $payment = new Payment();
                 $payment->date=date('Y-m-d');
+                $payment->transaction_type='Vehicle Vendor Rent';
                 $payment->order_id=$insert_id;
                 $payment->payment_type_id = 1;
                 $payment->paid = $request->paid;
@@ -178,6 +180,7 @@ class OrderController extends Controller
                 // due
                 $payment = new Payment();
                 $payment->date=date('Y-m-d');
+                $payment->transaction_type='Vehicle Vendor Rent';
                 $payment->order_id=$insert_id;
                 $payment->payment_type_id = 2;
                 $payment->paid = $request->due_price;
@@ -307,6 +310,7 @@ class OrderController extends Controller
                 // due
                 $payment = new Payment();
                 $payment->date=date('Y-m-d');
+                $payment->transaction_type='Vehicle Vendor Rent';
                 $payment->order_id=$id;
                 $payment->payment_type_id = 2;
                 $payment->paid = $request->due_price;
@@ -374,7 +378,7 @@ class OrderController extends Controller
         $payment_types = PaymentType::where('name','!=','Credit')->get();
         return view('backend.admin.orders.vehicle_vendor_rent_due', compact('vehicleVendorRents','payment_types'));
     }
-    public function payDue(Request $request){
+    public function vendorPayDue(Request $request){
         //dd($request->all());
 
         // update due
@@ -384,11 +388,12 @@ class OrderController extends Controller
         $order->save();
 
         // delete previous due
-        Payment::where('order_id',$request->order_id)->where('payment_type_id',2)->delete();
+        Payment::where('order_id',$request->order_id)->where('transaction_type','Vehicle Vendor Rent')->where('payment_type_id',2)->delete();
 
         // new due paid
         $payment = new Payment();
         $payment->date=date('Y-m-d');
+        $payment->transaction_type='Vehicle Vendor Rent';
         $payment->order_id=$request->order_id;
         $payment->payment_type_id = $request->payment_type_id;
         $payment->paid = $request->new_paid;
@@ -397,6 +402,7 @@ class OrderController extends Controller
         // current due
         $payment = new Payment();
         $payment->date=date('Y-m-d');
+        $payment->transaction_type='Vehicle Vendor Rent';
         $payment->order_id=$request->order_id;
         $payment->payment_type_id = 2;
         $payment->paid = $last_due_price;
@@ -411,6 +417,48 @@ class OrderController extends Controller
         $accessLog->save();
 
         Toastr::success('Vehicle Vendor Rent Order Due Paid Successfully');
+        return back();
+    }
+
+    public function customerPayDue(Request $request){
+        //dd($request->all());
+
+        // update due
+        $order = Order::find($request->order_id);
+        $last_due_price = $order->due_price - $request->new_paid;
+        $order->due_price=$last_due_price;
+        $order->save();
+
+        // delete previous due
+        Payment::where('order_id',$request->order_id)->where('transaction_type','Vehicle Customer Rent')->where('payment_type_id',2)->delete();
+
+        // new due paid
+        $payment = new Payment();
+        $payment->date=date('Y-m-d');
+        $payment->transaction_type='Vehicle Customer Rent';
+        $payment->order_id=$request->order_id;
+        $payment->payment_type_id = $request->payment_type_id;
+        $payment->paid = $request->new_paid;
+        $payment->save();
+
+        // current due
+        $payment = new Payment();
+        $payment->date=date('Y-m-d');
+        $payment->transaction_type='Vehicle Customer Rent';
+        $payment->order_id=$request->order_id;
+        $payment->payment_type_id = 2;
+        $payment->paid = $last_due_price;
+        $payment->save();
+
+        $accessLog = new AccessLog();
+        $accessLog->user_id=Auth::user()->id;
+        $accessLog->action_module='Vehicle Customer Rent';
+        $accessLog->action_done='Due Update';
+        $accessLog->action_remarks='Vehicle Customer Rent Order ID: '.$request->order_id;
+        $accessLog->action_date=date('Y-m-d');
+        $accessLog->save();
+
+        Toastr::success('Vehicle Customer Rent Order Due Paid Successfully');
         return back();
     }
 
@@ -549,6 +597,7 @@ class OrderController extends Controller
             if($request->payment_type_id == 1){
                 $payment = new Payment();
                 $payment->date=date('Y-m-d');
+                $payment->transaction_type='Vehicle Customer Rent';
                 $payment->order_id=$insert_id;
                 $payment->payment_type_id = 1;
                 $payment->paid = $request->grand_total;
@@ -558,6 +607,7 @@ class OrderController extends Controller
                 // paid
                 $payment = new Payment();
                 $payment->date=$date;
+                $payment->transaction_type='Vehicle Customer Rent';
                 $payment->order_id=$insert_id;
                 $payment->payment_type_id = 1;
                 $payment->paid = $request->paid;
@@ -567,6 +617,7 @@ class OrderController extends Controller
                 // due
                 $payment = new Payment();
                 $payment->date=$date;
+                $payment->transaction_type='Vehicle Customer Rent';
                 $payment->order_id=$insert_id;
                 $payment->payment_type_id = 2;
                 $payment->paid = $request->due_price;
@@ -701,6 +752,7 @@ class OrderController extends Controller
                 // due
                 $payment = new Payment();
                 $payment->date=$date;
+                $payment->transaction_type='Vehicle Customer Rent';
                 $payment->order_id=$id;
                 $payment->payment_type_id = 2;
                 $payment->paid = $request->due_price;

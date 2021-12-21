@@ -92,7 +92,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{route('admin.pay.due')}}" method="post">
+                                                <form action="{{route('admin.vendor.pay.due')}}" method="post">
                                                     @csrf
                                                     <div class="form-group">
                                                         <label for="due">Enter Due Amount</label>

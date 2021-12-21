@@ -26,14 +26,14 @@
                 <div class="card card-info card-outline">
                     <div class="card-header">
                         <h3 class="card-title float-left">Access Log Lists</h3>
-                        <div class="float-right">
-                            <a href="{{route('admin.access-logs.create')}}">
-                                <button class="btn btn-success">
-                                    <i class="fa fa-plus-circle"></i>
-                                    Add
-                                </button>
-                            </a>
-                        </div>
+{{--                        <div class="float-right">--}}
+{{--                            <a href="{{route('admin.access-logs.create')}}">--}}
+{{--                                <button class="btn btn-success">--}}
+{{--                                    <i class="fa fa-plus-circle"></i>--}}
+{{--                                    Add--}}
+{{--                                </button>--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive">

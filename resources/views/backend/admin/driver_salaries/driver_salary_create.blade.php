@@ -81,7 +81,7 @@
                         </div>
                         <div class="form-group">
                             <label for="salary">Salary</label>
-                            <input type="number" class="form-control" name="salary" id="price" >
+                            <input type="number" class="form-control" name="salary" id="salary" >
                         </div>
                         <div class="form-group">
                             <label for="payment_type_id">Payment Type <span>*</span></label>
@@ -193,6 +193,15 @@
                 },
                 success:function (data){
                     console.log(data)
+                    if(data.salary_type == "Monthly"){
+                        $('#salary').val(data.salary);
+                        //$('#paid').val(data.salary);
+                        //$('#due_price').val(0);
+                    }else{
+                        $('#salary').val(data.per_day_salary*data.duration);
+                        //$('#paid').val(data.salary);
+                        //$('#due_price').val(0);
+                    }
                 },
                 error:function (err){
                     console.log(err)
@@ -203,31 +212,10 @@
 
         })
 
-        $('#price').keyup(function (){
-            var price = $('#price').val();
-            var rent_type = $('#rent_type').val();
-            var quantity = $('#quantity').val();
-
-            var grand_total = 0
-            if(rent_type == 'Daily'){
-                var rent_duration_day = $('#rent_duration_day').val();
-                grand_total = (price*rent_duration_day)*quantity;
-            }else{
-                var rent_duration_month = $('#rent_duration_month').val();
-                grand_total = (price*rent_duration_month)*quantity;
-            }
-
-            $('#sub_total').val(grand_total);
-            $('#grand_total').val(grand_total);
-            var paid = $('#paid').val();
-            var due_price = grand_total - paid;
-            $('#due_price').val(due_price);
-        })
-
         $('#paid').keyup(function (){
-            var grand_total = $('#grand_total').val();
+            var salary = $('#salary').val();
             var paid = $('#paid').val();
-            var due_price = grand_total - paid;
+            var due_price = salary - paid;
             $('#due_price').val(due_price);
         })
 
@@ -240,12 +228,13 @@
                 $('#paid_div').show();
                 $('#due_price_div').show();
                 $('#paid').val(0);
-                var grand_total = $('#grand_total').val();
-                $('#due_price').val(grand_total);
+                var salary = $('#salary').val();
+                $('#due_price').val(salary);
             }else{
                 $('#paid_div').hide();
                 $('#due_price_div').hide();
-                $('#paid').val(0);
+                var salary = $('#salary').val();
+                $('#paid').val(salary);
                 $('#due_price').val(0);
             }
         })

@@ -57,12 +57,11 @@
                                 @endphp
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>{{$driverSalary->DriverSalary->name}} ({{$driverSalary->driver->driver_code}})</td>
+                                <td>{{$driverSalary->driver->name}}</td>
                                 <td>{{$driverSalary->year}}</td>
                                 <td>{{$driverSalary->month}}</td>
                                 <td>{{$driverSalary->salary}}</td>
                                 <td>{{$driverSalary->paid}}</td>
-                                <td>{{$driverSalary->due}}</td>
                                 <td>
                                     {{$driverSalary->due}}
                                     @if($driverSalary->due > 0)
@@ -70,9 +69,9 @@
                                     @endif
                                 </td>
                                 <td class="d-inline-flex">
-                                    <a class="btn btn-info float-left" href="{{route('admin.driver-salary-edit',$driverSalary->id)}}" style="margin-left: 5px">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
+{{--                                    <a class="btn btn-info float-left" href="{{route('admin.driver-salary-edit',$driverSalary->id)}}" style="margin-left: 5px">--}}
+{{--                                        <i class="fa fa-edit"></i>--}}
+{{--                                    </a>--}}
                                     <a class="btn btn-success" href="{{route('admin.driver-salary-show',$driverSalary->id)}}" style="margin-left: 5px">
                                         <i class="fa fa-eye"></i>
                                     </a>
@@ -89,7 +88,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{route('admin.pay.due')}}" method="post">
+                                                <form action="{{route('admin.driver.pay.due')}}" method="post">
                                                     @csrf
                                                     <div class="form-group">
                                                         <label for="due">Enter Due Amount</label>

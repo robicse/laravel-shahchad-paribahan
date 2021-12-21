@@ -57,7 +57,8 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     //Route::get('check/already/vehicle/rent/or/not/{id}','VehicleController@check_already_vehicle_rent_or_not');
     Route::post('check/already/vehicle/rent/or/not/this/date','VehicleController@check_already_vehicle_rent_or_not_this_date');
     Route::post('get/vehicle/assigned/driver','VehicleDriverAssignController@get_vehicle_assigned_driver');
-    Route::post('pay-due','OrderController@payDue')->name('pay.due');
+    Route::post('vendor-pay-due','OrderController@vendorPayDue')->name('vendor.pay.due');
+    Route::post('customer-pay-due','OrderController@customerPayDue')->name('customer.pay.due');
 
     Route::get('check/driver/salary/info/{id}','DriverController@check_driver_salary_info');
 
@@ -65,9 +66,10 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::get('driver/salary/list','DriverSalaryController@driver_salary_list')->name('driver-salary-list');
     Route::get('driver/salary/create','DriverSalaryController@driver_salary_create')->name('driver-salary-create');
     Route::post('driver/salary/store','DriverSalaryController@driver_salary_store')->name('driver-salary-store');
-    Route::get('driver/salary/show/{id}','DriverSalaryController@vehicle_customer_rent_show')->name('driver-salary-show');
+    Route::get('driver/salary/show/{id}','DriverSalaryController@driver_salary_show')->name('driver-salary-show');
     Route::get('driver/salary/edit/{id}','DriverSalaryController@vehicle_customer_rent_edit')->name('driver-salary-edit');
     Route::post('check/driver/salary','DriverSalaryController@check_driver_salary');
+    Route::post('driver-pay-due','DriverSalaryController@driverPayDue')->name('driver.pay.due');
 
     // report
     Route::get('report/payments','ReportController@reportPayment')->name('report-payment');

@@ -31,21 +31,21 @@
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.vendors.index')}}" class="nav-link {{Request::is('admin/vendors') ? 'active' : ''}}">
+                        <a href="{{route('admin.vendors.index')}}" class="nav-link {{Request::is('admin/vendors*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>Vendors List</p>
+                            <p>Vendors</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.drivers.index')}}" class="nav-link {{Request::is('admin/drivers') ? 'active' : ''}}">
+                        <a href="{{route('admin.drivers.index')}}" class="nav-link {{Request::is('admin/drivers*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>Drivers List</p>
+                            <p>Drivers</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.customers.index')}}" class="nav-link {{Request::is('admin/customers') ? 'active' : ''}}">
+                        <a href="{{route('admin.customers.index')}}" class="nav-link {{Request::is('admin/customers*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>Customers List</p>
+                            <p>Customers</p>
                         </a>
                     </li>
                     <li class="nav-item has-treeview {{(Request::is('admin/brands*')
@@ -100,54 +100,54 @@
                         </ul>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.vehicle-vendor-rent-list')}}" class="nav-link {{Request::is('admin/vehicle/vendor/rent/list') ? 'active' : ''}}">
+                        <a href="{{route('admin.vehicle-vendor-rent-list')}}" class="nav-link {{Request::is('admin/vehicle/vendor/rent/list') || Request::is('admin/vehicle/vendor/rent/create') || Request::is('admin/vehicle/vendor/rent/edit*')|| Request::is('admin/vehicle/vendor/rent/show*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>Vehicle Rent From Vendor List</p>
+                            <p>Vehicle Rent From Vendor</p>
                         </a>
                     </li>
                     <li class="nav-item ">
                         <a href="{{route('admin.vehicle-vendor-rent-due')}}" class="nav-link {{Request::is('admin/vehicle/vendor/rent/due') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>Vendor Due List</p>
+                            <p>Vendor Due</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.vehicle-driver-assigns.index')}}" class="nav-link {{Request::is('admin/vehicle-driver-assigns') ? 'active' : ''}}">
+                        <a href="{{route('admin.vehicle-driver-assigns.index')}}" class="nav-link {{Request::is('admin/vehicle-driver-assigns*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>Vehicle Driver Assign List</p>
+                            <p>Vehicle Driver Assign</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.vehicle-customer-rent-list')}}" class="nav-link {{Request::is('admin/vehicle/customer/rent/list') ? 'active' : ''}}">
+                        <a href="{{route('admin.vehicle-customer-rent-list')}}" class="nav-link {{Request::is('admin/vehicle/customer/rent/list') || Request::is('admin/vehicle/customer/rent/create') || Request::is('admin/vehicle/customer/rent/edit*')|| Request::is('admin/vehicle/customer/rent/show*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>Vehicle Rent To Customer List</p>
+                            <p>Vehicle Rent To Customer</p>
                         </a>
                     </li>
                     <li class="nav-item ">
                         <a href="{{route('admin.vehicle-customer-rent-due')}}" class="nav-link {{Request::is('admin/vehicle/customer/rent/due') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>Customer Due List</p>
+                            <p>Customer Due</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.overall-cost-categories.index')}}" class="nav-link {{Request::is('admin/overall-cost-categories') ? 'active' : ''}}">
+                        <a href="{{route('admin.overall-cost-categories.index')}}" class="nav-link {{Request::is('admin/overall-cost-categories*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Overall Cost Category</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.overall-cost.index')}}" class="nav-link {{Request::is('admin/overall-cost') ? 'active' : ''}}">
+                        <a href="{{route('admin.overall-cost.index')}}" class="nav-link {{Request::is('admin/overall-cost*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Overall Cost</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="{{route('admin.driver-salary-list')}}" class="nav-link {{Request::is('admin/driver/salary/list') ? 'active' : ''}}">
+                        <a href="{{route('admin.driver-salary-list')}}" class="nav-link {{Request::is('admin/driver/salary*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Driver Salary</p>
                         </a>
                     </li>
-                    <li class="nav-item has-treeview {{(Request::is('admin/payments*')
+                    <li class="nav-item has-treeview {{(Request::is('admin/report/payments*')
                         //|| Request::is('admin/categories*')
                         //|| Request::is('admin/subcategories*')
                         //|| Request::is('admin/vehicles*')
@@ -163,8 +163,8 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="{{route('admin.report-payment')}}"
-                                   class="nav-link {{Request::is('admin/payments*') ? 'active' :''}}">
-                                    <i class="fa fa-{{Request::is('admin/payments*') ? 'folder-open':'folder'}} nav-icon"></i>
+                                   class="nav-link {{Request::is('admin/report/payments') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/report/payments') ? 'folder-open':'folder'}} nav-icon"></i>
                                     <p>Payments</p>
                                 </a>
                             </li>
@@ -200,7 +200,7 @@
                     <li class="nav-item ">
                         <a href="{{route('admin.profile.index')}}" class="nav-link {{Request::is('admin/profile') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-user-circle"></i>
-                            <p>Profile</p>
+                            <p>Admin Profile</p>
                         </a>
                     </li>
 

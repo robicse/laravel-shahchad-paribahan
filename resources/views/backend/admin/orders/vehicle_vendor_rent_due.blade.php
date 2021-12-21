@@ -26,14 +26,6 @@
                 <div class="card card-info card-outline">
                     <div class="card-header">
                         <h3 class="card-title float-left">Vendor Due Lists</h3>
-                        <div class="float-right">
-                            <a href="{{route('admin.vehicle-vendor-rent-create')}}">
-                                <button class="btn btn-success">
-                                    <i class="fa fa-plus-circle"></i>
-                                    Add
-                                </button>
-                            </a>
-                        </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive">
@@ -47,7 +39,7 @@
                                 <th>End Date</th>
                                 <th>Grand Total</th>
                                 <th>Due</th>
-                                <th>Action</th>
+{{--                                <th>Action</th>--}}
                             </tr>
                             </thead>
                             <tbody>
@@ -68,18 +60,14 @@
                                         <a href="" class="btn btn-warning btn-sm mx-1" data-toggle="modal" data-target="#exampleModal-<?= $vehicleVendorRent->id;?>"> Pay Due</a>
                                     @endif
                                 </td>
-                                <td class="d-inline-flex">
-                                    <a class="btn btn-info float-left" href="{{route('admin.vehicle-vendor-rent-edit',$vehicleVendorRent->id)}}" style="margin-left: 5px">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a class="btn btn-success" href="{{route('admin.vehicle-vendor-rent-show',$vehicleVendorRent->id)}}" style="margin-left: 5px">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-{{--                                    <button class="btn btn-danger waves-effect" type="button"--}}
-{{--                                            onclick="deleteVehicle({{$vehicle->id}})">--}}
-{{--                                        <i class="fa fa-trash"></i>--}}
-{{--                                    </button>--}}
-                                </td>
+{{--                                <td class="d-inline-flex">--}}
+{{--                                    <a class="btn btn-info float-left" href="{{route('admin.vehicle-vendor-rent-edit',$vehicleVendorRent->id)}}" style="margin-left: 5px">--}}
+{{--                                        <i class="fa fa-edit"></i>--}}
+{{--                                    </a>--}}
+{{--                                    <a class="btn btn-success" href="{{route('admin.vehicle-vendor-rent-show',$vehicleVendorRent->id)}}" style="margin-left: 5px">--}}
+{{--                                        <i class="fa fa-eye"></i>--}}
+{{--                                    </a>--}}
+{{--                                </td>--}}
                             </tr>
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal-{{$vehicleVendorRent->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -92,7 +80,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{route('admin.pay.due')}}" method="post">
+                                                <form action="{{route('admin.vendor.pay.due')}}" method="post">
                                                     @csrf
                                                     <div class="form-group">
                                                         <label for="due">Enter Due Amount</label>
@@ -142,7 +130,7 @@
                                 <th>End Date</th>
                                 <th>Grand Total</th>
                                 <th>Due</th>
-                                <th>Action</th>
+{{--                                <th>Action</th>--}}
                             </tr>
                             </tfoot>
                         </table>
