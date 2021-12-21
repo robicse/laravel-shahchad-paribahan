@@ -10,6 +10,14 @@ use Illuminate\Support\Str;
 
 class OverallCostCategoryController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:overall-cost-category-list|overall-cost-category-create|overall-cost-category-edit|overall-cost-category-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:overall-cost-category-create', ['only' => ['create','store']]);
+        $this->middleware('permission:overall-cost-category-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:overall-cost-category-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $overallCostCategories = OverallCostCategory::latest()->get();

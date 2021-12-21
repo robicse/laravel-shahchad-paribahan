@@ -65,6 +65,10 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="salary">Salary</label>
+                            <input type="number" class="form-control" name="salary" id="salary" placeholder="Enter Salary">
+                        </div>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">

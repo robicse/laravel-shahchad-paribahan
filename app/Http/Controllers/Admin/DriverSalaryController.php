@@ -25,13 +25,13 @@ use Intervention\Image\Facades\Image;
 
 class DriverSalaryController extends Controller
 {
-//    function __construct()
-//    {
-//        $this->middleware('permission:vehicle-driver-assign-list|vehicle-driver-assign-create|vehicle-driver-assign-edit|vehicle-driver-assign-delete', ['only' => ['index','store']]);
-//        $this->middleware('permission:vehicle-driver-assign-create', ['only' => ['create','store']]);
-//        $this->middleware('permission:vehicle-driver-assign-edit', ['only' => ['edit','update']]);
-//        $this->middleware('permission:vehicle-driver-assign-delete', ['only' => ['destroy']]);
-//    }
+    function __construct()
+    {
+        $this->middleware('permission:driver-salary-list|driver-salary-create|driver-salary-edit|driver-salary-delete|driver_salary_show', ['only' => ['driver_salary_list','driver_salary_store']]);
+        $this->middleware('permission:driver-salary-create', ['only' => ['driver_salary_create','driver_salary_store']]);
+        $this->middleware('permission:driver-salary-edit', ['only' => ['driver_salary_edit','driver_salary_update']]);
+        $this->middleware('permission:driver-salary-delete', ['only' => ['driver_salary_destroy']]);
+    }
 
     public function driver_salary_list()
     {

@@ -23,13 +23,20 @@ use Intervention\Image\Facades\Image;
 
 class OrderController extends Controller
 {
-//    function __construct()
-//    {
-//        $this->middleware('permission:vehicle-driver-assign-list|vehicle-driver-assign-create|vehicle-driver-assign-edit|vehicle-driver-assign-delete', ['only' => ['index','store']]);
-//        $this->middleware('permission:vehicle-driver-assign-create', ['only' => ['create','store']]);
-//        $this->middleware('permission:vehicle-driver-assign-edit', ['only' => ['edit','update']]);
-//        $this->middleware('permission:vehicle-driver-assign-delete', ['only' => ['destroy']]);
-//    }
+    function __construct()
+    {
+        // vendor
+        $this->middleware('permission:vehicle-vendor-rent-list|vehicle-vendor-rent-create|vehicle-vendor-rent-edit|vehicle-vendor-rent-delete', ['only' => ['vehicle_vendor_rent_list','vehicle_vendor_rent_store','vehicle_vendor_rent_show']]);
+        $this->middleware('permission:vehicle-vendor-rent-create', ['only' => ['vehicle_vendor_rent_create','vehicle_vendor_rent_store']]);
+        $this->middleware('permission:vehicle-vendor-rent-edit', ['only' => ['vehicle_vendor_rent_edit','vehicle_vendor_rent_update']]);
+        $this->middleware('permission:vehicle-vendor-rent-delete', ['only' => ['destroy']]);
+
+        // customer
+        $this->middleware('permission:vehicle-customer-rent-list|vehicle-customer-rent-create|vehicle-customer-rent-edit|vehicle-customer-rent-delete', ['only' => ['vehicle_customer_rent_list','vehicle_customer_rent_store','vehicle_customer_rent_show']]);
+        $this->middleware('permission:vehicle-customer-rent-create', ['only' => ['vehicle_vendor_rent_create','vehicle_customer_rent_store']]);
+        $this->middleware('permission:vehicle-customer-rent-edit', ['only' => ['vehicle_vendor_rent_edit','vehicle_customer_rent_update']]);
+        $this->middleware('permission:vehicle-customer-rent-delete', ['only' => ['destroy']]);
+    }
 
     public function vehicle_vendor_rent_list()
     {

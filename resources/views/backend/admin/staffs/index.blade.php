@@ -45,6 +45,7 @@
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Role</th>
+                                <th>Salary</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -62,6 +63,7 @@
                                         @endforeach
                                     @endif
                                 </td>
+                                <td>{{$user->salary}}</td>
                                 <td>
                                     <a class="btn btn-info waves-effect" href="{{route('admin.staffs.edit',$user->id)}}">
                                         <i class="fa fa-edit"></i>
@@ -85,6 +87,7 @@
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Role</th>
+                                <th>Salary</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>

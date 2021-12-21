@@ -42,7 +42,7 @@
                             <tr>
                                 <th>#SL NO</th>
                                 <th>Invoice NO</th>
-                                <th>Date</th>
+                                <th>Date Time</th>
                                 <th>Vehicle</th>
                                 <th>Paid To</th>
                                 <th>Method</th>
@@ -58,8 +58,12 @@
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{$payment->order->invoice_no}}</td>
-                                <td>{{$payment->date}}</td>
-                                <td>{{$orderItem->vehicle_name}}({{$orderItem->registration_no}})</td>
+                                <td>{{$payment->created_at}}</td>
+                                <td>
+                                    @if($payment->transaction_type == 'Vehicle Vendor Rent' || $payment->transaction_type == 'Vehicle Customer Rent')
+                                        {{$orderItem->vehicle_name}}({{$orderItem->registration_no}})
+                                    @endif
+                                </td>
                                 <td>
                                     @if($payment->order->order_type == 'Purchases')
                                         {{$payment->order->vendor->name}}
@@ -78,7 +82,7 @@
                             <tr>
                                 <th>#SL NO</th>
                                 <th>Invoice NO</th>
-                                <th>Date</th>
+                                <th>Date Time</th>
                                 <th>Vehicle</th>
                                 <th>Paid To</th>
                                 <th>Method</th>

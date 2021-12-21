@@ -12,6 +12,14 @@ use Illuminate\Support\Str;
 
 class OverallCostController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:overall-cost-list|overall-cost-create|overall-cost-edit|overall-cost-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:overall-cost-create', ['only' => ['create','store']]);
+        $this->middleware('permission:overall-cost-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:overall-cost-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $overallCosts = OverallCost::latest()->get();

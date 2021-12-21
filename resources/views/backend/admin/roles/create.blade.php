@@ -10,13 +10,13 @@
                 <div class="col-sm-5">
                     <h1>Roles</h1>
                 </div>
-                <div class="col-sm-4">
-                    <div class="float-left">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            Add Permission
-                        </button>
-                    </div>
-                </div>
+{{--                <div class="col-sm-4">--}}
+{{--                    <div class="float-left">--}}
+{{--                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">--}}
+{{--                            Add Permission--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="col-sm-3">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>

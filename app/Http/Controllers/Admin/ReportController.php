@@ -23,13 +23,11 @@ use Intervention\Image\Facades\Image;
 
 class ReportController extends Controller
 {
-//    function __construct()
-//    {
-//        $this->middleware('permission:vehicle-driver-assign-list|vehicle-driver-assign-create|vehicle-driver-assign-edit|vehicle-driver-assign-delete', ['only' => ['index','store']]);
-//        $this->middleware('permission:vehicle-driver-assign-create', ['only' => ['create','store']]);
-//        $this->middleware('permission:vehicle-driver-assign-edit', ['only' => ['edit','update']]);
-//        $this->middleware('permission:vehicle-driver-assign-delete', ['only' => ['destroy']]);
-//    }
+    function __construct()
+    {
+        $this->middleware('permission:report-payment-list', ['only' => ['reportPayment']]);
+
+    }
 
     public function reportPayment()
     {
