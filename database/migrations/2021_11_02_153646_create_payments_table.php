@@ -16,7 +16,9 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('date');
+            $table->enum('transaction_type',['Vehicle Vendor Rent','Vehicle Customer Rent','Driver Salary','Staff Salary']);
             $table->integer('order_id');
+            $table->integer('paid_user_id')->nullable();
             $table->integer('payment_type_id');
             $table->double('paid',8,2)->default(0);
             $table->double('exchange',8,2)->default(0);

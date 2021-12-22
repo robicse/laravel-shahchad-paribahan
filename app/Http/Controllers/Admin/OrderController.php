@@ -169,6 +169,7 @@ class OrderController extends Controller
                 $payment->date=date('Y-m-d');
                 $payment->transaction_type='Vehicle Vendor Rent';
                 $payment->order_id=$insert_id;
+                $payment->paid_user_id=$request->vendor_id;
                 $payment->payment_type_id = 1;
                 $payment->paid = $request->grand_total;
                 $payment->exchange = 0;
@@ -179,6 +180,7 @@ class OrderController extends Controller
                 $payment->date=date('Y-m-d');
                 $payment->transaction_type='Vehicle Vendor Rent';
                 $payment->order_id=$insert_id;
+                $payment->paid_user_id=$request->vendor_id;
                 $payment->payment_type_id = 1;
                 $payment->paid = $request->paid;
                 $payment->exchange = 0;
@@ -189,6 +191,7 @@ class OrderController extends Controller
                 $payment->date=date('Y-m-d');
                 $payment->transaction_type='Vehicle Vendor Rent';
                 $payment->order_id=$insert_id;
+                $payment->paid_user_id=$request->vendor_id;
                 $payment->payment_type_id = 2;
                 $payment->paid = $request->due_price;
                 $payment->exchange = 0;
@@ -319,6 +322,7 @@ class OrderController extends Controller
                 $payment->date=date('Y-m-d');
                 $payment->transaction_type='Vehicle Vendor Rent';
                 $payment->order_id=$id;
+                $payment->paid_user_id=$request->vendor_id;
                 $payment->payment_type_id = 2;
                 $payment->paid = $request->due_price;
                 $payment->exchange = 0;
@@ -402,6 +406,7 @@ class OrderController extends Controller
         $payment->date=date('Y-m-d');
         $payment->transaction_type='Vehicle Vendor Rent';
         $payment->order_id=$request->order_id;
+        $payment->paid_user_id=$order->vendor_id;
         $payment->payment_type_id = $request->payment_type_id;
         $payment->paid = $request->new_paid;
         $payment->save();
@@ -411,6 +416,7 @@ class OrderController extends Controller
         $payment->date=date('Y-m-d');
         $payment->transaction_type='Vehicle Vendor Rent';
         $payment->order_id=$request->order_id;
+        $payment->paid_user_id=$order->vendor_id;
         $payment->payment_type_id = 2;
         $payment->paid = $last_due_price;
         $payment->save();
@@ -444,6 +450,7 @@ class OrderController extends Controller
         $payment->date=date('Y-m-d');
         $payment->transaction_type='Vehicle Customer Rent';
         $payment->order_id=$request->order_id;
+        $payment->paid_user_id=$order->customer_id;
         $payment->payment_type_id = $request->payment_type_id;
         $payment->paid = $request->new_paid;
         $payment->save();
@@ -453,6 +460,7 @@ class OrderController extends Controller
         $payment->date=date('Y-m-d');
         $payment->transaction_type='Vehicle Customer Rent';
         $payment->order_id=$request->order_id;
+        $payment->paid_user_id=$order->customer_id;
         $payment->payment_type_id = 2;
         $payment->paid = $last_due_price;
         $payment->save();
@@ -606,6 +614,7 @@ class OrderController extends Controller
                 $payment->date=date('Y-m-d');
                 $payment->transaction_type='Vehicle Customer Rent';
                 $payment->order_id=$insert_id;
+                $payment->paid_user_id=$request->customer_id;
                 $payment->payment_type_id = 1;
                 $payment->paid = $request->grand_total;
                 $payment->exchange = 0;
@@ -616,6 +625,7 @@ class OrderController extends Controller
                 $payment->date=$date;
                 $payment->transaction_type='Vehicle Customer Rent';
                 $payment->order_id=$insert_id;
+                $payment->paid_user_id=$request->customer_id;
                 $payment->payment_type_id = 1;
                 $payment->paid = $request->paid;
                 $payment->exchange = 0;
@@ -626,6 +636,7 @@ class OrderController extends Controller
                 $payment->date=$date;
                 $payment->transaction_type='Vehicle Customer Rent';
                 $payment->order_id=$insert_id;
+                $payment->paid_user_id=$request->customer_id;
                 $payment->payment_type_id = 2;
                 $payment->paid = $request->due_price;
                 $payment->exchange = 0;
@@ -712,7 +723,7 @@ class OrderController extends Controller
 
         $order = Order::find($id);
         $prev_payment_type_id = $order->payment_type_id;
-        $order->vendor_id = $request->vendor_id;
+        $order->customer_id = $request->customer_id;
         $order->payment_type_id = $request->payment_type_id;
         $order->discount_type = $request->discount_type;
         $order->discount_percent = $request->discount_percent;
@@ -761,6 +772,7 @@ class OrderController extends Controller
                 $payment->date=$date;
                 $payment->transaction_type='Vehicle Customer Rent';
                 $payment->order_id=$id;
+                $payment->paid_user_id=$request->customer_id;
                 $payment->payment_type_id = 2;
                 $payment->paid = $request->due_price;
                 $payment->exchange = 0;

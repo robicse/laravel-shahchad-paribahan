@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDriverSalariesTable extends Migration
+class CreateStaffSalariesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateDriverSalariesTable extends Migration
      */
     public function up()
     {
-        Schema::create('driver_salaries', function (Blueprint $table) {
+        Schema::create('staff_salaries', function (Blueprint $table) {
             $table->id();
-            $table->integer('driver_id');
+            $table->integer('user_id');
             $table->string('invoice_no')->nullable();
             $table->string('year')->nullable();
             $table->string('month')->nullable();
@@ -37,6 +37,6 @@ class CreateDriverSalariesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('driver_salaries');
+        Schema::dropIfExists('staff_salaries');
     }
 }

@@ -71,6 +71,15 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::post('check/driver/salary','DriverSalaryController@check_driver_salary');
     Route::post('driver-pay-due','DriverSalaryController@driverPayDue')->name('driver.pay.due');
 
+    // staff salary
+    Route::get('staff/salary/list','StaffSalaryController@staff_salary_list')->name('staff-salary-list');
+    Route::get('staff/salary/create','StaffSalaryController@staff_salary_create')->name('staff-salary-create');
+    Route::post('staff/salary/store','StaffSalaryController@staff_salary_store')->name('staff-salary-store');
+    Route::get('staff/salary/show/{id}','StaffSalaryController@staff_salary_show')->name('staff-salary-show');
+    Route::get('staff/salary/edit/{id}','StaffSalaryController@staff_salary_edit')->name('staff-salary-edit');
+    Route::post('check/staff/salary','StaffSalaryController@check_staff_salary');
+    Route::post('staff-pay-due','StaffSalaryController@staffPayDue')->name('staff.pay.due');
+
     // report
     Route::get('report/payments','ReportController@reportPayment')->name('report-payment');
 

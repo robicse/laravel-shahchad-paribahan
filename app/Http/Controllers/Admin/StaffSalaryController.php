@@ -11,9 +11,11 @@ use App\Model\Order;
 use App\Model\OrderItem;
 use App\Model\Payment;
 use App\Model\PaymentType;
+use App\Model\StaffSalary;
 use App\Model\Vehicle;
 use App\Model\VehicleDriverAssign;
 use App\Model\Vendor;
+use App\User;
 use NumberFormatter;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -23,31 +25,31 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
-class DriverSalaryController extends Controller
+class StaffSalaryController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('permission:driver-salary-list|driver-salary-create|driver-salary-edit|driver-salary-delete|driver_salary_show', ['only' => ['driver_salary_list','driver_salary_store']]);
-        $this->middleware('permission:driver-salary-create', ['only' => ['driver_salary_create','driver_salary_store']]);
-        $this->middleware('permission:driver-salary-edit', ['only' => ['driver_salary_edit','driver_salary_update']]);
-        $this->middleware('permission:driver-salary-delete', ['only' => ['driver_salary_destroy']]);
-    }
+//    function __construct()
+//    {
+//        $this->middleware('permission:driver-salary-list|driver-salary-create|driver-salary-edit|driver-salary-delete|driver_salary_show', ['only' => ['driver_salary_list','driver_salary_store']]);
+//        $this->middleware('permission:driver-salary-create', ['only' => ['driver_salary_create','driver_salary_store']]);
+//        $this->middleware('permission:driver-salary-edit', ['only' => ['driver_salary_edit','driver_salary_update']]);
+//        $this->middleware('permission:driver-salary-delete', ['only' => ['driver_salary_destroy']]);
+//    }
 
-    public function driver_salary_list()
+    public function staff_salary_list()
     {
-        $driverSalaries = DriverSalary::latest()->get();
+        $staffSalaries = StaffSalary::latest()->get();
         $payment_types = PaymentType::all();
-        return view('backend.admin.driver_salaries.driver_salary_list', compact('driverSalaries','payment_types'));
+        return view('backend.admin.staff_salaries.staff_salary_list', compact('staffSalaries','payment_types'));
     }
 
-    public function driver_salary_create()
+    public function staff_salary_create()
     {
-        $drivers = Driver::where('status',1)->get();
+        $staffs = User::where('status',1)->where('user_type','staff')->get();
         $payment_types = PaymentType::all();
-        return view('backend.admin.driver_salaries.driver_salary_create', compact('drivers','payment_types'));
+        return view('backend.admin.staff_salaries.staff_salary_create', compact('staffs','payment_types'));
     }
 
-    public function driver_salary_store(Request $request)
+    public function staff_salary_store(Request $request)
     {
         //dd($request->all());
         $this->validate($request, [
@@ -55,52 +57,50 @@ class DriverSalaryController extends Controller
         ]);
 
         $date = date('Y-m-d H:i:s');
-        $vehicle = Vehicle::where('id',$request->vehicle_id)->first();
-        $vehicleDriver = VehicleDriverAssign::where('vehicle_id',$request->vehicle_id)->first();
 
         // invoice no
         if($request->payment_type_id == 1){
-            $get_invoice_no = DriverSalary::latest()->pluck('invoice_no')->where('payment_type_id',1)->first();
+            $get_invoice_no = StaffSalary::latest()->pluck('invoice_no')->where('payment_type_id',1)->first();
             if(!empty($get_invoice_no)){
-                $get_invoice = str_replace("CSDS-","",$get_invoice_no);
+                $get_invoice = str_replace("CSSS-","",$get_invoice_no);
                 $invoice_no = $get_invoice+1;
             }else{
                 $invoice_no = 1;
             }
-            $final_invoice = 'CSDS-'.$invoice_no;
+            $final_invoice = 'CSSS-'.$invoice_no;
         }else{
-            $get_invoice_no = DriverSalary::latest()->pluck('invoice_no')->where('payment_type_id',2)->first();
+            $get_invoice_no = StaffSalary::latest()->pluck('invoice_no')->where('payment_type_id',2)->first();
             if(!empty($get_invoice_no)){
-                $get_invoice = str_replace("CRDS-","",$get_invoice_no);
+                $get_invoice = str_replace("CRSS-","",$get_invoice_no);
                 $invoice_no = $get_invoice+1;
             }else{
                 $invoice_no = 1;
             }
-            $final_invoice = 'CRDS-'.$invoice_no;
+            $final_invoice = 'CRSS-'.$invoice_no;
         }
         // invoice no
 
-        $driverSalary = new DriverSalary();
-        $driverSalary->date = $date;
-        $driverSalary->invoice_no = $final_invoice;
-        $driverSalary->driver_id = $request->driver_id;
-        $driverSalary->year = $request->year;
-        $driverSalary->month = $request->month;
-        $driverSalary->salary = $request->salary;
-        $driverSalary->payment_type_id = $request->payment_type_id;
-        $driverSalary->paid = $request->paid;
-        $driverSalary->due = $request->due_price;
-        $driverSalary->note = $request->note;
-        $driverSalary->save();
-        $insert_id = $driverSalary->id;
+        $staffSalary = new StaffSalary();
+        $staffSalary->date = $date;
+        $staffSalary->invoice_no = $final_invoice;
+        $staffSalary->user_id = $request->user_id;
+        $staffSalary->year = $request->year;
+        $staffSalary->month = $request->month;
+        $staffSalary->salary = $request->salary;
+        $staffSalary->payment_type_id = $request->payment_type_id;
+        $staffSalary->paid = $request->paid;
+        $staffSalary->due = $request->due_price;
+        $staffSalary->note = $request->note;
+        $staffSalary->save();
+        $insert_id = $staffSalary->id;
         if($insert_id){
 
             if($request->payment_type_id == 1){
                 $payment = new Payment();
                 $payment->date=date('Y-m-d');
-                $payment->transaction_type='Driver Salary';
+                $payment->transaction_type='Staff Salary';
                 $payment->order_id=$insert_id;
-                $payment->paid_user_id=$request->driver_id;
+                $payment->paid_user_id=$request->user_id;
                 $payment->payment_type_id = 1;
                 $payment->paid = $request->paid;
                 $payment->exchange = 0;
@@ -109,9 +109,9 @@ class DriverSalaryController extends Controller
                 // paid
                 $payment = new Payment();
                 $payment->date=date('Y-m-d');
-                $payment->transaction_type='Driver Salary';
+                $payment->transaction_type='Staff Salary';
                 $payment->order_id=$insert_id;
-                $payment->paid_user_id=$request->driver_id;
+                $payment->paid_user_id=$request->user_id;
                 $payment->payment_type_id = 1;
                 $payment->paid = $request->paid;
                 $payment->exchange = 0;
@@ -120,9 +120,9 @@ class DriverSalaryController extends Controller
                 // due
                 $payment = new Payment();
                 $payment->date=date('Y-m-d');
-                $payment->transaction_type='Driver Salary';
+                $payment->transaction_type='Staff Salary';
                 $payment->order_id=$insert_id;
-                $payment->paid_user_id=$request->driver_id;
+                $payment->paid_user_id=$request->user_id;
                 $payment->payment_type_id = 2;
                 $payment->paid = $request->due_price;
                 $payment->exchange = 0;
@@ -132,37 +132,35 @@ class DriverSalaryController extends Controller
 
             $accessLog = new AccessLog();
             $accessLog->user_id=Auth::user()->id;
-            $accessLog->action_module='Driver Salary';
+            $accessLog->action_module='Staff Salary';
             $accessLog->action_done='Create';
-            $accessLog->action_remarks='Driver Salary ID: '.$insert_id;
+            $accessLog->action_remarks='Staff Salary ID: '.$insert_id;
             $accessLog->action_date=date('Y-m-d');
             $accessLog->save();
         }
 
-        Toastr::success('Driver Salary Created Successfully');
-        return redirect()->route('admin.driver-salary-list');
+        Toastr::success('Staff Salary Created Successfully');
+        return redirect()->route('admin.staff-salary-list');
     }
 
-    public function driver_salary_show($id)
+    public function Staff_salary_show($id)
     {
-        $driverSalary = DriverSalary::where('id',$id)->first();
-        $drivers = Driver::latest()->get();
-        return view('backend.admin.driver_salaries.driver_salary_show',compact('driverSalary','drivers'));
+        $staffSalary = StaffSalary::where('id',$id)->first();
+        $staffs = User::where('status',1)->where('user_type','staff')->get();
+        return view('backend.admin.staff_salaries.staff_salary_show',compact('staffSalary','staffs'));
     }
 
-    public function driver_salary_edit($id)
+    public function staff_salary_edit($id)
     {
-        $vehicles = Vehicle::where('status',1)->where('own_vehicle_status','Rent')->get();
-        $vendors = Vendor::where('status',1)->get();
+        $staffSalary = StaffSalary::find($id);
+        $staffs = User::where('status',1)->where('user_type','staff')->get();
         $payment_types = PaymentType::all();
-        $vehicleVendorRent = Order::where('order_type','Purchases')->where('id',$id)->first();
-        $vehicleVendorRentDetail = OrderItem::where('order_id',$id)->first();
-        return view('backend.admin.driver_salaries.vehicle_vendor_rent_edit',compact('vehicleVendorRent','vehicleVendorRentDetail','vendors','vehicles','payment_types'));
+        return view('backend.admin.driver_salaries.staff_salary_edit',compact('staffSalary','staffs','payment_types'));
     }
 
-    public function driver_salary_update(Request $request, $id)
+    public function staff_salary_update(Request $request, $id)
     {
-        //dd($request->all());
+        dd($request->all());
         //dd($id);
         $this->validate($request, [
             //'name'=> 'required|unique:vehicles,name,'.$id,
@@ -369,5 +367,9 @@ class DriverSalaryController extends Controller
         $digit = new NumberFormatter("en", NumberFormatter::SPELLOUT);
 
         return view('backend.admin.orders.invoice_vendor',compact('vehicleVendorRent','vehicleVendorRentDetail','vendor','digit'));
+    }
+
+    public function check_staff_salary(Request $request){
+        return User::where('id',$request->user_id)->pluck('salary')->first();
     }
 }

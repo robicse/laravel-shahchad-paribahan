@@ -107,6 +107,24 @@ if (!function_exists('getVehicleAssignedDriver')) {
 // vehicle end
 
 
+if (!function_exists('getPaidToName')) {
+    function getPaidToName($id, $transaction_type) {
+        if($transaction_type == 'Vehicle Vendor Rent'){
+            return \App\Model\Vendor::where('id',$id)->pluck('name')->first();
+        }elseif($transaction_type == 'Vehicle Customer Rent'){
+            return \App\Model\Customer::where('id',$id)->pluck('name')->first();
+        }elseif($transaction_type == 'Driver Salary'){
+            return \App\Model\Driver::where('id',$id)->pluck('name')->first();
+        }elseif($transaction_type == 'Staff Salary'){
+            return \App\User::where('id',$id)->pluck('name')->first();
+        }else{
+            return 'No Found!';
+        }
+
+    }
+}
+
+
 
 
 
