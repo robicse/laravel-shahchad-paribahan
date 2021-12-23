@@ -213,8 +213,13 @@
         };
 
         $('#month').change(function (){
+            var vehicle_id = $('#vehicle_id').val();
             var year = $('#year').val();
             var month = $('#month').val();
+            if(vehicle_id == ''){
+                alert('Year Select Vehicle!');
+                $('#month').val('');
+            }
             if(month == ''){
                 alert('Year Select First!');
                 $('#month').val('');
@@ -228,25 +233,58 @@
             console.log(month_days);
             var end_date = year+'-'+month+'-'+month_days;
 
-            $('#start_date').val(start_date)
-            $('#end_date').val(end_date)
+            $.ajax({
+                url:"{{URL('admin/get/vehicle/assigned/driver')}}",
+                method:"post",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{
+                    vehicle_id:vehicle_id,
+                    start_date:start_date
+                },
+                success:function (data){
+                    console.log(data)
+                    if(data === ''){
+
+                        $('#start_date').val(start_date)
+                        $('#end_date').val(end_date)
 
 
-            //alert(start_date);
-            const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-            const firstDate = new Date(start_date);
-            const secondDate = new Date(end_date);
+                        //alert(start_date);
+                        const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+                        const firstDate = new Date(start_date);
+                        const secondDate = new Date(end_date);
 
-            //const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
-            const diffMonths = Math.round(Math.abs((firstDate - secondDate) / (oneDay*month_days)));
-            //$('#rent_duration_day').val(diffDays);
-            $('#rent_duration_day').val(month_days);
-            $('#rent_duration_month').val(diffMonths);
+                        //const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+                        const diffMonths = Math.round(Math.abs((firstDate - secondDate) / (oneDay*month_days)));
+                        //$('#rent_duration_day').val(diffDays);
+                        $('#rent_duration_day').val(month_days);
+                        $('#rent_duration_month').val(diffMonths);
+                    }else{
+                        alert('Already Assigned Among This Durations For This Vehicle!');
+                        $('#start_date').val('');
+                        $('#end_date').val('');
+                        $('#year').val('')
+                        $('#month').val('')
+                    }
+                },
+                error:function (err){
+                    console.log(err)
+                }
+            })
+
+
         })
 
         $('#end_date').change(function (){
+            var vehicle_id = $('#vehicle_id').val();
             var start_date = $('#start_date').val();
             var end_date = $('#end_date').val();
+            if(vehicle_id == ''){
+                alert('Year Select Vehicle!');
+                $('#month').val('');
+            }
             if(start_date == ''){
                 alert('Start Date Select First!');
                 $('#end_date').val('');
@@ -272,12 +310,37 @@
                 $('#end_date').val('');
             }
 
-            $('#year').val(year)
-            $('#month').val(month)
+            $.ajax({
+                url:"{{URL('admin/get/vehicle/assigned/driver')}}",
+                method:"post",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{
+                    vehicle_id:vehicle_id,
+                    start_date:start_date
+                },
+                success:function (data){
+                    console.log(data)
+                    if(data === ''){
+                        $('#year').val(year)
+                        $('#month').val(month)
 
-            //$('#rent_duration_day').val(diffDays);
-            $('#rent_duration_day').val(month_days);
-            $('#rent_duration_month').val(diffMonths);
+                        //$('#rent_duration_day').val(diffDays);
+                        $('#rent_duration_day').val(month_days);
+                        $('#rent_duration_month').val(diffMonths);
+                    }else{
+                        alert('Already Assigned Among This Durations For This Vehicle!');
+                        $('#start_date').val('');
+                        $('#end_date').val('');
+                        $('#year').val('')
+                        $('#month').val('')
+                    }
+                },
+                error:function (err){
+                    console.log(err)
+                }
+            })
         })
     </script>
 @endpush
