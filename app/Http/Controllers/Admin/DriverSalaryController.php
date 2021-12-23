@@ -370,4 +370,33 @@ class DriverSalaryController extends Controller
 
         return view('backend.admin.orders.invoice_vendor',compact('vehicleVendorRent','vehicleVendorRentDetail','vendor','digit'));
     }
+
+    public function check_driver_salary(Request $request){
+//        return \App\Model\Driver::where('id',$request->driver_id)
+//            ->select('id','salary_type','salary','per_day_salary')->first();
+
+        return VehicleDriverAssign::join('drivers','vehicle_driver_assigns.driver_id','drivers.id')
+            ->where('drivers.id',$request->driver_id)
+            ->where('vehicle_driver_assigns.month',$request->month)
+            ->where('vehicle_driver_assigns.year',$request->year)
+            ->select(
+                'drivers.id',
+                'drivers.salary_type',
+                'drivers.salary',
+                'drivers.per_day_salary',
+                'vehicle_driver_assigns.duration'
+            )->first();
+    }
+
+    public function check_already_driver_salary(Request $request){
+        $check_exists_driver =  DriverSalary::where('driver_id',$request->driver_id)
+            ->where('year',$request->year)
+            ->where('month',$request->month)
+            ->pluck('salary')->first();
+        if(!empty($check_exists_driver)){
+            return 'Found';
+        }else{
+            return 'Not Found';
+        }
+    }
 }

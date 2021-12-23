@@ -47,7 +47,7 @@
                                 <th>Code</th>
                                 <th>Registration NO</th>
                                 <th>Active/Inactive</th>
-{{--                                <th>Driver Assign Status</th>--}}
+                                <th>Running Driver</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -63,9 +63,14 @@
                                 <td>{{$vehicle->vehicle_code}}</td>
                                 <td>{{$vehicle->registration_no}}</td>
                                 <td>{{$vehicle->status == 1 ? 'Active' : 'Inactive'}}</td>
-{{--                                <td>--}}
+                                <td>
 {{--                                    {{checkAlreadyVehicleAssignedOrFree($vehicle->id) > 0 ? 'Assigned' : 'Free'}}--}}
-{{--                                </td>--}}
+                                    @if($vehicle->driver_id != NULL)
+                                        {{$vehicle->driver->name}}
+                                    @else
+                                        No Driver Assign Yet!
+                                    @endif
+                                </td>
                                 <td>
                                     <a class="btn btn-info waves-effect" href="{{route('admin.vehicles.edit',$vehicle->id)}}">
                                         <i class="fa fa-edit"></i>
@@ -86,7 +91,7 @@
                                 <th>Vehicle Name</th>
                                 <th>Registration NO</th>
                                 <th>Active/Inactive</th>
-{{--                                <th>Driver Assign Status</th>--}}
+                                <th>Running Driver</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>

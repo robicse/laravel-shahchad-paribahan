@@ -172,9 +172,43 @@
                     console.log(err)
                 }
             })
+        })
 
+        $('#month').change(function (){
+            var user_id = $('#user_id').val();
+            var year = $('#year').val();
+            var month = $('#month').val();
+            if(user_id == ''){
+                alert('Driver Select First!');
+                $('#month').val('');
+            }
+            if(year == ''){
+                alert('Start Year Select First!');
+                $('#month').val('');
+            }
 
-
+            $.ajax({
+                url:"{{URL('admin/check/already/staff/salary')}}",
+                method:"post",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{
+                    user_id:user_id,
+                    year:year,
+                    month:month
+                },
+                success:function (data){
+                    console.log(data)
+                    if(data === 'Found'){
+                        alert('Salary Already Created This Month, Please select another!');
+                        $('#month').val('');
+                    }
+                },
+                error:function (err){
+                    console.log(err)
+                }
+            })
         })
 
         $('#paid').keyup(function (){

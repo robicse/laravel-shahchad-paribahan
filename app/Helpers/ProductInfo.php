@@ -41,6 +41,16 @@ if (!function_exists('checkAlreadyDriverAssignedOrFreeEdit')) {
     }
 }
 
+// driver today
+if (!function_exists('checkAlreadyDriverAssignedOrFreeToday')) {
+    function checkAlreadyDriverAssignedOrFreeToday($vehicle_id) {
+        return VehicleDriverAssign::where('vehicle_id',$vehicle_id)
+            ->where('start_date','<=',date('Y-m-d'))
+            ->where('end_date','>=',date('Y-m-d'))
+            ->get()->count();
+    }
+}
+
 // driver start
 if (!function_exists('checkDriverSalaryInfo')) {
     function checkDriverSalaryInfo($driver_id) {

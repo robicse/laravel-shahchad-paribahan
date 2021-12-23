@@ -372,4 +372,16 @@ class StaffSalaryController extends Controller
     public function check_staff_salary(Request $request){
         return User::where('id',$request->user_id)->pluck('salary')->first();
     }
+
+    public function check_already_staff_salary(Request $request){
+        $check_exists_salary =  StaffSalary::where('user_id',$request->user_id)
+            ->where('year',$request->year)
+            ->where('month',$request->month)
+            ->pluck('salary')->first();
+        if(!empty($check_exists_salary)){
+            return 'Found';
+        }else{
+            return 'Not Found';
+        }
+    }
 }

@@ -79,6 +79,11 @@ class VehicleDriverAssignController extends Controller
         $vehicleDriverAssign->save();
         $insert_id = $vehicleDriverAssign->id;
         if($insert_id){
+
+            $vehicle = Vehicle::find($request->vehicle_id);
+            $vehicle->driver_id = $request->driver_id;
+            $vehicle->save();
+
             $accessLog = new AccessLog();
             $accessLog->user_id=Auth::user()->id;
             $accessLog->action_module='Vehicle Driver Assign';
@@ -229,6 +234,13 @@ class VehicleDriverAssignController extends Controller
         $vehicleDriverAssign->duration = $request->rent_duration_day;
         $updated_row = $vehicleDriverAssign->save();
         if($updated_row){
+
+            $vehicle = Vehicle::find($request->vehicle_id);
+            if($vehicle->driver_id != $request->driver_id){
+                $vehicle->driver_id = $request->driver_id;
+                $vehicle->save();
+            }
+
             $accessLog = new AccessLog();
             $accessLog->user_id=Auth::user()->id;
             $accessLog->action_module='Vehicle Driver Assign';

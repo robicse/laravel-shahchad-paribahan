@@ -161,6 +161,7 @@
 
 
         $('#month').change(function (){
+            $('#salary').val('');
             var driver_id = $('#driver_id').val();
             var year = $('#year').val();
             var month = $('#month').val();
@@ -180,36 +181,58 @@
             var end_date = year+'-'+month+'-'+month_days;
 
             $.ajax({
-                url:"{{URL('admin/check/driver/salary')}}",
+                url:"{{URL('admin/check/already/driver/salary')}}",
                 method:"post",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     driver_id:driver_id,
-                    start_date:start_date,
-                    end_date:end_date,
-                    month_days:month_days
+                    year:year,
+                    month:month
                 },
                 success:function (data){
                     console.log(data)
-                    if(data.salary_type == "Monthly"){
-                        $('#salary').val(data.salary);
-                        //$('#paid').val(data.salary);
-                        //$('#due_price').val(0);
+                    if(data === 'Found'){
+                        alert('Salary Already Created This Month, Please select another!');
+                        $('#month').val('');
                     }else{
-                        $('#salary').val(data.per_day_salary*data.duration);
-                        //$('#paid').val(data.salary);
-                        //$('#due_price').val(0);
+
+
+                        $.ajax({
+                            url:"{{URL('admin/check/driver/salary')}}",
+                            method:"post",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data:{
+                                driver_id:driver_id,
+                                //start_date:start_date,
+                                //end_date:end_date,
+                                //month_days:month_days,
+                                year:year,
+                                month:month
+                            },
+                            success:function (data){
+                                console.log(data)
+                                if(data.salary_type == "Monthly"){
+                                    $('#salary').val(data.salary);
+                                }else{
+                                    $('#salary').val(data.per_day_salary*data.duration);
+                                }
+                            },
+                            error:function (err){
+                                console.log(err)
+                            }
+                        })
+
+
                     }
                 },
                 error:function (err){
                     console.log(err)
                 }
             })
-
-
-
         })
 
         $('#paid').keyup(function (){
