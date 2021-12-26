@@ -23,6 +23,45 @@
     <section class="content">
         <div class="row">
             <div class="col-12">
+                @if(session('response'))
+                    <div class="alert alert-success">
+                        {{ session('response') }}
+                    </div>
+                @endif
+                <form method="post" action="{{ route('admin.report-payment') }}">
+                    @csrf
+                    <div class="form-group row">
+                        <label class="control-label col-md-3 text-right">From</label>
+                        <div class="col-md-8">
+                            <input type="date" class="form-control-sm" name="date_from" value="{{ $date_from }}" id="demoDate" required>
+                            @if ($errors->has('date_from'))
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('date_from') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-md-3 text-right">To</label>
+                        <div class="col-md-8">
+                            <input type="date" class="form-control-sm" name="date_to" value="{{ $date_to }}" required />
+                            @if ($errors->has('date_to'))
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('date_to') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-8">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fa fa-fw fa-lg fa-check-circle"></i>View
+                            </button>
+                            <a href="{!! route('admin.get-report-payment') !!}" class="btn btn-primary" type="button"><i class="fa fa-refresh"> Reset</i></a>
+                        </div>
+                    </div>
+                </form>
                 <div class="card card-info card-outline">
                     <div class="card-header">
                         <h3 class="card-title float-left">Payment Lists</h3>
@@ -34,6 +73,9 @@
 {{--                                </button>--}}
 {{--                            </a>--}}
                         </div>
+
+
+
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive">
@@ -43,41 +85,45 @@
                                 <th>#SL NO</th>
                                 <th>Invoice NO</th>
                                 <th>Date Time</th>
-{{--                                <th>Vehicle</th>--}}
                                 <th>Paid To</th>
                                 <th>Method</th>
-                                <th>Amount</th>
+                                <th>Cash(TK)</th>
+                                <th>Credit(TK)</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @php
+                                $cashTotal = 0;
+                                $creditTotal = 0;
+                                $balance = 0;
+                            @endphp
                             @foreach($payments as $key => $payment)
+                                @php
+                                    if($payment->payment_type_id == 1){
+                                        $cashTotal += $payment->paid;
+                                    }
+                                    if($payment->payment_type_id == 2){
+                                        $creditTotal += $payment->paid;
+                                    }
+                                @endphp
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{$payment->order->invoice_no}}</td>
                                 <td>{{$payment->created_at}}</td>
-{{--                                <td>--}}
-{{--                                    @if($payment->transaction_type == 'Vehicle Vendor Rent' || $payment->transaction_type == 'Vehicle Customer Rent')--}}
-{{--                                        @php--}}
-{{--                                            $orderItem = orderItemByOrderId($payment->order_id);--}}
-{{--                                        @endphp--}}
-{{--                                        {{$orderItem->vehicle_name}}({{$orderItem->registration_no}})--}}
-{{--                                    @endif--}}
-{{--                                </td>--}}
                                 <td>
-{{--                                    @if($payment->order->order_type == 'Purchases')--}}
-{{--                                        {{$payment->order->vendor->name}}--}}
-{{--                                    @elseif($payment->order->order_type == 'Sales')--}}
-{{--                                        {{$payment->order->customer->name}}--}}
-{{--                                    @else--}}
-
-{{--                                    @endif--}}
-                                    @php
-                                        //$orderItem = orderItemByOrderId($payment->order_id);
-                                    @endphp
                                     {{getPaidToName($payment->paid_user_id, $payment->transaction_type)}}
                                 </td>
                                 <td>{{$payment->payment_type->name}}</td>
-                                <td>{{$payment->paid}}</td>
+                                <td class="text-right">
+                                    @if($payment->payment_type_id == 1)
+                                        {{ number_format($payment->paid,2,'.',',') }}
+                                    @endif
+                                </td>
+                                <td class="text-right">
+                                    @if($payment->payment_type_id == 2)
+                                        {{ number_format($payment->paid,2,'.',',') }}
+                                    @endif
+                                </td>
                             </tr>
                             @endforeach
                             </tbody>
@@ -86,16 +132,21 @@
                                 <th>#SL NO</th>
                                 <th>Invoice NO</th>
                                 <th>Date Time</th>
-{{--                                <th>Vehicle</th>--}}
                                 <th>Paid To</th>
                                 <th>Method</th>
-                                <th>Amount</th>
+                                <th>Cash(TK)</th>
+                                <th>Credit(TK)</th>
                             </tr>
                             </tfoot>
                         </table>
                     </div>
                     <!-- /.card-body -->
                 </div>
+                    @if($date_from !== '' && $date_to !== '')
+                        <div class="text-center">
+                            <a href="{{ url('/admin/report/payments-print/'.$date_from.'/'.$date_to) }}" target="_blank" class="btn btn-sm btn-primary float-left">Print</a>
+                        </div>
+                    @endif
             </div>
         </div>
     </section>

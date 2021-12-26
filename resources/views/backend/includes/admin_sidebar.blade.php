@@ -154,9 +154,10 @@
                         </a>
                     </li>
                     <li class="nav-item has-treeview {{(Request::is('admin/report/payments*')
-                        //|| Request::is('admin/categories*')
-                        //|| Request::is('admin/subcategories*')
-                        //|| Request::is('admin/vehicles*')
+                        || Request::is('admin/report/vendor-balance-sheet')
+                        || Request::is('admin/report/customer-balance-sheet')
+                        || Request::is('admin/report/driver-balance-sheet')
+                        || Request::is('admin/report/staff-balance-sheet')
                         )
                     ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link">
@@ -168,7 +169,36 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{route('admin.report-payment')}}"
+                                <a href="{!! URL::to('/admin/report/vendor-balance-sheet') !!}"
+                                   class="nav-link {{Request::is('admin/report/vendor-balance-sheet') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/report/vendor-balance-sheet') ? 'folder-open':'folder'}} nav-icon"></i>
+                                    <p>Vendor Balance Sheet</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{!! URL::to('/admin/report/customer-balance-sheet') !!}"
+                                   class="nav-link {{Request::is('admin/report/customer-balance-sheet') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/report/customer-balance-sheet') ? 'folder-open':'folder'}} nav-icon"></i>
+                                    <p>Customer Balance Sheet</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{!! URL::to('/admin/report/driver-balance-sheet') !!}"
+                                   class="nav-link {{Request::is('admin/report/driver-balance-sheet') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/report/driver-balance-sheet') ? 'folder-open':'folder'}} nav-icon"></i>
+                                    <p>Driver Balance Sheet</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{!! URL::to('/admin/report/staff-balance-sheet') !!}"
+                                   class="nav-link {{Request::is('admin/report/staff-balance-sheet') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/report/staff-balance-sheet') ? 'folder-open':'folder'}} nav-icon"></i>
+                                    <p>Staff Balance Sheet</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+{{--                                <a href="{{route('admin.report-payment')}}"--}}
+                                <a href="{!! URL::to('/admin/report/payments') !!}"
                                    class="nav-link {{Request::is('admin/report/payments') ? 'active' :''}}">
                                     <i class="fa fa-{{Request::is('admin/report/payments') ? 'folder-open':'folder'}} nav-icon"></i>
                                     <p>Payments</p>

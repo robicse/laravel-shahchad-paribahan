@@ -83,8 +83,25 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::post('staff-pay-due','StaffSalaryController@staffPayDue')->name('staff.pay.due');
 
     // report
-    Route::get('report/payments','ReportController@reportPayment')->name('report-payment');
-
+    Route::get('report/payments','ReportController@reportPayment')->name('get-report-payment');
+    Route::post('report/payments','ReportController@reportPayment')->name('report-payment');
+    Route::get('report/payments-print/{date_from}/{date_to}','ReportController@report_payment_print');
+    // vendor balance sheet
+    Route::get('report/vendor-balance-sheet','ReportController@vendor_balance_sheet_form')->name('get-report-vendor-balance-sheet');
+    Route::post('report/vendor-balance-sheet','ReportController@vendor_balance_sheet_form')->name('report-vendor-balance-sheet');
+    Route::get('report/vendor-balance-sheet-print/{date_from}/{date_to}','ReportController@report_vendor_balance_sheet_print');
+    // customer balance sheet
+    Route::get('report/customer-balance-sheet','ReportController@customer_balance_sheet_form')->name('get-report-customer-balance-sheet');
+    Route::post('report/customer-balance-sheet','ReportController@customer_balance_sheet_form')->name('report-customer-balance-sheet');
+    Route::get('report/customer-balance-sheet-print/{date_from}/{date_to}','ReportController@report_customer_balance_sheet_print');
+    // driver balance sheet
+    Route::get('report/driver-balance-sheet','ReportController@driver_balance_sheet_form')->name('get-report-driver-balance-sheet');
+    Route::post('report/driver-balance-sheet','ReportController@driver_balance_sheet_form')->name('report-driver-balance-sheet');
+    Route::get('report/driver-balance-sheet-print/{date_from}/{date_to}','ReportController@report_driver_balance_sheet_print');
+    // staff balance sheet
+    Route::get('report/staff-balance-sheet','ReportController@staff_balance_sheet_form')->name('get-report-staff-balance-sheet');
+    Route::post('report/staff-balance-sheet','ReportController@staff_balance_sheet_form')->name('report-staff-balance-sheet');
+    Route::get('report/staff-balance-sheet-print/{date_from}/{date_to}','ReportController@report_staff_balance_sheet_print');
 
 
 
