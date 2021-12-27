@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Model\OverallCost;
 use App\Model\OverallCostCategory;
+use App\Model\Payment;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +50,17 @@ class OverallCostController extends Controller
         $overallCost->amount = $request->amount;
         $overallCost->date = $request->date;
         $overallCost->save();
+        $insert_id = $overallCost->id;
+
+        $payment = new Payment();
+        $payment->date=date('Y-m-d');
+        $payment->transaction_type='Overall Cost';
+        $payment->order_id=$insert_id;
+        $payment->paid_user_id=NULL;
+        $payment->payment_type_id = 1;
+        $payment->paid = $request->amount;
+        $payment->exchange = 0;
+        $payment->save();
 
         Toastr::success('Overall Cost Created Successfully');
         return redirect()->route('admin.overall-cost.index');
@@ -82,6 +94,13 @@ class OverallCostController extends Controller
         $overallCost->amount = $request->amount;
         $overallCost->date = $request->date;
         $overallCost->save();
+
+        $payment = Payment::where('order_id',$id)
+            ->where('payment_type_id',1)
+            ->where('transaction_type','Overall Cost')
+            ->first();
+        $payment->paid = $request->amount;
+        $payment->save();
 
         Toastr::success('Overall Cost Updated Successfully');
         return redirect()->route('admin.overall-cost.index');

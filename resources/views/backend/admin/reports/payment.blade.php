@@ -36,8 +36,8 @@
                             <input type="date" class="form-control-sm" name="date_from" value="{{ $date_from }}" id="demoDate" required>
                             @if ($errors->has('date_from'))
                                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('date_from') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('date_from') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>
@@ -72,18 +72,19 @@
 {{--                                    Add--}}
 {{--                                </button>--}}
 {{--                            </a>--}}
+                            @if($date_from !== '' && $date_to !== '')
+                                <a href="{{ url('/admin/report/payments-print/'.$date_from.'/'.$date_to) }}" target="_blank" class="btn btn-sm btn-primary float-right">Print</a>
+                            @endif
                         </div>
-
-
-
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>#SL NO</th>
+                                <th>#SL</th>
                                 <th>Invoice NO</th>
+                                <th>Transaction Type</th>
                                 <th>Date Time</th>
                                 <th>Paid To</th>
                                 <th>Method</th>
@@ -109,6 +110,7 @@
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{$payment->order->invoice_no}}</td>
+                                <td>{{$payment->transaction_type}}</td>
                                 <td>{{$payment->created_at}}</td>
                                 <td>
                                     {{getPaidToName($payment->paid_user_id, $payment->transaction_type)}}
@@ -129,8 +131,9 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>#SL NO</th>
+                                <th>#SL</th>
                                 <th>Invoice NO</th>
+                                <th>Transaction Type</th>
                                 <th>Date Time</th>
                                 <th>Paid To</th>
                                 <th>Method</th>
@@ -142,9 +145,6 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
-                    @if($date_from !== '' && $date_to !== '')
-                        <a href="{{ url('/admin/report/payments-print/'.$date_from.'/'.$date_to) }}" target="_blank" class="btn btn-sm btn-primary float-right">Print</a>
-                    @endif
             </div>
         </div>
     </section>

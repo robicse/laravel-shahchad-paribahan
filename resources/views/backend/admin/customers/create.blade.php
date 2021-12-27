@@ -66,8 +66,8 @@
                             <input type="text" class="form-control" name="company_address" id="company_address" placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="image">Customer Image <small>(size: 120 * 80 pixel)</small></label>
-                            <input type="file" class="form-control" name="image" id="image" >
+                            <label for="image">Customer Image <small>(size: 120 * 80 pixel)</small> <span>*</span></label>
+                            <input type="file" class="form-control" name="image" id="image" required>
                         </div>
 {{--                        <div class="form-group">--}}
 {{--                            <label for="meta_desc">Meta Description</label>--}}

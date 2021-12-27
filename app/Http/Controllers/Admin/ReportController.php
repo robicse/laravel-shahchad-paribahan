@@ -20,7 +20,7 @@ class ReportController extends Controller
     {
         if( (!empty($request->date_from)) && (!empty($request->date_to)) )
         {
-            $payments = Payment::whereBetween('date', [$request->date_from, $request->date_from])->latest()->get();
+            $payments = Payment::whereBetween('date', [$request->date_from, $request->date_to])->latest()->get();
         }else{
             $payments = Payment::latest()->get();
         }

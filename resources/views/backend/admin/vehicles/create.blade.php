@@ -92,45 +92,45 @@
                             <input type="text" class="form-control" name="model" id="model" placeholder="" required>
                         </div>
                         <div class="form-group">
-                            <label for="registration_no">Registration NO</label>
+                            <label for="registration_no">Registration NO <span>*</span></label>
                             <input type="text" class="form-control" name="registration_no" id="registration_no" placeholder="" required>
                         </div>
                         <div class="form-group">
-                            <label for="registration_date">Registration Date</label>
+                            <label for="registration_date">Registration Date <span>*</span></label>
                             <input type="text" class="datepicker form-control" name="registration_date" id="registration_date" placeholder="" required>
                         </div>
                         <div class="form-group">
-                            <label for="chassis_no">Chassis NO</label>
+                            <label for="chassis_no">Chassis NO <span>*</span></label>
                             <input type="text" class="form-control" name="chassis_no" id="chassis_no" placeholder="" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="engine_no">Engine NO</label>
+                            <label for="engine_no">Engine NO <span>*</span></label>
                             <input type="text" class="form-control" name="engine_no" id="engine_no" placeholder="" required>
                         </div>
                         <div class="form-group">
-                            <label for="vehicle_class">Vehicle Class</label>
+                            <label for="vehicle_class">Vehicle Class <span>*</span></label>
                             <input type="text" class="form-control" name="vehicle_class" id="vehicle_class" placeholder="" required>
                         </div>
                         <div class="form-group">
-                            <label for="fuel_type">Fuel Type</label>
+                            <label for="fuel_type">Fuel Type <span>*</span></label>
                             <input type="text" class="form-control" name="fuel_type" id="fuel_type" placeholder="" required>
                         </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label for="chassis_no">Chassis NO <span>*</span></label>--}}
+{{--                            <input type="text" class="form-control" name="chassis_no" id="chassis_no" placeholder="" required>--}}
+{{--                        </div>--}}
                         <div class="form-group">
-                            <label for="chassis_no">Chassis NO</label>
-                            <input type="text" class="form-control" name="chassis_no" id="chassis_no" placeholder="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="fitness">Fitness</label>
+                            <label for="fitness">Fitness <span>*</span></label>
                             <input type="text" class="form-control" name="fitness" id="fitness" placeholder="" required>
                         </div>
                         <div class="form-group">
-                            <label for="rc_status">RC Status</label>
+                            <label for="rc_status">RC Status <span>*</span></label>
                             <input type="text" class="form-control" name="rc_status" id="rc_status" placeholder="" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Vehicle Image <small>(size: 120 * 80 pixel)</small></label>
-                            <input type="file" class="form-control" name="image" id="logo" >
+                            <label for="email">Vehicle Image <small>(size: 120 * 80 pixel)</small> <span>*</span></label>
+                            <input type="file" class="form-control" name="image" id="logo" required>
                         </div>
                     </div>
                     <!-- /.card-body -->

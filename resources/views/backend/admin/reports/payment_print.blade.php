@@ -107,6 +107,7 @@
                                     <tr>
                                         <th width="5%">SL</th>
                                         <th width="10%">Invoice NO</th>
+                                        <th>Transaction Type</th>
                                         <th width="10%">Date Time</th>
                                         <th width="10%">Paid To</th>
                                         <th width="5%">Method</th>
@@ -132,6 +133,7 @@
                                             <tr>
                                                 <td>{{$key + 1}}</td>
                                                 <td>{{$payment->order->invoice_no}}</td>
+                                                <td>{{$payment->transaction_type}}</td>
                                                 <td>{{$payment->created_at}}</td>
                                                 <td>
                                                     {{getPaidToName($payment->paid_user_id, $payment->transaction_type)}}

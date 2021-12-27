@@ -102,7 +102,16 @@
                 @endphp
 
                 <div class="col-md-12">
-                    <h1 class="text-center"><h5 align="center">Loss/Profit Sheet @if(!empty($date_from)) from date {{ $date_from }} to date {{ $date_to }}@endif</h5></h1>
+                    <div class="card-header">
+                        <h3 class="card-title float-left">Loss/Profit Sheet @if(!empty($date_from)) from date {{ $date_from }} to date {{ $date_to }}@endif</h3>
+                        <div class="float-right">
+                            @if($date_from !== '' && $date_to !== '')
+                                <a href="{{ url('/admin/report/loss-profit-print/'.$date_from.'/'.$date_to) }}" target="_blank" class="btn btn-sm btn-primary float-right">Print</a>
+                            @else
+                                <a href="{{ url('/admin/report/loss-profit-print/2020-11-01/'.date('Y-m-d')) }}" target="_blank" class="btn btn-sm btn-primary float-right">Print</a>
+                            @endif
+                        </div>
+                    </div>
                     <table class="table table-bordered">
                         <thead>
                         <tr>
@@ -147,11 +156,6 @@
                     </table>
                 </div>
             </div>
-            @if($date_from !== '' && $date_to !== '')
-                <a href="{{ url('/admin/report/loss-profit-print/'.$date_from.'/'.$date_to) }}" target="_blank" class="btn btn-sm btn-primary float-right">Print</a>
-            @else
-                <a href="{{ url('/admin/report/loss-profit-print/2020-11-01/'.date('Y-m-d')) }}" target="_blank" class="btn btn-sm btn-primary float-right">Print</a>
-            @endif
         </div>
 
         </div>

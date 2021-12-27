@@ -42,12 +42,12 @@ class VendorController extends Controller
 
         $get_vendor_code = Vendor::latest('id','desc')->pluck('vendor_code')->first();
         if(!empty($get_vendor_code)){
-            $get_vendor_code_after_replace = str_replace("CC-","",$get_vendor_code);
+            $get_vendor_code_after_replace = str_replace("VC-","",$get_vendor_code);
             $vendor_code = $get_vendor_code_after_replace+1;
         }else{
             $vendor_code = 1;
         }
-        $final_vendor_code = 'CC-'.$vendor_code;
+        $final_vendor_code = 'VC-'.$vendor_code;
 
         $vendor = new Vendor();
         $vendor->name = $request->name;

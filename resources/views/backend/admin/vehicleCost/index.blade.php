@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section("title","Driver List")
+@section("title","Vehicle Cost List")
 @push('css')
     <link rel="stylesheet" href="{{asset('backend/plugins/datatables/dataTables.bootstrap4.css')}}">
 @endpush
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Driver List</h1>
+                    <h1>All Vehicle Cost</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Driver List</li>
+                        <li class="breadcrumb-item active">Office Vehicle Cost</li>
                     </ol>
                 </div>
             </div>
@@ -25,9 +25,9 @@
             <div class="col-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title float-left">Driver Lists</h3>
+                        <h3 class="card-title float-left">Vehicle Cost Lists</h3>
                         <div class="float-right">
-                            <a href="{{route('admin.drivers.create')}}">
+                            <a href="{{route('admin.vehicle-cost.create')}}">
                                 <button class="btn btn-success">
                                     <i class="fa fa-plus-circle"></i>
                                     Add
@@ -41,33 +41,30 @@
                             <thead>
                             <tr>
                                 <th>#Id</th>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Code</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th>Active/Inactive</th>
-                                <th>Vehicle Assign Status</th>
+                                <th>Date</th>
+                                <th>Vehicle</th>
+                                <th>Payment Type</th>
+                                <th>Amount</th>
+                                <th>Note</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($drivers as $key => $driver)
-                            <tr class="{{$driver->status == 0 ? 'bg-warning' : ''}}">
+                            @foreach($vehicleCosts as $key => $vehicleCost)
+                            <tr>
                                 <td>{{$key + 1}}</td>
+                                <td>{{$vehicleCost->date}}</td>
+                                <td>{{$vehicleCost->vehicle->vehicle_name}}({{$vehicleCost->vehicle->vehicle_code}})</td>
                                 <td>
-                                    <img src="{{asset('uploads/drivers/'.$driver->logo)}}" width="80" height="50" alt="">
+                                    {{$vehicleCost->payment_type}}
+                                    @if($vehicleCost->payment_type == 'Cheque')
+                                        (Cheque NO:{{$vehicleCost->cheque_number}})
+                                    @endif
                                 </td>
-                                <td>{{$driver->name}}</td>
-                                <td>{{$driver->driver_code}}</td>
-                                <td>{{$driver->phone}}</td>
-                                <td>{{$driver->email}}</td>
-                                <td>{{$driver->status == 1 ? 'Active' : 'Inactive'}}</td>
+                                <td>{{$vehicleCost->amount}}</td>
+                                <td>{{$vehicleCost->note}}</td>
                                 <td>
-                                    {{checkAlreadyDriverAssignedOrFree($driver->id) > 0 ? 'Assigned' : 'Free'}}
-                                </td>
-                                <td>
-                                    <a class="btn btn-info waves-effect" href="{{route('admin.drivers.edit',$driver->id)}}">
+                                    <a class="btn btn-info waves-effect" href="{{route('admin.vehicle-cost.edit',$vehicleCost->id)}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
 {{--                                    <button class="btn btn-danger waves-effect" type="button"--}}
@@ -85,13 +82,11 @@
                             <tfoot>
                             <tr>
                                 <th>#Id</th>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Code</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th>Active/Inactive</th>
-                                <th>Vehicle Assign Status</th>
+                                <th>Date</th>
+                                <th>Vehicle</th>
+                                <th>Payment Type</th>
+                                <th>Amount</th>
+                                <th>Note</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>

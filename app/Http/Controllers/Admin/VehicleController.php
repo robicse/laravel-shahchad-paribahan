@@ -47,12 +47,12 @@ class VehicleController extends Controller
 
         $get_vehicle_code = Vehicle::latest('id','desc')->pluck('vehicle_code')->first();
         if(!empty($get_vehicle_code)){
-            $get_vehicle_code_after_replace = str_replace("CC-","",$get_vehicle_code);
+            $get_vehicle_code_after_replace = str_replace("VC-","",$get_vehicle_code);
             $vehicle_code = $get_vehicle_code_after_replace+1;
         }else{
             $vehicle_code = 1;
         }
-        $final_vehicle_code = 'CC-'.$vehicle_code;
+        $final_vehicle_code = 'VC-'.$vehicle_code;
 
         $vehicle = new Vehicle();
         $vehicle->owner_name = $request->owner_name;

@@ -27,6 +27,7 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::resource('categories','CategoryController');
     Route::resource('overall-cost-categories','OverallCostCategoryController');
     Route::resource('overall-cost','OverallCostController');
+    Route::resource('vehicle-cost','VehicleCostController');
     Route::resource('access-logs','AccessLogController');
 
     // vehicle rent from vendor

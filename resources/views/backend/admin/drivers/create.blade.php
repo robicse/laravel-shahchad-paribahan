@@ -81,8 +81,8 @@
                             <input type="number" class="form-control" name="salary" id="salary" placeholder="" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Driver Image <small>(size: 120 * 80 pixel)</small></label>
-                            <input type="file" class="form-control" name="logo" id="logo" >
+                            <label for="email">Driver Image <small>(size: 120 * 80 pixel)</small> <span>*</span></label>
+                            <input type="file" class="form-control" name="logo" id="logo" required>
                         </div>
 {{--                        <div class="form-group">--}}
 {{--                            <label for="meta_desc">Meta Description</label>--}}

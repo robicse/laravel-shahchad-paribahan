@@ -49,7 +49,14 @@
                             </div>
                         </div>
                     </form>
-                    <h5 align="center">Customer Balance Sheet from date {{ $date_from }} to date {{ $date_to }}</h5>
+                    <div class="card-header">
+                        <h3 class="card-title float-left">Customer Balance Sheet from date {{ $date_from }} to date {{ $date_to }}</h3>
+                        <div class="float-right">
+                            @if($date_from !== '' && $date_to !== '')
+                                <a href="{{ url('/admin/report/customer-balance-sheet-print/'.$date_from.'/'.$date_to) }}" target="_blank" class="btn btn-sm btn-primary float-right">Print</a>
+                            @endif
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -95,9 +102,6 @@
                 <div class="tile-footer">
                 </div>
             </div>
-            @if($date_from !== '' && $date_to !== '')
-                <a href="{{ url('/admin/report/customer-balance-sheet-print/'.$date_from.'/'.$date_to) }}" target="_blank" class="btn btn-sm btn-primary float-right">Print</a>
-            @endif
         </div>
     </main>
 

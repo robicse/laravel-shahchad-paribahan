@@ -130,6 +130,12 @@
                         </a>
                     </li>
                     <li class="nav-item ">
+                        <a href="{{route('admin.vehicle-cost.index')}}" class="nav-link {{Request::is('admin/vehicle-cost*') ? 'active' : ''}}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Vehicle Cost</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
                         <a href="{{route('admin.overall-cost-categories.index')}}" class="nav-link {{Request::is('admin/overall-cost-categories*') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Overall Cost Category</p>
