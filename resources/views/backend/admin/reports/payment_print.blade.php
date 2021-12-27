@@ -137,12 +137,12 @@
                                                     {{getPaidToName($payment->paid_user_id, $payment->transaction_type)}}
                                                 </td>
                                                 <td>{{$payment->payment_type->name}}</td>
-                                                <td class="text-right">
+                                                <td style="text-align: right">
                                                     @if($payment->payment_type_id == 1)
                                                         {{ number_format($payment->paid,2,'.',',') }}
                                                     @endif
                                                 </td>
-                                                <td class="text-right">
+                                                <td style="text-align: right">
                                                     @if($payment->payment_type_id == 2)
                                                         {{ number_format($payment->paid,2,'.',',') }}
                                                     @endif
@@ -153,8 +153,8 @@
                                     <tr>
                                         <td colspan="4">&nbsp;</td>
                                         <td>Total</td>
-                                        <td class="text-right">{{ number_format($cashTotal,2,'.',',') }}</td>
-                                        <td class="text-right">{{ number_format($creditTotal,2,'.',',') }}</td>
+                                        <td style="text-align: right">{{ number_format($cashTotal,2,'.',',') }}</td>
+                                        <td style="text-align: right">{{ number_format($creditTotal,2,'.',',') }}</td>
                                     </tr>
                                 </table>
                             </div>

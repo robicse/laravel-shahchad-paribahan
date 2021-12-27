@@ -8,6 +8,7 @@
 use App\Model\VehicleDriverAssign;
 use App\Model\OrderItem;
 use App\Model\Vehicle;
+use Illuminate\Support\Facades\DB;
 
 // order start
 if (!function_exists('orderItemByOrderId')) {
@@ -131,6 +132,107 @@ if (!function_exists('getPaidToName')) {
             return 'No Found!';
         }
 
+    }
+}
+
+if (!function_exists('getVendorTotalAmount')) {
+    function getVendorTotalAmount($date_from='', $date_to='') {
+        if($date_from !== '' && $date_to !== ''){
+            $vendor_total_amount = DB::table('payments')
+                ->select('transaction_type',DB::raw('SUM(paid) as total_paid'))
+                ->where('transaction_type','Vehicle Vendor Rent')
+                //->where('payment_type_id',1)
+                ->whereBetween('date', [$date_from, $date_to])
+                ->groupBy('transaction_type')
+                ->first();
+        }else{
+            $vendor_total_amount = DB::table('payments')
+                ->select('transaction_type',DB::raw('SUM(paid) as total_paid'))
+                ->where('transaction_type','Vehicle Vendor Rent')
+                //->where('payment_type_id',1)
+                ->groupBy('transaction_type')
+                ->first();
+        }
+
+        return $vendor_total_amount;
+    }
+
+    function getCustomerTotalAmount($date_from, $date_to) {
+        if($date_from !== '' && $date_to !== ''){
+            $customer_total_amount = DB::table('payments')
+                ->select('transaction_type',DB::raw('SUM(paid) as total_paid'))
+                ->where('transaction_type','Vehicle Customer Rent')
+                //->where('payment_type_id',1)
+                ->whereBetween('date', [$date_from, $date_to])
+                ->groupBy('transaction_type')
+                ->first();
+        }else{
+            $customer_total_amount = DB::table('payments')
+                ->select('transaction_type',DB::raw('SUM(paid) as total_paid'))
+                ->where('transaction_type','Vehicle Customer Rent')
+                //->where('payment_type_id',1)
+                ->groupBy('transaction_type')
+                ->first();
+        }
+
+        return $customer_total_amount;
+    }
+
+    function getDriverTotalAmount($date_from, $date_to) {
+        if($date_from !== '' && $date_to !== ''){
+            $driver_total_amount = DB::table('payments')
+                ->select('transaction_type',DB::raw('SUM(paid) as total_paid'))
+                ->where('transaction_type','Driver Salary')
+                //->where('payment_type_id',1)
+                ->whereBetween('date', [$date_from, $date_to])
+                ->groupBy('transaction_type')
+                ->first();
+        }else{
+            $driver_total_amount = DB::table('payments')
+                ->select('transaction_type',DB::raw('SUM(paid) as total_paid'))
+                ->where('transaction_type','Driver Salary')
+                //->where('payment_type_id',1)
+                ->groupBy('transaction_type')
+                ->first();
+        }
+
+        return $driver_total_amount;
+    }
+
+    function getStaffTotalAmount($date_from, $date_to) {
+        if($date_from !== '' && $date_to !== ''){
+            $staff_total_amount = DB::table('payments')
+                ->select('transaction_type',DB::raw('SUM(paid) as total_paid'))
+                ->where('transaction_type','Staff Salary')
+                //->where('payment_type_id',1)
+                ->whereBetween('date', [$date_from, $date_to])
+                ->groupBy('transaction_type')
+                ->first();
+        }else{
+            $staff_total_amount = DB::table('payments')
+                ->select('transaction_type',DB::raw('SUM(paid) as total_paid'))
+                ->where('transaction_type','Staff Salary')
+                //->where('payment_type_id',1)
+                ->groupBy('transaction_type')
+                ->first();
+        }
+
+        return $staff_total_amount;
+    }
+
+    function getOverallCostTotalAmount($date_from, $date_to) {
+        if($date_from !== '' && $date_to !== ''){
+            $staff_total_amount = DB::table('overall_costs')
+                ->select(DB::raw('SUM(amount) as total_paid'))
+                ->whereBetween('date', [$date_from, $date_to])
+                ->first();
+        }else{
+            $staff_total_amount = DB::table('overall_costs')
+                ->select(DB::raw('SUM(amount) as total_paid'))
+                ->first();
+        }
+
+        return $staff_total_amount;
     }
 }
 

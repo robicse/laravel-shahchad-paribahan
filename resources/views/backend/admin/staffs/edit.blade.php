@@ -58,7 +58,7 @@
                             <label for="password">Password <small class="text-info">(if you don't want to change password ? leave blank it. )</small></label>
                             <input type="password" class="form-control" name="password" id="password" >
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="@if($userRole->id == 4) display:none @endif">
                             <label for="roles">Role</label>
                             <select name="roles" id="roles" class="form-control">
                                 @foreach($roles as $role)

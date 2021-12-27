@@ -158,6 +158,7 @@
                         || Request::is('admin/report/customer-balance-sheet')
                         || Request::is('admin/report/driver-balance-sheet')
                         || Request::is('admin/report/staff-balance-sheet')
+                        || Request::is('admin/report/loss-profit')
                         )
                     ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link">
@@ -202,6 +203,13 @@
                                    class="nav-link {{Request::is('admin/report/payments') ? 'active' :''}}">
                                     <i class="fa fa-{{Request::is('admin/report/payments') ? 'folder-open':'folder'}} nav-icon"></i>
                                     <p>Payments</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{!! URL::to('/admin/report/loss-profit') !!}"
+                                   class="nav-link {{Request::is('admin/report/loss-profit') ? 'active' :''}}">
+                                    <i class="fa fa-{{Request::is('admin/report/loss-profit') ? 'folder-open':'folder'}} nav-icon"></i>
+                                    <p>Loss/Profit</p>
                                 </a>
                             </li>
                         </ul>

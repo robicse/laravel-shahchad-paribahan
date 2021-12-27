@@ -422,4 +422,36 @@ class ReportController extends Controller
 
         return view('backend.admin.reports.staff_balance_sheet_print', compact('staff_cash_data_results', 'staff_previous_total_paid','date_from','date_to'));
     }
+
+    public function loss_profit(Request $request){
+        $date_from = '';
+        $date_to = '';
+
+        if($request->date_from)
+        {
+            $date_from = $request->date_from;
+        }
+        if($request->date_to)
+        {
+            $date_to = $request->date_to;
+        }
+
+        return view('backend.admin.reports.loss_profit', compact('date_from', 'date_to'));
+    }
+
+    public function loss_profit_print(Request $request){
+        $date_from = '';
+        $date_to = '';
+
+        if($request->date_from)
+        {
+            $date_from = $request->date_from;
+        }
+        if($request->date_to)
+        {
+            $date_to = $request->date_to;
+        }
+
+        return view('backend.admin.reports.loss_profit_print', compact('date_from', 'date_to'));
+    }
 }

@@ -126,14 +126,14 @@
                                             <tr>
                                                 <td>{{$sl}}</td>
                                                 <td>{{$vendor}}</td>
-                                                <td class="text-right">{{ number_format($cash_data_result->total_paid,2,'.',',') }}</td>
+                                                <td style="text-align: right">{{ number_format($cash_data_result->total_paid,2,'.',',') }}</td>
                                             </tr>
                                         @endforeach
                                     @endif
                                     <tr>
                                         <td>&nbsp;</td>
                                         <td>Total</td>
-                                        <td class="text-right">{{ number_format($final_paid_amount,2,'.',',') }}</td>
+                                        <td style="text-align: right">{{ number_format($final_paid_amount,2,'.',',') }}</td>
                                     </tr>
                                 </table>
                             </div>

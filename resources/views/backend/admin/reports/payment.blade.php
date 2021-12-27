@@ -143,9 +143,7 @@
                     <!-- /.card-body -->
                 </div>
                     @if($date_from !== '' && $date_to !== '')
-                        <div class="text-center">
-                            <a href="{{ url('/admin/report/payments-print/'.$date_from.'/'.$date_to) }}" target="_blank" class="btn btn-sm btn-primary float-left">Print</a>
-                        </div>
+                        <a href="{{ url('/admin/report/payments-print/'.$date_from.'/'.$date_to) }}" target="_blank" class="btn btn-sm btn-primary float-right">Print</a>
                     @endif
             </div>
         </div>

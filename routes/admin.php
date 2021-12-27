@@ -103,6 +103,12 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::post('report/staff-balance-sheet','ReportController@staff_balance_sheet_form')->name('report-staff-balance-sheet');
     Route::get('report/staff-balance-sheet-print/{date_from}/{date_to}','ReportController@report_staff_balance_sheet_print');
 
+    Route::get('report/loss-profit','ReportController@loss_profit')->name('get-report-loss-profit');
+    Route::post('report/loss-profit','ReportController@loss_profit')->name('report-loss-profit');
+    Route::get('report/loss-profit-print/{date_from}/{date_to}','ReportController@loss_profit_print');
+    Route::get('report/loss-profit/export/', 'ReportController@loss_profit_export')->name('report-loss-profit-export');
+    Route::get('report/loss-profit-filter-export/{start_date}/{end_date}','ReportController@loss_profit_export_filter')->name('report-loss-profit-filter-export');
+
 
 
 
