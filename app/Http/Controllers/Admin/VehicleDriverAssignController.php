@@ -80,9 +80,15 @@ class VehicleDriverAssignController extends Controller
         $insert_id = $vehicleDriverAssign->id;
         if($insert_id){
 
+            // vehicle update
             $vehicle = Vehicle::find($request->vehicle_id);
             $vehicle->driver_id = $request->driver_id;
             $vehicle->save();
+
+            // driver update
+            $driver = Driver::find($request->driver_id);
+            $driver->vehicle_id = $request->vehicle_id;
+            $driver->save();
 
             $accessLog = new AccessLog();
             $accessLog->user_id=Auth::user()->id;

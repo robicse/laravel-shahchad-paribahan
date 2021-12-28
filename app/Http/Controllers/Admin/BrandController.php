@@ -85,9 +85,7 @@ class BrandController extends Controller
             $accessLog->save();
         }
         Toastr::success('Brand Created Successfully');
-        return back();
-
-
+        return redirect()->route('admin.brands.index');
     }
 
     /**

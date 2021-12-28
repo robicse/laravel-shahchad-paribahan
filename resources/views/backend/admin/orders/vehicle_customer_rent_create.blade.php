@@ -55,10 +55,11 @@
                             <select name="vehicle_id" id="vehicle_id" class="form-control select2" required>
                                 <option value="">Select</option>
                                 @foreach($vehicles as $vehicle)
-                                    <option value="{{$vehicle->id}}">{{$vehicle->vehicle_name}} ({{$vehicle->vehicle_code}})</option>
+                                    <option class="@if($vehicle->driver_id === NULL) bg bg-danger @endif" value="{{$vehicle->id}}">{{$vehicle->vehicle_name}} ({{$vehicle->vehicle_code}}) @if($vehicle->driver_id !== NULL) ({{$vehicle->driver->name}}) @endif</option>
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label for="rent_type">Rent Type <span>*</span></label>
                             <select name="rent_type" id="rent_type" class="form-control select2" required>
@@ -197,24 +198,26 @@
             todayHighlight: true
         });
 
-        {{--$('#vehicle_id').change(function (){--}}
-        {{--    //alert();--}}
-        {{--    var vehicle_id = $('#vehicle_id').val();--}}
-        {{--    $.ajax({--}}
-        {{--        url:"{{URL('/admin/get/vehicle/assigned/driver')}}/" + vehicle_id,--}}
-        {{--        method:"GET",--}}
-        {{--        success:function (data){--}}
-        {{--            console.log(data)--}}
-        {{--            // if(data > 0){--}}
-        {{--            //     alert('Please select another vehicle, This vehicle already assigned.');--}}
-        {{--            //     $('#vehicle_id').val('');--}}
-        {{--            // }--}}
-        {{--        },--}}
-        {{--        error:function (err){--}}
-        {{--            console.log(err)--}}
-        {{--        }--}}
-        {{--    })--}}
-        {{--})--}}
+        $('#vehicle_id').change(function (){
+            //alert();
+            var vehicle_id = $('#vehicle_id').val();
+            $.ajax({
+                //url:"{{URL('/admin/get/vehicle/assigned/driver')}}/" + vehicle_id,
+                url:"{{URL('/admin/check/already/vehicle/assigned/to/driver')}}/" + vehicle_id,
+                method:"GET",
+                success:function (data){
+                    console.log(data)
+                    if(data == ''){
+                        //alert('Please select another vehicle, This vehicle already assigned.');
+                        alert('No driver found this vehicle, Please select another vehicle.');
+                        $('#vehicle_id').val('');
+                    }
+                },
+                error:function (err){
+                    console.log(err)
+                }
+            })
+        })
 
         $('#start_date').change(function (){
             var start_date = $('#start_date').val();

@@ -6,7 +6,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">{{strtoupper('Admin Dashboard')}}</h1>
+                    <h1 class="m-0 text-dark">
+                        @php
+                            $staff = \App\User::find(Auth::user()->id);
+                            $userRole = $staff->roles->first();
+                        @endphp
+                        {{strtoupper(Auth::user()->name.' ('.$userRole->name.') Dashboard')}}
+                    </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">

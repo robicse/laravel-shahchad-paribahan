@@ -74,7 +74,7 @@ class CategoryController extends Controller
             $accessLog->save();
         }
         Toastr::success('Categories Created Successfully');
-        return back();
+        return redirect()->route('admin.categories.index');
     }
 
     public function show($id)

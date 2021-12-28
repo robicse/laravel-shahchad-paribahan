@@ -50,6 +50,7 @@ Route::group(['as'=>'admin.','prefix' =>'admin','namespace'=>'Admin', 'middlewar
     Route::put('vehicle/customer/rent/update/{id}','OrderController@vehicle_customer_rent_update')->name('vehicle-customer-rent-update');
     Route::get('order/customer/print/{id}','OrderController@order_customer_print')->name('order-customer-print');
 
+    Route::get('check/already/vehicle/assigned/to/driver/{id}','VehicleController@check_already_vehicle_assigned_to_driver');
     Route::get('check/already/vehicle/assigned/or/free/{id}','VehicleController@check_already_vehicle_assigned_or_free');
     Route::get('check/already/driver/assigned/or/free/{id}','DriverController@check_already_driver_assigned_or_free');
     Route::post('check/already/vehicle/assigned/or/free/edit','VehicleController@check_already_vehicle_assigned_or_free_edit');

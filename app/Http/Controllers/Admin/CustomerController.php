@@ -84,9 +84,7 @@ class CustomerController extends Controller
         }
 
         Toastr::success('Customer Created Successfully');
-        return back();
-
-
+        return redirect()->route('admin.customers.index');
     }
 
     public function show($id)

@@ -49,9 +49,18 @@
                                 <option value="Rent">Rent</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="vendor_div">
+                            <label for="vendor_id">Vendor <span>*</span></label>
+                            <select name="vendor_id" id="vendor_id" class="form-control select2">
+                                <option value="">Select</option>
+                                @foreach($vendors as $vendor)
+                                    <option value="{{$vendor->id}}">{{$vendor->name}} ({{$vendor->vendor_code}})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group" id="owner_name_div">
                             <label for="owner_name">Vehicle Owner Name <span>*</span></label>
-                            <input type="text" class="form-control" name="owner_name" id="owner_name" placeholder="" required>
+                            <input type="text" class="form-control" name="owner_name" id="owner_name" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="vehicle_name">Vehicle Name <span>*</span></label>
@@ -88,7 +97,7 @@
 {{--                            <input type="number" class="form-control" name="price" id="price" placeholder="">--}}
 {{--                        </div>--}}
                         <div class="form-group">
-                            <label for="model">Model</label>
+                            <label for="model">Model <span>*</span></label>
                             <input type="text" class="form-control" name="model" id="model" placeholder="" required>
                         </div>
                         <div class="form-group">
@@ -162,5 +171,19 @@
             autoclose: true,
             todayHighlight: true
         });
+
+        $('#vendor_div').hide();
+        $('#owner_name_div').hide();
+        $('#own_vehicle_status').change(function (){
+            var own_vehicle_status = $('#own_vehicle_status').val();
+            if(own_vehicle_status == 'Rent'){
+                $('#vendor_div').show();
+                //$('#owner_name_div').hide();
+            }else{
+                //$('#owner_name').val('Mr.');
+                //$('#owner_name').show();
+                $('#vendor_div').hide();
+            }
+        })
     </script>
 @endpush

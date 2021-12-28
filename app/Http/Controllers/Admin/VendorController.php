@@ -83,9 +83,7 @@ class VendorController extends Controller
         }
 
         Toastr::success('Vendor Created Successfully');
-        return back();
-
-
+        return redirect()->route('admin.vendors.index');
     }
 
     public function show($id)

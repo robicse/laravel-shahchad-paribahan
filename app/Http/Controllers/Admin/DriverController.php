@@ -93,9 +93,7 @@ class DriverController extends Controller
             $accessLog->save();
         }
         Toastr::success('Driver Created Successfully');
-        return back();
-
-
+        return redirect()->route('admin.drivers.index');
     }
 
     public function show($id)

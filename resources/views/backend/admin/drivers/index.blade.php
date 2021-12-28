@@ -53,7 +53,7 @@
                             </thead>
                             <tbody>
                             @foreach($drivers as $key => $driver)
-                            <tr class="{{$driver->status == 0 ? 'bg-warning' : ''}}">
+                            <tr class="@if($driver->status == 0) bg-warning @elseif($driver->vehicle_id == NULL) bg-danger @endif">
                                 <td>{{$key + 1}}</td>
                                 <td>
                                     <img src="{{asset('uploads/drivers/'.$driver->logo)}}" width="80" height="50" alt="">
@@ -64,7 +64,12 @@
                                 <td>{{$driver->email}}</td>
                                 <td>{{$driver->status == 1 ? 'Active' : 'Inactive'}}</td>
                                 <td>
-                                    {{checkAlreadyDriverAssignedOrFree($driver->id) > 0 ? 'Assigned' : 'Free'}}
+{{--                                    {{checkAlreadyDriverAssignedOrFree($driver->id) > 0 ? 'Assigned' : 'Free'}}--}}
+                                    @if($driver->vehicle_id != NULL)
+                                        {{$driver->vehicle->vehicle_name}} ({{$driver->vehicle->vehicle_code}})
+                                    @else
+                                        No Driver Assign Yet!
+                                    @endif
                                 </td>
                                 <td>
                                     <a class="btn btn-info waves-effect" href="{{route('admin.drivers.edit',$driver->id)}}">

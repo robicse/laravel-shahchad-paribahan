@@ -88,7 +88,8 @@ class DriverSalaryController extends Controller
         $driverSalary->month = $request->month;
         $driverSalary->salary = $request->salary;
         $driverSalary->payment_type_id = $request->payment_type_id;
-        $driverSalary->paid = $request->paid;
+        //$driverSalary->paid = $request->paid;
+        $driverSalary->paid = $request->salary;
         $driverSalary->due = $request->due_price;
         $driverSalary->note = $request->note;
         $driverSalary->save();
@@ -102,7 +103,8 @@ class DriverSalaryController extends Controller
                 $payment->order_id=$insert_id;
                 $payment->paid_user_id=$request->driver_id;
                 $payment->payment_type_id = 1;
-                $payment->paid = $request->paid;
+                //$payment->paid = $request->paid;
+                $payment->paid = $request->salary;
                 $payment->exchange = 0;
                 $payment->save();
             }else{

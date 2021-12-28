@@ -112,6 +112,7 @@
                             @endif
                         </div>
                     </div>
+
                     <table class="table table-bordered">
                         <thead>
                         <tr>
@@ -151,6 +152,27 @@
                                 <td class="text-right">{{number_format($total_expense,2,'.',',')}}</td>
                                 <td class="text-right">Total:</td>
                                 <td class="text-right">{{number_format($total_income,2,'.',',')}}</td>
+                            </tr>
+                            <?php
+                            if($total_income > $total_expense){
+                                $loss_profit_status = 'Profit';
+                                $loss_profit_amount = $total_income - $total_expense;
+                            }elseif($total_expense > $total_income){
+                                $loss_profit_status = 'Loss';
+                                $loss_profit_amount = $total_expense - $total_income;
+                            }else{
+                                $loss_profit_status = 'Loss/Profit';
+                                $loss_profit_amount = 0;
+                            }
+                            ?>
+                            <tr class="@if($loss_profit_status === 'Profit') bg-success @elseif($loss_profit_status === 'Loss') bg-danger @endif">
+                                <td class="text-right" colspan="2">&nbsp;</td>
+                                <td class="text-right">
+                                    {{ $loss_profit_status }}
+                                </td>
+                                <td class="text-right">
+                                    {{number_format($loss_profit_amount,2,'.',',')}}
+                                </td>
                             </tr>
                         </tbody>
                     </table>

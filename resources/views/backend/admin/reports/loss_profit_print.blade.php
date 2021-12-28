@@ -179,6 +179,27 @@
                                         <td style="text-align: right">Total:</td>
                                         <td style="text-align: right">{{number_format($total_income,2,'.',',')}}</td>
                                     </tr>
+                                    <?php
+                                    if($total_income > $total_expense){
+                                        $loss_profit_status = 'Profit';
+                                        $loss_profit_amount = $total_income - $total_expense;
+                                    }elseif($total_expense > $total_income){
+                                        $loss_profit_status = 'Loss';
+                                        $loss_profit_amount = $total_expense - $total_income;
+                                    }else{
+                                        $loss_profit_status = 'Loss/Profit';
+                                        $loss_profit_amount = 0;
+                                    }
+                                    ?>
+                                    <tr style="@if($loss_profit_status === 'Profit') background-color:green; @elseif($loss_profit_status === 'Loss') background-color:red; @endif">
+                                        <td style="text-align: right" colspan="2">&nbsp;</td>
+                                        <td style="text-align: right">
+                                            {{ $loss_profit_status }}
+                                        </td>
+                                        <td style="text-align: right">
+                                            {{number_format($loss_profit_amount,2,'.',',')}}
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
                         </td>

@@ -8,6 +8,7 @@ use App\Model\Vehicle;
 use App\Model\Brand;
 use App\Model\Category;
 use App\Model\VehicleDriverAssign;
+use App\Model\Vendor;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -36,7 +37,8 @@ class VehicleController extends Controller
     {
         $brands = Brand::all();
         $categories = Category::all();
-        return view('backend.admin.vehicles.create', compact('brands','categories'));
+        $vendors = Vendor::where('status',1)->get();
+        return view('backend.admin.vehicles.create', compact('brands','categories','vendors'));
     }
 
     public function store(Request $request)
@@ -44,7 +46,7 @@ class VehicleController extends Controller
         $this->validate($request, [
             //'name'=> 'required|unique:vehicles,name',
         ]);
-
+        //dd($request->all());
         $get_vehicle_code = Vehicle::latest('id','desc')->pluck('vehicle_code')->first();
         if(!empty($get_vehicle_code)){
             $get_vehicle_code_after_replace = str_replace("VC-","",$get_vehicle_code);
@@ -54,8 +56,17 @@ class VehicleController extends Controller
         }
         $final_vehicle_code = 'VC-'.$vehicle_code;
 
+        if($request->vendor_id === NULL){
+            $owner_name = 'Mr.';
+            $vendor_id = NULL;
+        }else{
+            $owner_name = Vendor::where('id',$request->vendor_id)->pluck('name')->first();
+            $vendor_id = $request->vendor_id;
+        }
+
         $vehicle = new Vehicle();
-        $vehicle->owner_name = $request->owner_name;
+        $vehicle->owner_name = $owner_name;
+        $vehicle->vendor_id = $vendor_id;
         $vehicle->vehicle_name = $request->vehicle_name;
         $vehicle->vehicle_code = $final_vehicle_code;
         $vehicle->brand_id = $request->brand_id;
@@ -98,9 +109,7 @@ class VehicleController extends Controller
             $accessLog->save();
         }
         Toastr::success('Vehicle Created Successfully');
-        return back();
-
-
+        return redirect()->route('admin.vehicles.index');
     }
 
     public function show($id)
@@ -113,7 +122,8 @@ class VehicleController extends Controller
         $brands = Brand::all();
         $categories = Category::all();
         $vehicle = Vehicle::find($id);
-        return view('backend.admin.vehicles.edit',compact('vehicle','brands','categories'));
+        $vendors = Vendor::where('status',1)->get();
+        return view('backend.admin.vehicles.edit',compact('vehicle','brands','categories','vendors'));
     }
 
     public function update(Request $request, $id)
@@ -122,8 +132,17 @@ class VehicleController extends Controller
             //'name'=> 'required|unique:vehicles,name,'.$id,
         ]);
 
+        if($request->vendor_id === NULL){
+            $owner_name = 'Mr.';
+            $vendor_id = NULL;
+        }else{
+            $owner_name = Vendor::where('id',$request->vendor_id)->pluck('name')->first();
+            $vendor_id = $request->vendor_id;
+        }
+
         $vehicle = Vehicle::find($id);
-        $vehicle->owner_name = $request->owner_name;
+        $vehicle->vendor_id = $vendor_id;
+        $vehicle->owner_name = $owner_name;
         $vehicle->vehicle_name = $request->vehicle_name;
         $vehicle->brand_id = $request->brand_id;
         $vehicle->category_id = $request->category_id;
@@ -198,6 +217,10 @@ class VehicleController extends Controller
 
     public function check_already_vehicle_assigned_or_free($vehicle_id){
         return checkAlreadyVehicleAssignedOrFree($vehicle_id);
+    }
+
+    public function check_already_vehicle_assigned_to_driver($vehicle_id){
+        return Vehicle::where('id',$vehicle_id)->pluck('driver_id')->first();
     }
 
     public function check_already_vehicle_assigned_or_free_edit(Request $request){

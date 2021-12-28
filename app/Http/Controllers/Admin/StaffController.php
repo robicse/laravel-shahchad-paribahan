@@ -116,14 +116,14 @@ class StaffController extends Controller
             'roles' => 'required'
         ]);
 
-
+        $user = User::find($id);
         $input = $request->all();
         if(!empty($input['password'])){
             $input['password'] = Hash::make($input['password']);
+        }else{
+            $input['password'] = $user->password;
         }
 
-
-        $user = User::find($id);
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
 

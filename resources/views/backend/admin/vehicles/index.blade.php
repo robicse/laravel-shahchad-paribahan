@@ -42,6 +42,7 @@
                             <tr>
                                 <th>#Id</th>
                                 <th>Image</th>
+                                <th>Owner Type</th>
                                 <th>Owner Name</th>
                                 <th>Vehicle Name</th>
                                 <th>Code</th>
@@ -53,11 +54,12 @@
                             </thead>
                             <tbody>
                             @foreach($vehicles as $key => $vehicle)
-                            <tr class="{{$vehicle->status == 0 ? 'bg-warning' : ''}}">
+                            <tr class="@if($vehicle->status == 0) bg-warning @elseif($vehicle->driver_id == NULL) bg-warning @endif">
                                 <td>{{$key + 1}}</td>
                                 <td>
                                     <img src="{{asset('uploads/vehicles/'.$vehicle->image)}}" width="80" height="50" alt="">
                                 </td>
+                                <td>{{$vehicle->own_vehicle_status}}</td>
                                 <td>{{$vehicle->owner_name}}</td>
                                 <td>{{$vehicle->vehicle_name}}</td>
                                 <td>{{$vehicle->vehicle_code}}</td>
@@ -87,8 +89,10 @@
                             <tr>
                                 <th>#Id</th>
                                 <th>Image</th>
+                                <th>Owner Type</th>
                                 <th>Owner Name</th>
                                 <th>Vehicle Name</th>
+                                <th>Code</th>
                                 <th>Registration NO</th>
                                 <th>Active/Inactive</th>
                                 <th>Running Driver</th>

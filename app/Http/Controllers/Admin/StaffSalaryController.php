@@ -27,13 +27,13 @@ use Intervention\Image\Facades\Image;
 
 class StaffSalaryController extends Controller
 {
-//    function __construct()
-//    {
-//        $this->middleware('permission:driver-salary-list|driver-salary-create|driver-salary-edit|driver-salary-delete|driver_salary_show', ['only' => ['driver_salary_list','driver_salary_store']]);
-//        $this->middleware('permission:driver-salary-create', ['only' => ['driver_salary_create','driver_salary_store']]);
-//        $this->middleware('permission:driver-salary-edit', ['only' => ['driver_salary_edit','driver_salary_update']]);
-//        $this->middleware('permission:driver-salary-delete', ['only' => ['driver_salary_destroy']]);
-//    }
+    function __construct()
+    {
+        $this->middleware('permission:staff-salary-list|staff-salary-create|staff-salary-edit|staff-salary-delete|staff_salary_show', ['only' => ['staff_salary_list','staff_salary_store']]);
+        $this->middleware('permission:staff-salary-create', ['only' => ['staff_salary_create','staff_salary_store']]);
+        $this->middleware('permission:staff-salary-edit', ['only' => ['staff_salary_edit','staff_salary_update']]);
+        $this->middleware('permission:staff-salary-delete', ['only' => ['staff_salary_destroy']]);
+    }
 
     public function staff_salary_list()
     {

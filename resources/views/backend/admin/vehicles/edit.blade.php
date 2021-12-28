@@ -50,9 +50,18 @@
                                     <option value="Rent" {{$vehicle->own_vehicle_status == 'Rent' ? 'selected' : ''}}>Rent</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="vendor_div" style="@if($vehicle->own_vehicle_status == 'Own') display:none; @endif">
+                                <label for="vendor_id">Vendor <span>*</span></label>
+                                <select name="vendor_id" id="vendor_id" class="form-control select2">
+                                    <option value="">Select</option>
+                                    @foreach($vendors as $vendor)
+                                        <option value="{{$vendor->id}}" {{$vendor->id == $vehicle->vendor_id ? 'selected' : ''}}>{{$vendor->name}} ({{$vendor->vendor_code}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group" id="owner_name_div">
                                 <label for="owner_name">Vehicle Owner Name <span>*</span></label>
-                                <input type="text" class="form-control" name="owner_name" id="owner_name" value="{{$vehicle->owner_name}}" required>
+                                <input type="text" class="form-control" name="owner_name" id="owner_name" value="{{$vehicle->owner_name}}">
                             </div>
                             <div class="form-group">
                                 <label for="vehicle_name">Vehicle Name <span>*</span></label>
@@ -169,5 +178,16 @@
             autoclose: true,
             todayHighlight: true
         });
+
+        //$('#vendor_div').hide();
+        $('#owner_name_div').hide();
+        $('#own_vehicle_status').change(function (){
+            var own_vehicle_status = $('#own_vehicle_status').val();
+            if(own_vehicle_status == 'Rent'){
+                $('#vendor_div').show();
+            }else{
+                $('#vendor_div').hide();
+            }
+        })
     </script>
 @endpush

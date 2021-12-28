@@ -100,6 +100,7 @@ if (!function_exists('getVehiclePrice')) {
 if (!function_exists('checkAlreadyVehicleRentOrNotThisDate')) {
     function checkAlreadyVehicleRentOrNotThisDate($vehicle_id, $start_date) {
         return OrderItem::where('vehicle_id',$vehicle_id)
+            ->where('type','Customer')
             ->where('start_date','<=',$start_date)
             ->where('end_date','>=',$start_date)
             ->get()->count();
