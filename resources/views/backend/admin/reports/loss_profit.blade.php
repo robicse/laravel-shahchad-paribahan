@@ -115,7 +115,7 @@
 
                     <table class="table table-bordered">
                         <thead>
-                        <tr>
+                        <tr class="bg-secondary">
                             <th class="text-center">Expense</th>
                             <th class="text-center">Amount(TK.)</th>
                             <th class="text-center">Income</th>

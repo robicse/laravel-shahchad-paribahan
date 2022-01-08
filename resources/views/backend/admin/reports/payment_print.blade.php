@@ -102,7 +102,7 @@
                         <td>
                             <!--*** CONTENT GOES HERE ***-->
                             <div class="page" style="padding: 10px;">
-                                <h5 align="center">Customer Balance Sheet from date {{ $date_from }} to date {{ $date_to }}</h5>
+                                <h5 align="center">Balance Sheet from date {{ $date_from }} to date {{ $date_to }}</h5>
                                 <table class="invoice">
                                     <tr>
                                         <th width="5%">SL</th>
@@ -153,7 +153,7 @@
                                         @endforeach
                                     @endif
                                     <tr>
-                                        <td colspan="4">&nbsp;</td>
+                                        <td colspan="5">&nbsp;</td>
                                         <td>Total</td>
                                         <td style="text-align: right">{{ number_format($cashTotal,2,'.',',') }}</td>
                                         <td style="text-align: right">{{ number_format($creditTotal,2,'.',',') }}</td>

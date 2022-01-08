@@ -107,10 +107,12 @@
                                     <tr>
                                         <th width="10%">SL</th>
                                         <th width="30%">Customer</th>
-                                        <th width="10%">Paid Amount(TK)</th>
+                                        <th width="30%">Total Paid Amount(TK)</th>
+                                        <th width="30%">Total Due Amount(TK)</th>
                                     </tr>
                                     @php
                                         $final_paid_amount = 0;
+                                        $final_due_amount = 0;
                                         $flag = 0;
                                         $first_day = date('Y-m-01',strtotime($date_from));
                                         $last_day = date('Y-m-t',strtotime($date_from));
@@ -122,11 +124,20 @@
                                                 $customer = \App\Model\Customer::where('id',$cash_data_result->paid_user_id)->pluck('name')->first();
                                                 $sl ++;
                                                 $final_paid_amount += $cash_data_result->total_paid;
+
+                                                $customer_due = getCustomerTotalDueAmount($cash_data_result->paid_user_id, $date_from, $date_to);
+                                                if(!empty($customer_due)){
+                                                    $customer_due_amount = $customer_due->total_due;
+                                                    $final_due_amount += $customer_due->total_due;
+                                                }else{
+                                                    $customer_due_amount = 0;
+                                                }
                                             @endphp
                                             <tr>
                                                 <td>{{$sl}}</td>
                                                 <td>{{$customer}}</td>
                                                 <td style="text-align: right">{{ number_format($cash_data_result->total_paid,2,'.',',') }}</td>
+                                                <td class="text-right">{{ number_format($customer_due_amount,2,'.',',') }}</td>
                                             </tr>
                                         @endforeach
                                     @endif
@@ -134,6 +145,7 @@
                                         <td>&nbsp;</td>
                                         <td>Total</td>
                                         <td style="text-align: right">{{ number_format($final_paid_amount,2,'.',',') }}</td>
+                                        <td style="text-align: right">{{ number_format($final_due_amount,2,'.',',') }}</td>
                                     </tr>
                                 </table>
                             </div>

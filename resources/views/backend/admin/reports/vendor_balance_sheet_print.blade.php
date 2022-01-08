@@ -107,10 +107,12 @@
                                     <tr>
                                         <th width="10%">SL</th>
                                         <th width="30%">Vendor</th>
-                                        <th width="10%">Paid Amount(TK)</th>
+                                        <th width="30%">Total Paid Amount(TK)</th>
+                                        <th width="30%">Total Due Amount(TK)</th>
                                     </tr>
                                     @php
                                         $final_paid_amount = 0;
+                                        $final_due_amount = 0;
                                         $flag = 0;
                                         $first_day = date('Y-m-01',strtotime($date_from));
                                         $last_day = date('Y-m-t',strtotime($date_from));
@@ -122,11 +124,20 @@
                                                 $vendor = \App\Model\Vendor::where('id',$cash_data_result->paid_user_id)->pluck('name')->first();
                                                 $sl ++;
                                                 $final_paid_amount += $cash_data_result->total_paid;
+
+                                                $vendor_due = getVendorTotalDueAmount($cash_data_result->paid_user_id, $date_from, $date_to);
+                                                if(!empty($vendor_due)){
+                                                    $vendor_due_amount = $vendor_due->total_due;
+                                                    $final_due_amount += $vendor_due->total_due;
+                                                }else{
+                                                    $vendor_due_amount = 0;
+                                                }
                                             @endphp
                                             <tr>
                                                 <td>{{$sl}}</td>
                                                 <td>{{$vendor}}</td>
                                                 <td style="text-align: right">{{ number_format($cash_data_result->total_paid,2,'.',',') }}</td>
+                                                <td style="text-align: right">{{ number_format($vendor_due_amount,2,'.',',') }}</td>
                                             </tr>
                                         @endforeach
                                     @endif
@@ -134,6 +145,7 @@
                                         <td>&nbsp;</td>
                                         <td>Total</td>
                                         <td style="text-align: right">{{ number_format($final_paid_amount,2,'.',',') }}</td>
+                                        <td style="text-align: right">{{ number_format($final_due_amount,2,'.',',') }}</td>
                                     </tr>
                                 </table>
                             </div>

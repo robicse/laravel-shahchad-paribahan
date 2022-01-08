@@ -82,7 +82,7 @@
                     <div class="card-body table-responsive">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
-                            <tr>
+                            <tr class="bg-secondary">
                                 <th>#SL</th>
                                 <th>Invoice NO</th>
                                 <th>Transaction Type</th>
@@ -131,15 +131,10 @@
                             @endforeach
                             </tbody>
                             <tfoot>
-                            <tr>
-                                <th>#SL</th>
-                                <th>Invoice NO</th>
-                                <th>Transaction Type</th>
-                                <th>Date Time</th>
-                                <th>Paid To</th>
-                                <th>Method</th>
-                                <th>Cash(TK)</th>
-                                <th>Credit(TK)</th>
+                            <tr class="bg-primary">
+                                <td colspan="6">Total:</td>
+                                <td class="text-right">{{ number_format($cashTotal,2,'.',',') }}</td>
+                                <td class="text-right">{{ number_format($creditTotal,2,'.',',') }}</td>
                             </tr>
                             </tfoot>
                         </table>
